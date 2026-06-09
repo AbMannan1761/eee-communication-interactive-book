@@ -245,7 +245,7 @@
 
         .tabs {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 10px;
         }
 
@@ -1024,6 +1024,113 @@
                 grid-template-columns: 1fr;
             }
         }
+
+        /* Video Lectures Styling */
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 20px;
+        }
+
+        .video-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .video-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-color);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .video-header-bar {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 10px 15px;
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            border-bottom: 1px solid var(--border-color);
+            text-transform: uppercase;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        body.light-theme .video-header-bar {
+            background: rgba(0, 0, 0, 0.02);
+        }
+
+        .video-media-wrapper {
+            background: #000000;
+            aspect-ratio: 16 / 9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .video-media-wrapper video {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .audio-wrapper {
+            background: linear-gradient(135deg, rgba(19, 26, 38, 0.9) 0%, rgba(11, 15, 25, 0.9) 100%);
+            flex-direction: column;
+            padding: 20px;
+            justify-content: space-around;
+        }
+
+        body.light-theme .audio-wrapper {
+            background: linear-gradient(135deg, #e6f0fa 0%, #d1dfed 100%);
+        }
+
+        .audio-poster {
+            font-size: 3rem;
+            color: var(--accent-color);
+            opacity: 0.7;
+            margin-bottom: 10px;
+            animation: pulse-slow 3s infinite ease-in-out;
+        }
+
+        @keyframes pulse-slow {
+            0%, 100% { transform: scale(1); opacity: 0.7; }
+            50% { transform: scale(1.08); opacity: 0.9; }
+        }
+
+        .audio-wrapper audio {
+            width: 100%;
+            border-radius: 8px;
+        }
+
+        .video-info {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            flex-grow: 1;
+        }
+
+        .video-info h4 {
+            font-size: 1.05rem;
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        .video-info p {
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
     </style>
 </head>
 <body class="tex2jax_ignore">
@@ -1066,6 +1173,9 @@
                 </button>
                 <button class="tab-btn" onclick="switchTab(3)">
                     <i class="fa-solid fa-database"></i> Ch-4: Storage &amp; Dynamic Range
+                </button>
+                <button class="tab-btn" onclick="switchTab(4)">
+                    <i class="fa-solid fa-circle-play"></i> Video Lectures (লেকচার ভিডিও)
                 </button>
             </div>
         </div>
@@ -1962,6 +2072,70 @@
                                 $$R_{b} = 2 \times 16 \times 40000 = 1.28\text{ Mbps}$$
                                 $$\text{Size} = \frac{1280000 \times 600}{8 \times 10^6} = 96\text{ MB}$$
                             </div>
+                        </div>
+                    </div>
+        <!-- ======================= TAB 5: VIDEO LECTURES ======================= -->
+        <div id="panel-4" class="tab-panel">
+            <div class="theory-section">
+                <span class="theory-badge">ভিডিও ও অডিও লেকচার • Learning Media</span>
+                <h2><i class="fa-solid fa-circle-play"></i> মাল্টিমিডিয়া লেকচার গ্যালারি</h2>
+                <p style="color: var(--text-secondary); margin-bottom: 25px;">ডিজিটাল কমিউনিকেশন ও পিসিএম (PCM)-এর গাণিতিক সমস্যার সহজ ব্যাখ্যা ও সরাসরি সমাধান দেখতে নিচের লেকচারগুলো প্লে করুন।</p>
+                
+                <div class="video-grid">
+                    <!-- Lecture 1 -->
+                    <div class="video-card">
+                        <div class="video-header-bar">
+                            <i class="fa-solid fa-file-video"></i> <span>ভিডিও লেকচার</span>
+                        </div>
+                        <div class="video-media-wrapper">
+                            <video controls preload="metadata" width="100%">
+                                <source src="ডিজিটাল_কমিউনিকেশন_ও_পিসিএম.mp4" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                        </div>
+                        <div class="video-info">
+                            <h4>১. ডিজিটাল কমিউনিকেশন ও পিসিএম</h4>
+                            <p>ডিজিটাল কমিউনিকেশন ও পালস কোড মডুলেশন (PCM)-এর প্রাথমিক ধারণা এবং স্যাম্পলিং প্রসেসের তাত্ত্বিক ব্যাখ্যা।</p>
+                        </div>
+                    </div>
+
+                    <!-- Lecture 2 -->
+                    <div class="video-card">
+                        <div class="video-header-bar">
+                            <i class="fa-solid fa-file-audio"></i> <span>অডিও লেকচার</span>
+                        </div>
+                        <div class="video-media-wrapper audio-wrapper">
+                            <div class="audio-poster">
+                                <i class="fa-solid fa-headphones-simple"></i>
+                            </div>
+                            <audio controls preload="metadata">
+                                <source src="পিসিএম_ও_নাইকুইস্ট_থিওরেমের_গাণিতিক_খুঁটিনাটি.m4a" type="audio/mp4">
+                                Your browser does not support the audio tag.
+                            </audio>
+                        </div>
+                        <div class="video-info">
+                            <h4>২. পিসিএম ও নাইকুইস্ট থিওরেমের গাণিতিক খুঁটিনাটি</h4>
+                            <p>নাইকুইস্ট থিওরেম এবং স্যাম্পলিং হার সম্পর্কিত বিভিন্ন সূত্রের ব্যবহারিক খুঁটিনাটি ও গাণিতিক আলোচনা।</p>
+                        </div>
+                    </div>
+
+                    <!-- Lecture 3 -->
+                    <div class="video-card">
+                        <div class="video-header-bar">
+                            <i class="fa-solid fa-file-audio"></i> <span>অডিও লেকচার</span>
+                        </div>
+                        <div class="video-media-wrapper audio-wrapper">
+                            <div class="audio-poster">
+                                <i class="fa-solid fa-headphones-simple"></i>
+                            </div>
+                            <audio controls preload="metadata">
+                                <source src="পিসিএম_ও_নাইকুইস্ট_থিওরেমের_গাণিতিক_সমাধান.m4a" type="audio/mp4">
+                                Your browser does not support the audio tag.
+                            </audio>
+                        </div>
+                        <div class="video-info">
+                            <h4>৩. পিসিএম ও নাইকুইস্ট থিওরেমের গাণিতিক সমাধান</h4>
+                            <p>বই এবং পরীক্ষায় আসা বিভিন্ন গুরুত্বপূর্ণ অংকের সমাধান এবং বাস্তব ও কাল্পনিক সমস্যার বিস্তারিত ব্যাখ্যা।</p>
                         </div>
                     </div>
                 </div>
