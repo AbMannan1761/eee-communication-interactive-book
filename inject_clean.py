@@ -12,7 +12,7 @@ with open(dataset_filepath, "r", encoding="utf-8") as f:
 
 # Re-load clean HTML from git or fresh state to avoid duplicate injections
 # Let's run a git checkout on index.html first to ensure we start from a clean state!
-os.system(f'git checkout "{html_filepath}"')
+os.system(f'git checkout dc2fd42e875a3057555355010fb47d69a1f91936 -- "{html_filepath}"')
 
 with open(html_filepath, "r", encoding="utf-8") as f:
     html_content = f.read()
@@ -501,6 +501,261 @@ css_to_inject = """
         .review-correct-ans {
             font-size: 0.9rem;
             margin-bottom: 8px;
+        }
+
+        /* --- BRANDING & DESIGN OVERRIDES (3D VIBE & ENGINEERING MOOD) --- */
+        :root {
+            --bg-color: #0b111e !important; /* Deepest cyber navy */
+            --card-bg: #121927 !important; /* Cyber card navy */
+            --accent-gradient: linear-gradient(135deg, #00f2fe 0%, #7f00ff 50%, #ff007f 100%) !important;
+            --accent-color: #00f2fe !important;
+            --secondary-color: #7f00ff !important;
+            --border-color: #1e293b !important;
+            --text-primary: #f8fafc !important;
+            --text-secondary: #94a3b8 !important;
+            --text-muted: #64748b !important;
+            --shadow-glow: 0 0 25px rgba(0, 242, 254, 0.25) !important;
+            --shadow-md: 0 8px 30px rgba(0, 0, 0, 0.4) !important;
+            --shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.6) !important;
+            --card-right-bg: rgba(9, 14, 23, 0.85) !important;
+            --highlight-box-bg: rgba(0, 242, 254, 0.05) !important;
+            --simulator-out-bg: rgba(9, 14, 23, 0.9) !important;
+        }
+
+        body.light-theme {
+            --bg-color: #f1f5f9 !important;
+            --card-bg: #ffffff !important;
+            --text-primary: #0f172a !important;
+            --text-secondary: #475569 !important;
+            --text-muted: #64748b !important;
+            --border-color: #e2e8f0 !important;
+            --accent-gradient: linear-gradient(135deg, #0052d4 0%, #4364f7 50%, #6fb1fc 100%) !important;
+            --accent-color: #2563eb !important;
+            --secondary-color: #4f46e5 !important;
+            --shadow-glow: 0 0 25px rgba(37, 99, 235, 0.12) !important;
+            --shadow-md: 0 8px 30px rgba(0, 50, 100, 0.04) !important;
+            --shadow-lg: 0 16px 40px rgba(0, 50, 100, 0.06) !important;
+            --card-right-bg: #f8fafc !important;
+            --highlight-box-bg: rgba(37, 99, 235, 0.04) !important;
+            --simulator-out-bg: #f8fafc !important;
+        }
+
+        body {
+            background-image: radial-gradient(rgba(0, 242, 254, 0.08) 1.5px, transparent 1.5px) !important;
+            background-size: 30px 30px !important;
+            background-attachment: fixed !important;
+        }
+        body.light-theme {
+            background-image: radial-gradient(rgba(37, 99, 235, 0.07) 1.5px, transparent 1.5px) !important;
+        }
+
+        header {
+            background: rgba(11, 16, 27, 0.8) !important;
+            backdrop-filter: blur(15px) !important;
+            border-bottom: 1px solid var(--border-color) !important;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3) !important;
+        }
+        body.light-theme header {
+            background: rgba(255, 255, 255, 0.8) !important;
+            box-shadow: 0 4px 20px rgba(0, 50, 100, 0.03) !important;
+        }
+
+        .app-card, .theory-section, .simulator-widget, .quiz-active-area, .quiz-mode-card {
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2), inset 0 1px 0 0 rgba(255, 255, 255, 0.03) !important;
+            border: 1px solid var(--border-color) !important;
+            background: var(--card-bg) !important;
+            border-radius: 16px !important;
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s ease, border-color 0.3s ease !important;
+        }
+        .app-card:hover, .theory-section:hover, .simulator-widget:hover, .quiz-mode-card:hover {
+            transform: translateY(-6px) scale(1.005) !important;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35), var(--shadow-glow) !important;
+            border-color: var(--accent-color) !important;
+        }
+        body.light-theme .app-card, body.light-theme .theory-section, body.light-theme .simulator-widget, body.light-theme .quiz-active-area, body.light-theme .quiz-mode-card {
+            box-shadow: 0 10px 30px rgba(0, 50, 100, 0.03), inset 0 1px 0 0 rgba(255, 255, 255, 0.5) !important;
+        }
+
+        .label-input {
+            border-radius: 6px !important;
+            background: rgba(9, 14, 23, 0.6) !important;
+            border: 1px solid var(--border-color) !important;
+            color: var(--accent-color) !important;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.3) !important;
+            transition: var(--transition) !important;
+        }
+        .label-input:focus {
+            border-color: var(--accent-color) !important;
+            box-shadow: 0 0 10px rgba(0, 242, 254, 0.3), inset 0 2px 4px rgba(0,0,0,0.3) !important;
+            background: rgba(0, 242, 254, 0.05) !important;
+        }
+        body.light-theme .label-input {
+            background: #f8fafc !important;
+            box-shadow: inset 0 1px 2px rgba(0,0,0,0.05) !important;
+            border-color: var(--border-color) !important;
+        }
+        body.light-theme .label-input:focus {
+            box-shadow: 0 0 10px rgba(37, 99, 235, 0.2), inset 0 1px 2px rgba(0,0,0,0.05) !important;
+            background: #ffffff !important;
+        }
+
+        .btn, .tab-btn {
+            position: relative;
+            border-bottom: 3px solid rgba(0, 0, 0, 0.3) !important;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.3s ease !important;
+        }
+        .btn:active, .tab-btn:active {
+            transform: translateY(2px) !important;
+            border-bottom-width: 1px !important;
+        }
+        .tab-btn.active {
+            box-shadow: 0 0 15px rgba(0, 242, 254, 0.3), 0 4px 10px rgba(0, 0, 0, 0.3) !important;
+            border-bottom-color: rgba(0, 0, 0, 0.4) !important;
+        }
+        body.light-theme .tab-btn.active {
+            box-shadow: 0 0 15px rgba(37, 99, 235, 0.2), 0 4px 10px rgba(0, 50, 100, 0.05) !important;
+        }
+
+        .visualizer-box {
+            background: rgba(9, 14, 23, 0.8) !important;
+            border: 1px solid var(--border-color) !important;
+            box-shadow: inset 0 2px 10px rgba(0,0,0,0.5) !important;
+            border-radius: 12px !important;
+        }
+        body.light-theme .visualizer-box {
+            background: #f8fafc !important;
+            box-shadow: inset 0 2px 10px rgba(0, 50, 100, 0.02) !important;
+            border-color: var(--border-color) !important;
+        }
+
+        /* --- LOGO & HEADER ANIMATION STYLES (GIF-LIKE MOVEMENT) --- */
+        .header-logo-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 5px;
+            width: 55px;
+            height: 55px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            animation: floatLogo 3.5s ease-in-out infinite;
+            transition: var(--transition);
+        }
+        body.light-theme .header-logo-container {
+            background: rgba(0, 0, 0, 0.02);
+            box-shadow: 0 4px 15px rgba(0, 50, 100, 0.05);
+        }
+
+        .header-logo-svg {
+            overflow: visible;
+        }
+
+        @keyframes floatLogo {
+            0% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-4px) rotate(3deg); }
+            100% { transform: translateY(0px) rotate(0deg); }
+        }
+
+        @keyframes spinHexagon {
+            0% { transform: rotate(0deg); transform-origin: 50px 50px; }
+            100% { transform: rotate(360deg); transform-origin: 50px 50px; }
+        }
+        
+        @keyframes wavePulse {
+            0% { stroke-dashoffset: 0; }
+            100% { stroke-dashoffset: -40; }
+        }
+
+        @keyframes coreBreathe {
+            0% { r: 5.5; opacity: 0.8; }
+            50% { r: 8.5; opacity: 1; }
+            100% { r: 5.5; opacity: 0.8; }
+        }
+
+        .logo-polygon {
+            animation: spinHexagon 16s linear infinite;
+        }
+
+        .logo-wave {
+            stroke-dasharray: 100;
+            animation: wavePulse 3s linear infinite;
+            stroke: var(--accent-color) !important;
+        }
+
+        .logo-core {
+            animation: coreBreathe 2s ease-in-out infinite;
+        }
+
+        @keyframes textGradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .header-title {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            animation: floatText 4s ease-in-out infinite;
+        }
+
+        @keyframes floatText {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-2px); }
+            100% { transform: translateY(0px); }
+        }
+
+        header h1 span:first-child {
+            background: linear-gradient(90deg, #00f2fe, #7f00ff, #ff007f, #00f2fe);
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: textGradientShift 6s ease infinite;
+            font-weight: 800;
+        }
+
+        body.light-theme header h1 span:first-child {
+            background: linear-gradient(90deg, #0052d4, #4364f7, #6fb1fc, #0052d4);
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: textGradientShift 6s ease infinite;
+        }
+
+        .tagline-styled {
+            font-size: 0.9rem !important;
+            font-family: var(--font-heading) !important;
+            font-style: italic !important;
+            font-weight: 500 !important;
+            color: var(--text-secondary) !important;
+            letter-spacing: 0.3px !important;
+            opacity: 0.85 !important;
+            border-left: 2px solid var(--border-color) !important;
+            padding-left: 10px !important;
+            margin-left: 5px !important;
+            animation: pulseTagline 2.5s ease-in-out infinite !important;
+            display: inline-block !important;
+        }
+
+        @keyframes pulseTagline {
+            0% { opacity: 0.7; text-shadow: 0 0 2px transparent; }
+            50% { opacity: 1; text-shadow: 0 0 8px rgba(0, 242, 254, 0.4); }
+            100% { opacity: 0.7; text-shadow: 0 0 2px transparent; }
+        }
+        
+        body.light-theme .tagline-styled {
+            animation: pulseTaglineLight 2.5s ease-in-out infinite !important;
+        }
+        @keyframes pulseTaglineLight {
+            0% { opacity: 0.7; }
+            50% { opacity: 1; text-shadow: 0 0 8px rgba(37, 99, 235, 0.2); }
+            100% { opacity: 0.7; }
         }
 """
 
@@ -1666,6 +1921,51 @@ new_setTheme_body = """            const body = document.body;
             }"""
 
 modified_html = replace_function_safe(modified_html, "setTheme", new_setTheme_body)
+
+# Replace title and header elements for animated brand design
+old_title = "<title>ABM Academy - A Digital Learning Platform</title>"
+new_title = "<title>ABM Academy - Your Digital Learning hub.</title>"
+modified_html = modified_html.replace(old_title, new_title)
+
+old_header_brand = """    <header>
+        <div class="header-brand">
+            <div class="header-logo">ABM</div>
+            <div>
+                <h1><span>ABM Academy</span> - A Digital Learning Platform</h1>
+                <p>Interactive E-Learning E-Book for Communication Engineering</p>
+            </div>
+        </div>"""
+
+new_header_brand = """    <header>
+        <div class="header-brand">
+            <div class="header-logo-container">
+                <svg class="header-logo-svg" viewBox="0 0 100 100" width="50" height="50">
+                    <defs>
+                        <linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#00f2fe" />
+                            <stop offset="50%" stop-color="#7f00ff" />
+                            <stop offset="100%" stop-color="#ff007f" />
+                        </linearGradient>
+                        <filter id="logoGlow" x="-25%" y="-25%" width="150%" height="150%">
+                            <feGaussianBlur stdDeviation="3" result="blur" />
+                            <feComposite in="SourceGraphic" in2="blur" operator="over" />
+                        </filter>
+                    </defs>
+                    <g class="logo-3d-group">
+                        <polygon points="50,12 83,31 83,69 50,88 17,69 17,31" fill="none" stroke="url(#logoGrad)" stroke-width="4.5" class="logo-polygon" filter="url(#logoGlow)"/>
+                        <path d="M28,50 Q39,30 50,50 T72,50" fill="none" stroke="url(#logoGrad)" stroke-width="4" stroke-linecap="round" class="logo-wave"/>
+                        <circle cx="50" cy="50" r="5.5" fill="url(#logoGrad)" class="logo-core" filter="url(#logoGlow)"/>
+                    </g>
+                </svg>
+            </div>
+            <div>
+                <h1 class="header-title"><span>ABM Academy</span> <span class="tagline-styled">Your Digital Learning hub.</span></h1>
+                <p class="header-subtitle">Interactive E-Learning E-Book for Communication Engineering</p>
+            </div>
+        </div>"""
+
+modified_html = modified_html.replace(old_header_brand, new_header_brand)
+print("Updated title, tagline, and animated SVG logo.")
 
 # Write output file
 with open(html_filepath, "w", encoding="utf-8") as f:
