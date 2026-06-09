@@ -757,6 +757,267 @@ css_to_inject = """
             50% { opacity: 1; text-shadow: 0 0 8px rgba(37, 99, 235, 0.2); }
             100% { opacity: 0.7; }
         }
+
+        /* --- GEMINI CHATBOT FLOATING WIDGET STYLES --- */
+        .gemini-chat-launcher {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #00f2fe 0%, #7f00ff 100%);
+            box-shadow: 0 8px 32px rgba(0, 242, 254, 0.4), 0 0 15px rgba(0, 242, 254, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 1000;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            outline: none;
+        }
+        body.light-theme .gemini-chat-launcher {
+            background: linear-gradient(135deg, #0052d4 0%, #4364f7 100%);
+            box-shadow: 0 8px 32px rgba(37, 99, 235, 0.3), 0 0 15px rgba(37, 99, 235, 0.15);
+        }
+        .gemini-chat-launcher:hover {
+            transform: scale(1.1) rotate(5deg);
+            box-shadow: 0 12px 40px rgba(0, 242, 254, 0.55), 0 0 25px rgba(0, 242, 254, 0.35);
+        }
+        .gemini-chat-launcher svg {
+            animation: geminiPulse 4s ease-in-out infinite;
+        }
+        @keyframes geminiPulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.08); }
+            100% { transform: scale(1); }
+        }
+
+        .gemini-chat-panel {
+            position: fixed;
+            bottom: 95px;
+            right: 25px;
+            width: 380px;
+            max-width: calc(100vw - 50px);
+            height: 550px;
+            max-height: calc(100vh - 150px);
+            border-radius: 16px;
+            background: rgba(18, 25, 39, 0.82);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 16px 48px rgba(0, 0, 0, 0.6);
+            display: flex;
+            flex-direction: column;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transform: scale(0.9) translateY(20px);
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.1), opacity 0.3s ease, visibility 0.3s;
+            overflow: hidden;
+        }
+        body.light-theme .gemini-chat-panel {
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            box-shadow: 0 16px 48px rgba(0, 50, 100, 0.1);
+        }
+        .gemini-chat-panel.active {
+            opacity: 1;
+            visibility: visible;
+            transform: scale(1) translateY(0);
+        }
+
+        .gemini-chat-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(0, 0, 0, 0.15);
+        }
+        body.light-theme .gemini-chat-header {
+            border-bottom-color: rgba(0, 0, 0, 0.06);
+            background: rgba(0, 0, 0, 0.02);
+        }
+
+        .chat-header-btn:hover {
+            color: var(--accent-color) !important;
+        }
+        body.light-theme .chat-header-btn:hover {
+            color: #0072ff !important;
+        }
+
+        .gemini-chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .chat-msg {
+            max-width: 85%;
+            padding: 12px 16px;
+            font-size: 0.92rem;
+            line-height: 1.5;
+            animation: msgFadeIn 0.3s ease-out;
+        }
+        @keyframes msgFadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .chat-msg.user {
+            align-self: flex-end;
+            background: linear-gradient(135deg, rgba(0, 242, 254, 0.18) 0%, rgba(127, 0, 255, 0.18) 100%);
+            color: #ffffff;
+            border-radius: 14px 14px 0 14px;
+            border: 1px solid rgba(0, 242, 254, 0.3);
+            text-align: left;
+        }
+        body.light-theme .chat-msg.user {
+            background: linear-gradient(135deg, rgba(0, 82, 212, 0.1) 0%, rgba(67, 100, 247, 0.1) 100%);
+            color: #0f172a;
+            border-color: rgba(67, 100, 247, 0.2);
+        }
+
+        .chat-msg.assistant {
+            align-self: flex-start;
+            background: rgba(255, 255, 255, 0.04);
+            color: var(--text-primary);
+            border-radius: 14px 14px 14px 0;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            text-align: left;
+        }
+        body.light-theme .chat-msg.assistant {
+            background: rgba(0, 0, 0, 0.03);
+            border-color: rgba(0, 0, 0, 0.04);
+        }
+
+        .quick-suggestions-box {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 12px;
+        }
+
+        .suggestion-tag {
+            background: rgba(0, 242, 254, 0.08);
+            border: 1px solid rgba(0, 242, 254, 0.2);
+            color: var(--accent-color);
+            border-radius: 15px;
+            padding: 5px 12px;
+            font-size: 0.76rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        body.light-theme .suggestion-tag {
+            background: rgba(37, 99, 235, 0.06);
+            border-color: rgba(37, 99, 235, 0.15);
+            color: #2563eb;
+        }
+        .suggestion-tag:hover {
+            background: var(--accent-color);
+            color: #000000 !important;
+            border-color: var(--accent-color);
+            transform: translateY(-1px);
+        }
+        body.light-theme .suggestion-tag:hover {
+            background: #2563eb;
+            color: #ffffff !important;
+            border-color: #2563eb;
+        }
+
+        .gemini-chat-input-area {
+            display: flex;
+            gap: 10px;
+            padding: 15px 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(0, 0, 0, 0.15);
+        }
+        body.light-theme .gemini-chat-input-area {
+            border-top-color: rgba(0, 0, 0, 0.06);
+            background: rgba(0, 0, 0, 0.02);
+        }
+
+        .gemini-chat-input-area input {
+            flex: 1;
+            padding: 10px 14px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            background: rgba(9, 13, 22, 0.6);
+            color: var(--text-primary);
+            outline: none;
+            font-family: inherit;
+            font-size: 0.92rem;
+            transition: var(--transition);
+        }
+        .gemini-chat-input-area input:focus {
+            border-color: var(--accent-color);
+            box-shadow: 0 0 8px rgba(0, 242, 254, 0.25);
+        }
+        body.light-theme .gemini-chat-input-area input {
+            background: #ffffff;
+        }
+
+        .gemini-chat-input-area button {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            background: var(--accent-gradient);
+            border: none;
+            color: #000000 !important;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.2s ease;
+        }
+        body.light-theme .gemini-chat-input-area button {
+            color: #ffffff !important;
+        }
+        .gemini-chat-input-area button:hover {
+            transform: scale(1.05);
+            opacity: 0.9;
+        }
+        .gemini-chat-input-area button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .gemini-config-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(9, 13, 22, 0.96);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 30px;
+            box-sizing: border-box;
+            z-index: 1001;
+            text-align: center;
+        }
+        body.light-theme .gemini-config-overlay {
+            background: rgba(255, 255, 255, 0.98);
+        }
+        .gemini-config-overlay.active {
+            display: flex;
+            animation: overlayFadeIn 0.2s ease-out;
+        }
+        @keyframes overlayFadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
 """
 
 # HTML Tab Buttons
@@ -1715,6 +1976,194 @@ js_code_to_inject = f"""
             document.getElementById('quiz-result-area').style.display = 'none';
             document.getElementById('cat-quiz-selector-box').style.display = 'none';
         }}
+
+        // --- GEMINI CHATBOT ENGINE LOGIC ---
+        let isGeminiConfigOpen = false;
+
+        function toggleGeminiChat() {{
+            const panel = document.getElementById('gemini-chat-panel');
+            if (panel) {{
+                panel.classList.toggle('active');
+            }}
+        }}
+
+        function toggleGeminiConfig() {{
+            const overlay = document.getElementById('gemini-config-overlay');
+            if (overlay) {{
+                isGeminiConfigOpen = !isGeminiConfigOpen;
+                overlay.classList.toggle('active', isGeminiConfigOpen);
+                if (isGeminiConfigOpen) {{
+                    const savedKey = localStorage.getItem('gemini_api_key') || '';
+                    document.getElementById('gemini-api-key-input').value = savedKey;
+                }}
+            }}
+        }}
+
+        function saveGeminiApiKey() {{
+            const key = document.getElementById('gemini-api-key-input').value.trim();
+            localStorage.setItem('gemini_api_key', key);
+            toggleGeminiConfig();
+            appendBotMessage("এপিআই কি (API Key) সফলভাবে সেভ করা হয়েছে! এখন আপনি পূর্ণাঙ্গ এআই চ্যাট করতে পারবেন।");
+        }}
+
+        function handleGeminiKeyPress(event) {{
+            if (event.key === 'Enter') {{
+                sendGeminiMessage();
+            }}
+        }}
+
+        function sendQuickQuery(text) {{
+            const input = document.getElementById('gemini-chat-input');
+            if (input) {{
+                input.value = text;
+                sendGeminiMessage();
+            }}
+        }}
+
+        function appendUserMessage(text) {{
+            const msgs = document.getElementById('gemini-chat-messages');
+            if (!msgs) return;
+            const msgDiv = document.createElement('div');
+            msgDiv.className = 'chat-msg user';
+            msgDiv.innerText = text;
+            msgs.appendChild(msgDiv);
+            msgs.scrollTop = msgs.scrollHeight;
+        }}
+
+        function appendBotMessage(text) {{
+            const msgs = document.getElementById('gemini-chat-messages');
+            if (!msgs) return;
+            const msgDiv = document.createElement('div');
+            msgDiv.className = 'chat-msg assistant';
+            msgDiv.innerHTML = text;
+            msgs.appendChild(msgDiv);
+            msgs.scrollTop = msgs.scrollHeight;
+            return msgDiv;
+        }}
+
+        function getLocalFallbackResponse(query) {{
+            const q = query.toLowerCase();
+            
+            const hasTopic = q.includes('sampl') || q.includes('স্যাম্প') || q.includes('nyquist') || q.includes('নাইকু') || 
+                             q.includes('pcm') || q.includes('পিসিএম') || q.includes('tdm') || q.includes('টিডিএম') || 
+                             q.includes('sqnr') || q.includes('কোয়ান্ট') || q.includes('quant') || q.includes('compand') || 
+                             q.includes('কম্প্যা') || q.includes('noise') || q.includes('শব্দ') || q.includes('storage') || 
+                             q.includes('মেমরি') || q.includes('modulation') || q.includes('মডুলে') || q.includes('carrier') || 
+                             q.includes('ask') || q.includes('fsk') || q.includes('psk') || q.includes('qam') || 
+                             q.includes('aliasing') || q.includes('এলিয়াসি');
+                             
+            if (!hasTopic) {{
+                return "আমি দুঃখিত, আমি শুধুমাত্র ও পালস কোড মডুলেশন (PCM) এবং ওয়ের অধ্যায় সম্পর্কিত প্রশ্নের উত্তর দিতে পারি। দয়া করে আপনার পাঠ্যক্রমের ওপর কোনো প্রশ্ন জিজ্ঞেস করুন।";
+            }}
+            
+            if (q.includes('sampling rate') || q.includes('স্যাম্পলিং রেট') || q.includes('sampling frequency')) {{
+                return "<strong>স্যাম্পলিং রেট (Sampling Rate - $f_s$):</strong><br>একটি অ্যানালগ সিগন্যাল থেকে প্রতি সেকেন্ডে কতগুলো স্যাম্পল বা নমুনা নেওয়া হবে, তাকে স্যাম্পলিং রেট বলা হয়। এর একক Hertz (Hz)। স্যাম্পলিং থিওরেম অনুযায়ী, সিগন্যালকে বিকৃতি ছাড়া পুনর্গঠন করতে স্যাম্পলিং রেট অবশ্যই সিগন্যালের সর্বোচ্চ কম্পাঙ্কের দ্বিগুণের সমান বা বেশি হতে হবে ($f_s \\ge 2f_m$)।";
+            }}
+            if (q.includes('nyquist rate') || q.includes('নাইকুইস্ট')) {{
+                return "<strong>নাইকুইস্ট রেট (Nyquist Rate):</strong><br>সিগন্যালকে নিখুঁতভাবে রিকনস্ট্রাকশন করতে সর্বনিম্ন যে হারে স্যাম্পল নিতে হয়, তাকে নাইকুইস্ট রেট বলে। গাণিতিকভাবে, $\\text{{Nyquist Rate}} = 2f_m$, যেখানে $f_m$ হলো সিগন্যালের সর্বোচ্চ কম্পাঙ্ক। যদি স্যাম্পলিং রেট নাইকুইস্ট রেটের চেয়ে কম হয় ($f_s < 2f_m$), তবে <strong>Aliasing</strong> বা সিগন্যাল বিকৃতি ঘটে।";
+            }}
+            if (q.includes('tdm') || q.includes('টিডিএম') || q.includes('time division')) {{
+                return "<strong>টাইম ডিভিশন মাল্টিপ্লেক্সিং (Time Division Multiplexing - TDM):</strong><br>TDM এমন একটি প্রক্রিয়া যেখানে একাধিক ইনপুট সিগন্যাল একই ট্রান্সমিশন চ্যানেল শেয়ার করে বিভিন্ন ক্ষুদ্র ক্ষুদ্র টাইম স্লট (Time Slot) ব্যবহারের মাধ্যমে। এখানে একাধিক চ্যানেল পর্যায়ক্রমে একটি ফ্রেমে নিজ নিজ স্লট পায়, যার ফলে একটি সাধারণ মিডিয়াম ব্যবহার করে সব সিগন্যাল একসাথে পাঠানো সম্ভব হয়।";
+            }}
+            if (q.includes('sqnr') || q.includes('signal to quantization')) {{
+                return "<strong>SQNR (Signal-to-Quantization Noise Ratio):</strong><br>কোয়ান্টাইজেশন প্রক্রিয়ায় সৃষ্ট নয়েজের সাপেক্ষে মূল সিগন্যালের পাওয়ারের অনুপাতকে SQNR বলে। PCM সিস্টেমে প্রতি স্যাম্পলে বিট সংখ্যা ($n$) ১টি করে বাড়ালে SQNR প্রায় <strong>$6\\text{{ dB}}$</strong> বৃদ্ধি পায়। SQNR বৃদ্ধির প্রধান উপায় হলো বিট সংখ্যা ($n$) বাড়ানো অথবা <strong>Companding ($\\mu$-law / A-law)</strong> প্রযুক্তি ব্যবহার করা।";
+            }}
+            if (q.includes('aliasing') || q.includes('এলিয়াসি')) {{
+                return "<strong>Aliasing (এলিয়াসিং):</strong><br>যদি স্যাম্পলিং রেট সিগন্যালের সর্বোচ্চ কম্পাঙ্কের দ্বিগুণের কম হয় ($f_s < 2f_m$), তবে উচ্চ কম্পাঙ্কের সিগন্যাল অংশ লো-ফ্রিকোয়েন্সি তরঙ্গের রূপ ধারণ করে মূল অ্যানালগ সিগন্যালের সাথে মিশে যায়। একেই এলিয়াসিং বিকৃতি বলে। এটি দূর করতে স্যাম্পলিং করার পূর্বে একটি <strong>Anti-aliasing Low-pass Filter</strong> ব্যবহার করা হয়।";
+            }}
+            if (q.includes('pcm') || q.includes('পিসিএম') || q.includes('pulse code')) {{
+                return "<strong>পালস কোড মডুলেশন (PCM):</strong><br>অ্যানালগ সিগন্যালকে ডিজিটাল সিগন্যালে রূপান্তরের জন্য ব্যবহৃত প্রধান কৌশল হলো PCM। এর ৩টি ধাপ রয়েছে:<br>১. **স্যাম্পলিং (Sampling)**: অ্যানালগ ওয়েভের নির্দিষ্ট সময়ের অন্তর স্যাম্পল নেওয়া<br>২. **কোয়ান্টাইজেশন (Quantization)**: স্যাম্পলগুলোকে নিকটবর্তী নির্দিষ্ট অ্যামপ্লিচিউড লেভেলে রাউন্ড করা<br>৩. **কোডিং (Encoding)**: প্রতিটি লেভেলকে বাইনারি বিটে রূপান্তর করা।";
+            }}
+            
+            return "আমি কমিউনিকেশন ইঞ্জিনিয়ারিং সম্পর্কিত আপনার প্রশ্নটি বুঝতে পেরেছি। তবে এই বিষয়ে বিস্তারিত উত্তর দিতে আমার একটি এপিআই কি প্রয়োজন। অনুগ্রহ করে চ্যাটের ওপরে থাকা গিয়ার (Gear) আইকনটিতে ক্লিক করে আপনার <strong>Gemini API Key</strong> সেট করুন, যাতে আমি জেমিনি নেটওয়ার্কের মাধ্যমে আপনাকে পূর্ণাঙ্গ সমাধান দিতে পারি।";
+        }}
+
+        async function sendGeminiMessage() {{
+            const input = document.getElementById('gemini-chat-input');
+            const sendBtn = document.getElementById('gemini-send-btn');
+            if (!input || !sendBtn) return;
+            const query = input.value.trim();
+            if (!query) return;
+
+            input.value = '';
+            appendUserMessage(query);
+
+            const apiKey = localStorage.getItem('gemini_api_key');
+
+            if (!apiKey) {{
+                sendBtn.disabled = true;
+                const typingMsg = appendBotMessage("<i class='fa-solid fa-spinner fa-spin'></i> উত্তর খোঁজা হচ্ছে...");
+                setTimeout(() => {{
+                    const fallbackResponse = getLocalFallbackResponse(query);
+                    typingMsg.innerHTML = fallbackResponse;
+                    if (window.MathJax) {{
+                        window.MathJax.typesetPromise([typingMsg]).catch(err => console.log(err));
+                    }}
+                    sendBtn.disabled = false;
+                }}, 1000);
+                return;
+            }}
+
+            sendBtn.disabled = true;
+            const typingMsg = appendBotMessage("<i class='fa-solid fa-spinner fa-spin'></i> জেমিনি এআই টাইপ করছে...");
+
+            const systemInstructionText = `You are a specialized AI assistant for ABM Academy. Your name is "ABM Academy Gemini Assistant".
+Your primary task is to answer students' questions about Communication Engineering, Pulse Code Modulation (PCM), Nyquist Rate, TDM, SQNR, Carrier Modulation, and other related EEE topics.
+CRITICAL TOPIC GATING RULES:
+1. ONLY answer questions related to Communication Systems, Signal Processing, PCM, Delta Modulation, Carrier Modulation (ASK, FSK, PSK, QAM), Multiplexing, TDM, FDM, Sampling, Nyquist Theorem, Quantization, SQNR, Shannon Capacity, and storage calculations.
+2. If the user asks about ANY unrelated topic (e.g. general history, recipes, generic coding in python/java unless related to engineering math, literature, celebrity, other subjects), politely refuse to answer. You must reply in Bengali: "আমি দুঃখিত, আমি শুধুমাত্র ও পালস কোড মডুলেশন (PCM) এবং ওয়ের অধ্যায় সম্পর্কিত প্রশ্নের উত্তর দিতে পারি।"
+3. Always respond in a clear, friendly, and academic tone in Bengali.
+4. Keep the explanation concise and directly focused on clearing the student's concept.
+5. Use LaTeX inline style $...$ and display style $$...$$ for math formulas so that MathJax can parse them.`;
+
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${{apiKey}}`;
+
+            try {{
+                const response = await fetch(apiUrl, {{
+                    method: 'POST',
+                    headers: {{ 'Content-Type': 'application/json' }},
+                    body: JSON.stringify({{
+                        contents: [{{
+                            parts: [{{ text: query }}]
+                        }}],
+                        systemInstruction: {{
+                            parts: [{{ text: systemInstructionText }}]
+                        }}
+                    }})
+                }});
+
+                if (!response.ok) {{
+                    throw new Error(`API error code: ${{response.status}}`);
+                }}
+
+                const data = await response.json();
+                
+                let botText = "";
+                if (data.candidates && data.candidates[0] && data.candidates[0].content && data.candidates[0].content.parts[0]) {{
+                    botText = data.candidates[0].content.parts[0].text;
+                }} else {{
+                    botText = "আমি দুঃখিত, জেমিনি এআই থেকে কোনো উত্তর পাওয়া যায়নি। অনুগ্রহ করে আপনার এপিআই কি অথবা প্রশ্নটি যাচাই করুন।";
+                }}
+
+                let formattedText = botText
+                    .replace(/\\n/g, '<br>')
+                    .replace(/\\*\\*(.*?)\\*\\*/g, '<strong>$1</strong>')
+                    .replace(/\\*(.*?)\\*/g, '<em>$1</em>')
+                    .replace(/### (.*?)(<br>|$)/g, '<h3>$1</h3>')
+                    .replace(/## (.*?)(<br>|$)/g, '<h2>$1</h2>');
+
+                typingMsg.innerHTML = formattedText;
+                
+                if (window.MathJax) {{
+                    window.MathJax.typesetPromise([typingMsg]).catch(err => console.log(err));
+                }}
+            }} catch (err) {{
+                console.error(err);
+                typingMsg.innerHTML = `<span style="color: var(--danger-color);"><i class="fa-solid fa-triangle-exclamation"></i> এরর: জেমিনি এআই সার্ভারের সাথে যুক্ত হওয়া যায়নি। আপনার ইন্টারনেট সংযোগ এবং এপিআই কি (API Key) চেক করে পুনরায় চেষ্টা করুন। (এরর: ${{err.message}})</span>`;
+            }} finally {{
+                sendBtn.disabled = false;
+            }}
+        }}
 """
 
 # Inject JS Logic before </script> at the end
@@ -1966,6 +2415,78 @@ new_header_brand = """    <header>
 
 modified_html = modified_html.replace(old_header_brand, new_header_brand)
 print("Updated title, tagline, and animated SVG logo.")
+
+# Inject Chatbot HTML before </body> at the end
+chatbot_html_to_inject = """
+    <!-- Floating Gemini Chatbot Widget -->
+    <button class="gemini-chat-launcher" id="gemini-chat-launcher" onclick="toggleGeminiChat()" aria-label="Toggle Chatbot">
+        <svg viewBox="0 0 100 100" width="32" height="32">
+            <defs>
+                <linearGradient id="geminiGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#9bf8f4" />
+                    <stop offset="50%" stop-color="#6f86ff" />
+                    <stop offset="100%" stop-color="#ff99ca" />
+                </linearGradient>
+            </defs>
+            <path d="M50,15 C50,34.33 34.33,50 15,50 C34.33,50 50,65.67 50,85 C50,65.67 65.67,50 85,50 C65.67,50 50,34.33 50,15 Z" fill="url(#geminiGrad)" />
+            <circle cx="70" cy="30" r="4" fill="#fff" opacity="0.8" />
+            <circle cx="30" cy="70" r="3" fill="#fff" opacity="0.6" />
+        </svg>
+    </button>
+
+    <div class="gemini-chat-panel" id="gemini-chat-panel">
+        <div class="gemini-chat-header">
+            <div style="display: flex; align-items: center; gap: 10px;">
+                <svg viewBox="0 0 100 100" width="22" height="22" style="overflow: visible;">
+                    <path d="M50,15 C50,34.33 34.33,50 15,50 C34.33,50 50,65.67 50,85 C50,65.67 65.67,50 85,50 C65.67,50 50,34.33 50,15 Z" fill="url(#geminiGrad)" />
+                </svg>
+                <span style="font-weight: 700; font-size: 1.05rem; background: linear-gradient(90deg, #00f2fe, #ff007f); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Gemini Assistant</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 12px;">
+                <button class="chat-header-btn" onclick="toggleGeminiConfig()" title="Settings / API Key" style="background: none; border: none; color: var(--text-secondary); cursor: pointer; font-size: 1.1rem; padding: 2px; transition: color 0.2s;"><i class="fa-solid fa-gear"></i></button>
+                <button class="chat-header-btn" onclick="toggleGeminiChat()" title="Close Chat" style="background: none; border: none; color: var(--text-secondary); cursor: pointer; font-size: 1.1rem; padding: 2px; transition: color 0.2s;"><i class="fa-solid fa-chevron-down"></i></button>
+            </div>
+        </div>
+
+        <div class="gemini-chat-messages" id="gemini-chat-messages">
+            <div class="chat-msg assistant">
+                স্বাগতম! আমি <strong>ABM Academy Gemini Assistant</strong>। কুইজ, স্যাম্পলিং, নাইকুইস্ট রেট, TDM, SQNR, কেরিয়ার মডুলেশন (ASK, FSK, PSK, QAM) বা রিলেটেড যেকোনো গাণিতিক সমস্যা সমাধান করতে আমি আপনাকে সাহায্য করতে পারি। 
+                <br><br>
+                <em>প্রশ্ন করুন অথবা নিচের দ্রুত সাজেশনগুলো থেকে সিলেক্ট করুন:</em>
+                <div class="quick-suggestions-box">
+                    <span class="suggestion-tag" onclick="sendQuickQuery('স্যাম্পলিং রেট (Sampling Rate) কী?')">স্যাম্পলিং রেট কী?</span>
+                    <span class="suggestion-tag" onclick="sendQuickQuery('Nyquist Rate এবং Nyquist Interval বলতে কী বোঝায়?')">Nyquist Rate কী?</span>
+                    <span class="suggestion-tag" onclick="sendQuickQuery('TDM (Time Division Multiplexing) কীভাবে কাজ করে?')">TDM কী?</span>
+                    <span class="suggestion-tag" onclick="sendQuickQuery('PCM সিস্টেমে SQNR বৃদ্ধির উপায়গুলো কী কী?')">SQNR বৃদ্ধির উপায় কী?</span>
+                    <span class="suggestion-tag" onclick="sendQuickQuery('Aliasing বিকৃতি দূর করার উপায় কী?')">Aliasing দূর করার উপায়?</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="gemini-chat-input-area">
+            <input type="text" id="gemini-chat-input" placeholder="কমিউনিকেশন ইঞ্জিনিয়ারিং এর প্রশ্ন লিখুন..." onkeypress="handleGeminiKeyPress(event)">
+            <button id="gemini-send-btn" onclick="sendGeminiMessage()" aria-label="Send Message"><i class="fa-solid fa-paper-plane"></i></button>
+        </div>
+
+        <!-- Config Settings Overlay -->
+        <div class="gemini-config-overlay" id="gemini-config-overlay">
+            <h4 style="margin-bottom: 12px; color: var(--accent-color);"><i class="fa-solid fa-key"></i> Gemini API Key কনফিগার করুন</h4>
+            <p style="font-size: 0.8rem; color: var(--text-secondary); line-height: 1.5; margin-bottom: 20px;">
+                জেমিনি এআই এপিআই সরাসরি ব্যবহার করতে আপনার নিজস্ব API Key এখানে সেট করুন। আপনার কি-টি ব্রাউজারের লোকাল স্টোরেজে সুরক্ষিত থাকবে।
+            </p>
+            <input type="password" id="gemini-api-key-input" placeholder="AIzaSy..." style="width: 100%; padding: 10px 12px; border-radius: 6px; border: 1px solid var(--border-color); background: rgba(0,0,0,0.3); color: #fff; margin-bottom: 20px; font-family: monospace; outline: none; text-align: center;">
+            <div style="display: flex; gap: 10px; width: 100%; justify-content: center;">
+                <button class="btn btn-primary" onclick="saveGeminiApiKey()" style="padding: 8px 16px; font-size: 0.85rem;"><i class="fa-solid fa-floppy-disk"></i> সেভ করুন</button>
+                <button class="btn btn-secondary" onclick="toggleGeminiConfig()" style="padding: 8px 16px; font-size: 0.85rem;">ফিরে যান</button>
+            </div>
+        </div>
+    </div>
+"""
+
+body_end_idx = modified_html.rfind('</body>')
+if body_end_idx != -1:
+    modified_html = modified_html[:body_end_idx] + chatbot_html_to_inject + modified_html[body_end_idx:]
+    print("Injected Chatbot HTML mockup.")
 
 # Write output file
 with open(html_filepath, "w", encoding="utf-8") as f:
