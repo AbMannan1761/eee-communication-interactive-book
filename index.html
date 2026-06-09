@@ -1,0 +1,2293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ABM Academy - A Digital Learning Platform</title>
+    <!-- Google Fonts: Outfit & Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- MathJax Configuration and Load -->
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true
+            },
+            options: {
+                ignoreHtmlClass: 'tex2jax_ignore',
+                processHtmlClass: 'tex2jax_process'
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <style>
+        :root {
+            --bg-color: #090d16;
+            --card-bg: #131a26;
+            --accent-gradient: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%);
+            --accent-color: #00f2fe;
+            --success-color: #059962;
+            --danger-color: #d9534f;
+            --border-color: #222f46;
+            --text-primary: #ffffff;
+            --text-secondary: #a0aec0;
+            --text-muted: #718096;
+            --font-heading: 'Outfit', sans-serif;
+            --font-body: 'Inter', sans-serif;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --shadow-md: 0 4px 20px rgba(0, 0, 0, 0.3);
+            --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.5);
+            --card-right-bg: rgba(9, 13, 22, 0.7);
+            --highlight-box-bg: rgba(9, 13, 22, 0.5);
+            --simulator-out-bg: rgba(9, 13, 22, 0.8);
+        }
+
+        /* Light Theme Overrides (Eye-Friendly Light Blue Tint) */
+        body.light-theme {
+            --bg-color: #f0f5fa; /* সাদার মধ্যে হালকা নীল আভা */
+            --card-bg: #ffffff;
+            --text-primary: #1a2c40; /* Soft dark blue-gray text */
+            --text-secondary: #4a5d73;
+            --text-muted: #71879c;
+            --border-color: #d1dfed; /* Soft light blue-gray border */
+            --accent-gradient: linear-gradient(135deg, #0066cc 0%, #0099ff 100%);
+            --accent-color: #0066cc;
+            --shadow-md: 0 4px 20px rgba(0, 50, 100, 0.05);
+            --shadow-lg: 0 10px 30px rgba(0, 50, 100, 0.08);
+            --card-right-bg: #f5f9fc;
+            --highlight-box-bg: #e6f0fa;
+            --simulator-out-bg: #f5f9fc;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            font-family: var(--font-body);
+            line-height: 1.65;
+            overflow-x: hidden;
+            padding-bottom: 50px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        h1, h2, h3, h4, h5 {
+            font-family: var(--font-heading);
+            font-weight: 600;
+        }
+
+        /* E-Book Header Styling */
+        header {
+            background: rgba(19, 26, 38, 0.85);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-color);
+            padding: 20px 40px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            transition: var(--transition);
+        }
+
+        body.light-theme header {
+            background: rgba(240, 244, 248, 0.85);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .header-brand {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .header-logo {
+            background: var(--accent-gradient);
+            color: #090d16;
+            width: 45px;
+            height: 45px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 800;
+            box-shadow: 0 0 10px rgba(0, 242, 254, 0.4);
+        }
+
+        body.light-theme .header-logo {
+            color: #ffffff;
+            box-shadow: 0 0 10px rgba(0, 114, 255, 0.2);
+        }
+
+        header h1 {
+            font-size: 1.4rem;
+            letter-spacing: 0.5px;
+            color: var(--text-primary);
+            font-weight: 700;
+        }
+
+        header h1 span {
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 800;
+        }
+
+        body.light-theme header h1 span {
+            -webkit-text-fill-color: transparent;
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+        }
+
+        header p {
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+        }
+
+        /* Theme Toggle Options */
+        .theme-actions {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .theme-toggle-container {
+            display: flex;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-color);
+            padding: 3px;
+            border-radius: 30px;
+            gap: 2px;
+            align-items: center;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);
+            transition: var(--transition);
+        }
+
+        body.light-theme .theme-toggle-container {
+            background: rgba(0, 0, 0, 0.04);
+            border-color: var(--border-color);
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.08);
+        }
+
+        .theme-option {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            padding: 6px 14px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            font-family: var(--font-heading);
+            font-weight: 600;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            outline: none;
+        }
+
+        .theme-option:hover {
+            color: var(--text-primary);
+        }
+
+        .theme-option.active {
+            color: #090d16;
+            background: var(--accent-gradient);
+            box-shadow: 0 2px 10px rgba(0, 242, 254, 0.3);
+        }
+
+        body.light-theme .theme-option.active {
+            color: #ffffff;
+            background: var(--accent-gradient);
+            box-shadow: 0 2px 10px rgba(0, 114, 255, 0.2);
+        }
+
+        body.light-theme .theme-option {
+            color: var(--text-secondary);
+        }
+
+        /* App Container Layout */
+        .container {
+            max-width: 1400px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        /* Tabs Navigation (Digital Book Chapters Selector) */
+        .tabs-nav-container {
+            margin-bottom: 30px;
+        }
+
+        .tabs-nav-title {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-secondary);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .tabs {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+
+        .tab-btn {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            padding: 15px;
+            font-size: 0.9rem;
+            font-family: var(--font-heading);
+            font-weight: 500;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            text-align: center;
+        }
+
+        .tab-btn:hover {
+            color: var(--text-primary);
+            border-color: var(--accent-color);
+            transform: translateY(-2px);
+        }
+
+        .tab-btn.active {
+            background: var(--accent-gradient);
+            color: #090d16;
+            font-weight: 700;
+            border: none;
+            box-shadow: 0 4px 15px rgba(0, 242, 254, 0.3);
+        }
+
+        body.light-theme .tab-btn.active {
+            color: #ffffff;
+            box-shadow: 0 4px 15px rgba(0, 114, 255, 0.2);
+        }
+
+        /* Tab Content Panel */
+        .tab-panel {
+            display: none;
+            animation: fadeIn 0.4s ease-out;
+        }
+
+        .tab-panel.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* E-Book Theory Section (প্রাথমিক আলোচনা) */
+        .theory-section {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 35px;
+            margin-bottom: 40px;
+            box-shadow: var(--shadow-md);
+        }
+
+        .theory-badge {
+            background: rgba(0, 242, 254, 0.1);
+            color: var(--accent-color);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 15px;
+            border: 1px solid rgba(0, 242, 254, 0.2);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        body.light-theme .theory-badge {
+            background: rgba(0, 114, 255, 0.08);
+            border-color: rgba(0, 114, 255, 0.15);
+        }
+
+        .theory-section h2 {
+            font-size: 1.6rem;
+            color: var(--text-primary);
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .theory-content p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+
+        .theory-content h4 {
+            color: var(--text-primary);
+            font-size: 1.1rem;
+            margin: 20px 0 10px 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .theory-highlight-box {
+            background-color: var(--highlight-box-bg);
+            border-left: 4px solid var(--accent-color);
+            padding: 20px;
+            border-radius: 0 8px 8px 0;
+            margin: 20px 0;
+        }
+
+        .theory-highlight-box p {
+            margin-bottom: 0;
+            font-style: italic;
+        }
+
+        /* Formula Card Panel */
+        .formula-summary-card {
+            background: linear-gradient(135deg, rgba(19, 26, 38, 0.9) 0%, rgba(11, 15, 25, 0.9) 100%);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 40px;
+            box-shadow: var(--shadow-md);
+        }
+
+        body.light-theme .formula-summary-card {
+            background: linear-gradient(135deg, #ffffff 0%, #f0f5fa 100%);
+        }
+
+        .formula-summary-card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 15px;
+            color: var(--accent-color);
+            border-bottom: 1px dashed var(--border-color);
+            padding-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .formula-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .formula-item {
+            background: rgba(9, 13, 22, 0.6);
+            border: 1px solid rgba(34, 47, 70, 0.5);
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        body.light-theme .formula-item {
+            background: #e6f0fa;
+            border-color: #d1dfed;
+        }
+
+        .formula-item strong {
+            display: block;
+            margin-bottom: 5px;
+            color: var(--text-primary);
+            font-size: 0.9rem;
+        }
+
+        .formula-item code {
+            font-family: var(--font-body);
+            color: var(--accent-color);
+            font-size: 1.05rem;
+            display: block;
+            margin: 5px 0;
+        }
+
+        .formula-item p {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        /* Split-Card UI Layout */
+        .solved-problems-header {
+            margin-bottom: 20px;
+            font-size: 1.25rem;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .split-card {
+            display: grid;
+            grid-template-columns: 1fr 340px;
+            gap: 20px;
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: var(--shadow-md);
+            overflow: hidden;
+            transition: var(--transition);
+        }
+
+        .split-card:hover {
+            border-color: rgba(0, 242, 254, 0.4);
+            box-shadow: var(--shadow-lg);
+        }
+
+        body.light-theme .split-card:hover {
+            border-color: rgba(0, 114, 255, 0.3);
+        }
+
+        .card-left {
+            padding: 30px;
+        }
+
+        .card-right {
+            background-color: var(--card-right-bg);
+            border-left: 1px solid var(--border-color);
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+        }
+
+        .card-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .exam-tag {
+            background-color: rgba(0, 242, 254, 0.1);
+            color: var(--accent-color);
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            border: 1px solid rgba(0, 242, 254, 0.2);
+            text-transform: uppercase;
+        }
+
+        body.light-theme .exam-tag {
+            background-color: rgba(0, 114, 255, 0.08);
+            border-color: rgba(0, 114, 255, 0.15);
+        }
+
+        .problem-no {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-weight: bold;
+        }
+
+        .problem-title {
+            font-size: 1.25rem;
+            margin-bottom: 15px;
+            color: var(--text-primary);
+        }
+
+        .problem-question {
+            background: rgba(9, 13, 22, 0.4);
+            border-left: 3px solid var(--accent-color);
+            padding: 15px;
+            border-radius: 0 6px 6px 0;
+            margin-bottom: 25px;
+            font-size: 0.95rem;
+            color: var(--text-primary);
+        }
+
+        body.light-theme .problem-question {
+            background-color: #edf3f9;
+        }
+
+        .problem-solution {
+            margin-bottom: 20px;
+        }
+
+        .problem-solution h4 {
+            color: var(--success-color);
+            margin-bottom: 10px;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .problem-solution p, .problem-solution div {
+            font-size: 0.92rem;
+            color: var(--text-secondary);
+            margin-bottom: 10px;
+        }
+
+        .solution-step {
+            padding-left: 15px;
+            border-left: 2px solid var(--border-color);
+            margin-bottom: 15px;
+        }
+
+        /* Highlighted Formula Guide */
+        .formula-guide-title {
+            font-size: 1rem;
+            margin-bottom: 15px;
+            color: var(--accent-color);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-family: var(--font-heading);
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 8px;
+        }
+
+        .formula-guide-list {
+            list-style: none;
+        }
+
+        .formula-guide-list li {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 15px;
+            position: relative;
+            padding-left: 15px;
+            text-align: justify;
+        }
+
+        .formula-guide-list li::before {
+            content: "•";
+            color: var(--accent-color);
+            position: absolute;
+            left: 0;
+            top: 0;
+            font-size: 1.1rem;
+        }
+
+        .formula-guide-list code {
+            color: var(--text-primary);
+            background: rgba(255, 255, 255, 0.05);
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-size: 0.85rem;
+        }
+
+        body.light-theme .formula-guide-list code {
+            background: rgba(0, 0, 0, 0.05);
+        }
+
+        /* Action Buttons */
+        .btn-simulate {
+            background: rgba(0, 242, 254, 0.1);
+            color: var(--accent-color);
+            border: 1px solid rgba(0, 242, 254, 0.3);
+            padding: 10px 20px;
+            font-size: 0.85rem;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-family: var(--font-heading);
+            font-weight: 600;
+            margin-top: 10px;
+        }
+
+        body.light-theme .btn-simulate {
+            background: rgba(0, 114, 255, 0.05);
+            border-color: rgba(0, 114, 255, 0.2);
+        }
+
+        .btn-simulate:hover {
+            background: var(--accent-gradient);
+            color: #090d16;
+            border-color: transparent;
+            box-shadow: 0 4px 10px rgba(0, 242, 254, 0.2);
+            transform: translateY(-2px);
+        }
+
+        body.light-theme .btn-simulate:hover {
+            color: #ffffff;
+            box-shadow: 0 4px 10px rgba(0, 114, 255, 0.2);
+        }
+
+        /* Concept Test / Quiz Section Styling */
+        .quiz-section {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 40px;
+            box-shadow: var(--shadow-md);
+        }
+
+        .quiz-section h3 {
+            font-size: 1.3rem;
+            color: var(--text-primary);
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .quiz-question-block {
+            background-color: rgba(9, 13, 22, 0.4);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        body.light-theme .quiz-question-block {
+            background-color: #edf3f9;
+        }
+
+        .quiz-question-text {
+            font-size: 0.98rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: var(--text-primary);
+        }
+
+        .quiz-options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+
+        .quiz-opt-btn {
+            background-color: rgba(19, 26, 38, 0.8);
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            padding: 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            text-align: left;
+            transition: var(--transition);
+            font-size: 0.88rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        body.light-theme .quiz-opt-btn {
+            background-color: #ffffff;
+        }
+
+        .quiz-opt-btn:hover {
+            border-color: var(--accent-color);
+            color: var(--text-primary);
+            background-color: rgba(0, 242, 254, 0.05);
+        }
+
+        body.light-theme .quiz-opt-btn:hover {
+            background-color: rgba(0, 114, 255, 0.05);
+        }
+
+        .quiz-opt-btn.correct {
+            background-color: rgba(5, 153, 98, 0.2);
+            border-color: var(--success-color);
+            color: #ffffff;
+        }
+
+        body.light-theme .quiz-opt-btn.correct {
+            background-color: rgba(5, 153, 98, 0.15);
+            color: var(--success-color);
+            font-weight: bold;
+        }
+
+        .quiz-opt-btn.wrong {
+            background-color: rgba(217, 83, 79, 0.2);
+            border-color: var(--danger-color);
+            color: #ffffff;
+        }
+
+        body.light-theme .quiz-opt-btn.wrong {
+            background-color: rgba(217, 83, 79, 0.15);
+            color: var(--danger-color);
+            font-weight: bold;
+        }
+
+        .quiz-explanation {
+            background-color: rgba(19, 26, 38, 0.6);
+            border-left: 3px solid var(--accent-color);
+            padding: 15px;
+            border-radius: 0 6px 6px 0;
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+            display: none;
+            margin-top: 15px;
+        }
+
+        body.light-theme .quiz-explanation {
+            background-color: #e1ebf5;
+        }
+
+        /* Dynamic Simulators Section */
+        .simulator-widget {
+            background-color: var(--card-bg);
+            border: 2px solid var(--border-color);
+            border-radius: 16px;
+            padding: 30px;
+            margin-top: 50px;
+            box-shadow: var(--shadow-lg);
+            transition: background-color 1s ease, border-color 0.3s ease;
+            position: relative;
+        }
+
+        .simulator-widget.highlighted {
+            background-color: rgba(0, 242, 254, 0.07);
+            border-color: var(--accent-color);
+        }
+
+        body.light-theme .simulator-widget.highlighted {
+            background-color: rgba(0, 114, 255, 0.06);
+        }
+
+        .simulator-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 15px;
+        }
+
+        .simulator-header h3 {
+            font-size: 1.4rem;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .simulator-header h3 i {
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        body.light-theme .simulator-header h3 i {
+            -webkit-text-fill-color: initial;
+            color: #0072ff;
+        }
+
+        .simulator-badge {
+            background-color: var(--success-color);
+            color: #ffffff;
+            font-size: 0.75rem;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-weight: bold;
+        }
+
+        .simulator-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 30px;
+        }
+
+        .simulator-inputs {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .input-group label {
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .input-group label span {
+            color: var(--accent-color);
+            font-weight: bold;
+        }
+
+        .input-group input[type="number"], .input-group select {
+            background-color: rgba(9, 13, 22, 0.7);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 10px 15px;
+            border-radius: 6px;
+            font-size: 0.95rem;
+            outline: none;
+            transition: var(--transition);
+        }
+
+        body.light-theme .input-group input[type="number"], body.light-theme .input-group select {
+            background-color: #ffffff;
+        }
+
+        .input-group input[type="number"]:focus, .input-group select:focus {
+            border-color: var(--accent-color);
+            box-shadow: 0 0 5px rgba(0, 242, 254, 0.3);
+        }
+
+        body.light-theme .input-group input[type="number"]:focus, body.light-theme .input-group select:focus {
+            box-shadow: 0 0 5px rgba(0, 114, 255, 0.2);
+        }
+
+        .input-group input[type="range"] {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 6px;
+            background: var(--border-color);
+            border-radius: 3px;
+            outline: none;
+            margin-top: 5px;
+        }
+
+        .input-group input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: var(--accent-gradient);
+            cursor: pointer;
+            box-shadow: 0 0 5px rgba(0, 242, 254, 0.5);
+            transition: var(--transition);
+        }
+
+        .input-group input[type="range"]::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+        }
+
+        .simulator-outputs {
+            background-color: var(--simulator-out-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .output-heading {
+            font-size: 1rem;
+            margin-bottom: 20px;
+            color: var(--accent-color);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-bottom: 1px dashed var(--border-color);
+            padding-bottom: 8px;
+        }
+
+        .output-value-block {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .output-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 10px;
+        }
+
+        body.light-theme .output-row {
+            border-bottom-color: #d1dfed;
+        }
+
+        .output-label {
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+        }
+
+        .output-val {
+            font-weight: bold;
+            color: var(--text-primary);
+            font-size: 1.1rem;
+        }
+
+        .output-math-steps {
+            background-color: rgba(19, 26, 38, 0.5);
+            padding: 15px;
+            border-radius: 6px;
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+            border-left: 3px solid var(--success-color);
+        }
+
+        body.light-theme .output-math-steps {
+            background-color: #e1ebf5;
+        }
+
+        .output-math-steps h5 {
+            color: var(--success-color);
+            margin-bottom: 5px;
+        }
+
+        /* Real-World Application Cards */
+        .app-card {
+            background: linear-gradient(135deg, rgba(5, 153, 98, 0.1) 0%, rgba(9, 13, 22, 0.8) 100%);
+            border: 1px solid rgba(5, 153, 98, 0.3);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 30px;
+            display: flex;
+            gap: 20px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        body.light-theme .app-card {
+            background: linear-gradient(135deg, rgba(5, 153, 98, 0.05) 0%, #ffffff 100%);
+            border-color: rgba(5, 153, 98, 0.2);
+        }
+
+        .app-icon {
+            font-size: 2.2rem;
+            color: var(--success-color);
+            display: flex;
+            align-items: center;
+        }
+
+        .app-content h4 {
+            color: var(--text-primary);
+            font-size: 1.15rem;
+            margin-bottom: 8px;
+            font-family: var(--font-heading);
+        }
+
+        .app-content p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Layouts */
+        @media (max-width: 1024px) {
+            .tabs {
+                grid-template-columns: 1fr 1fr;
+            }
+            .split-card {
+                grid-template-columns: 1fr;
+            }
+            .card-right {
+                border-left: none;
+                border-top: 1px solid var(--border-color);
+            }
+            .simulator-grid {
+                grid-template-columns: 1fr;
+            }
+            .quiz-options {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+            .tabs {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body class="tex2jax_ignore">
+
+    <header>
+        <div class="header-brand">
+            <div class="header-logo">ABM</div>
+            <div>
+                <h1><span>ABM Academy</span> - A Digital Learning Platform</h1>
+                <p>Interactive E-Learning E-Book for Communication Engineering</p>
+            </div>
+        </div>
+        <div class="theme-actions">
+            <!-- Dynamic Theme Toggle Options -->
+            <div class="theme-toggle-container">
+                <button class="theme-option active" id="theme-dark-btn" onclick="setTheme('dark')">
+                    <i class="fa-solid fa-moon"></i> <span>ডার্ক মোড</span>
+                </button>
+                <button class="theme-option" id="theme-light-btn" onclick="setTheme('light')">
+                    <i class="fa-solid fa-sun"></i> <span>লাইট মোড</span>
+                </button>
+            </div>
+            <p style="font-style: italic; font-weight: 500; font-size: 0.85rem;" class="quiz-explanation-text"><i class="fa-solid fa-book-open"></i> E-Book 2026</p>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- Tabs Selection (E-Book Chapters) -->
+        <div class="tabs-nav-container">
+            <h3 class="tabs-nav-title"><i class="fa-solid fa-layer-group"></i> Table of Contents (অধ্যায়সমূহ)</h3>
+            <div class="tabs">
+                <button class="tab-btn active" onclick="switchTab(0)">
+                    <i class="fa-solid fa-wave-square"></i> Ch-1: Sampling &amp; Nyquist Rate
+                </button>
+                <button class="tab-btn" onclick="switchTab(1)">
+                    <i class="fa-solid fa-network-wired"></i> Ch-2: PCM Bit Rate &amp; TDM
+                </button>
+                <button class="tab-btn" onclick="switchTab(2)">
+                    <i class="fa-solid fa-chart-line"></i> Ch-3: SQNR &amp; Companding
+                </button>
+                <button class="tab-btn" onclick="switchTab(3)">
+                    <i class="fa-solid fa-database"></i> Ch-4: Storage &amp; Dynamic Range
+                </button>
+            </div>
+        </div>
+
+        <!-- ======================= TAB 1: CHAPTER-1 ======================= -->
+        <div id="panel-0" class="tab-panel active">
+            <!-- Theory Section (প্রাথমিক আলোচনা) -->
+            <div class="theory-section">
+                <span class="theory-badge">প্রাথমিক আলোচনা • Basic Concepts</span>
+                <h2><i class="fa-solid fa-book-open-reader"></i> অধ্যায় ১: স্যাম্পলিং থিওরেম ও নাইকুইস্ট হার</h2>
+                <div class="theory-content tex2jax_process">
+                    <p>বাস্তব জগতে আমরা যত সিগন্যাল বা সংকেত পাই (যেমন মানুষের কণ্ঠস্বর, প্রাকৃতি শব্দ বা তাপমাত্রা), তার সবই এনালগ (Analog) প্রকৃতির। এই ক্রমাগত পরিবর্তনশীল এনালগ সিগন্যালকে কম্পিউটার বা ডিজিটাল প্রসেসরের সাহায্যে প্রসেস করতে হলে প্রথমে তাকে ডিজিটালে রূপান্তর করতে হয়। এই রূপান্তরের প্রধান ৩টি ধাপ হলো: স্যাম্পলিং (Sampling), কোয়ান্টাইজেশন (Quantization) এবং কোডিং (Coding)।</p>
+                    
+                    <h4>১.১ স্যাম্পলিং কী?</h4>
+                    <p>একটি অবিচ্ছিন্ন এনালগ সংকেত থেকে নির্দিষ্ট সময় পরপর তার মানের টুকরো বা স্যাম্পল সংগ্রহ করার প্রক্রিয়াকে স্যাম্পলিং বলে। এটি মূলত এনালগ সময় অক্ষকে ডিজিটাল বা বিচ্ছিন্ন (Discrete) সময় অক্ষে রূপান্তর করে। পরপর দুটি স্যাম্পল সংগ্রহের মধ্যবর্তী সময়কে স্যাম্পলিং ইন্টারভাল ($T_s$) এবং প্রতি সেকেন্ডে সংগৃহীত স্যাম্পলের সংখ্যাকে স্যাম্পলিং ফ্রিকোয়েন্সি বা রেট ($f_s$) বলা হয়।</p>
+                    
+                    <div class="theory-highlight-box">
+                        <p><strong>নাইকুইস্ট-শ্যানন স্যাম্পলিং থিওরেম:</strong> কোনো সিগন্যাল থেকে কোনো তথ্য না হারিয়ে পুনরায় নিখুঁতভাবে সিগন্যাল পুনর্গঠন করতে হলে স্যাম্পলিং ফ্রিকোয়েন্সি ($f_s$) অবশ্যই সিগন্যালে উপস্থিত সর্বোচ্চ ফ্রিকোয়েন্সির ($f_m$) দ্বিগুণের সমান বা তার বেশি হতে হবে। অর্থাৎ:</p>
+                        <p style="text-align: center; margin-top: 10px; font-weight: bold; font-size: 1.1rem; color: var(--accent-color);">$$f_s \ge 2 \cdot f_m$$</p>
+                    </div>
+
+                    <h4>১.২ নাইকুইস্ট রেট ($f_{NQ}$) এবং অ্যালাইসিং (Aliasing)</h4>
+                    <p>স্যাম্পলিং থিওরেম অনুযায়ী যে সর্বনিম্ন হারে স্যাম্পলিং করা সম্ভব তাকেই নাইকুইস্ট রেট বলা হয়। অর্থাৎ $f_{NQ} = 2 \cdot f_m$। যদি স্যাম্পলিং রেট নাইকুইস্ট হারের চেয়ে কম হয় ($f_s < 2f_m$), তবে স্যাম্পলগুলোর ফ্রিকোয়েন্সি স্পেকট্রাম একটির ওপর আরেকটি ওভারল্যাপ করবে। এর ফলে রিসিভারে আর আসল সিগন্যাল রিকভার করা সম্ভব হয় না এবং নতুন একটি বিকৃত সংকেত তৈরি হয়। এই ত্রুটিকে <strong>Aliasing Distortion</strong> বলা হয়। অ্যালাইসিং এড়াতে স্যাম্পলিং করার আগে এনালগ সিগন্যালটিকে একটি <strong>Anti-aliasing Filter</strong> (লো-পাস ফিল্টার)-এর মধ্য দিয়ে প্রবাহিত করা হয় যা অতিরিক্ত উচ্চ ফ্রিকোয়েন্সিগুলোকে কেটে দেয়।</p>
+                </div>
+            </div>
+
+            <!-- Formula Summary Card -->
+            <div class="formula-summary-card">
+                <h3><i class="fa-solid fa-list-check"></i> অধ্যায় ১-এর মূল সূত্রসমূহ</h3>
+                <div class="formula-grid">
+                    <div class="formula-item">
+                        <strong>Nyquist Rate ($f_{NQ}$)</strong>
+                        <code>f_{NQ} = 2 \cdot f_m</code>
+                        <p>মেসেজ সিগন্যালে উপস্থিত সর্বোচ্চ ফ্রিকোয়েন্সির ($f_m$) দ্বিগুণ রেট।</p>
+                    </div>
+                    <div class="formula-item">
+                        <strong>Sampling Frequency ($f_s$)</strong>
+                        <code>f_s \ge 2 \cdot f_m</code>
+                        <p>বাস্তব স্যাম্পলিং রেট, যা নাইকুইস্ট রেটের সমান বা তার চেয়ে বেশি রাখা হয়।</p>
+                    </div>
+                    <div class="formula-item">
+                        <strong>Sampling Period ($T_s$)</strong>
+                        <code>T_s = \frac{1}{f_s}</code>
+                        <p>পরপর দুটি স্যাম্পলের মধ্যবর্তী সময়ের ব্যবধান।</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Solved Problems Section -->
+            <h3 class="solved-problems-header"><i class="fa-solid fa-square-poll-horizontal"></i> অধ্যায় ১: সমাধানকৃত গাণিতিক সমস্যাসমূহ</h3>
+
+            <!-- Problem 1.1 -->
+            <div class="split-card">
+                <div class="card-left">
+                    <div class="card-meta">
+                        <span class="problem-no">Problem 1.1</span>
+                        <span class="exam-tag">BUET M.Sc.-22 (June)</span>
+                    </div>
+                    <h3 class="problem-title">Composite Cosine Signal Nyquist Rate</h3>
+                    <div class="problem-question tex2jax_process">
+                        A signal is defined as: $x(t) = 5\cos(600\pi t) + 10\cos(1000\pi t)$. What is the Nyquist frequency of $x(t)$?
+                    </div>
+                    <div class="problem-solution tex2jax_process">
+                        <h4><i class="fa-solid fa-circle-check"></i> Solution</h4>
+                        <div class="solution-step">
+                            <strong>Step 1: ফ্রিকোয়েন্সি উপাদানসমূহ বের করা</strong>
+                            <p>এনালগ সিগন্যালে কোসাইন কম্পোনেন্টের সাধারণ সমীকরণ $A\cos(2\pi f t)$ এর সাথে তুলনা করে পাই:</p>
+                            <p>প্রথম কম্পোনেন্ট: $2\pi f_1 = 600\pi \Rightarrow f_1 = 300\text{ Hz}$</p>
+                            <p>দ্বিতীয় কম্পোনেন্ট: $2\pi f_2 = 1000\pi \Rightarrow f_2 = 500\text{ Hz}$</p>
+                        </div>
+                        <div class="solution-step">
+                            <strong>Step 2: সর্বোচ্চ ফ্রিকোয়েন্সি ($f_m$) নির্ধারণ</strong>
+                            <p>কম্পোজিট বা মিশ্র সিগন্যালে যোগাকারে থাকলে সর্বোচ্চ ফ্রিকোয়েন্সি উপাদানকে সিগন্যালের সর্বোচ্চ ফ্রিকোয়েন্সি ($f_m$) হিসেবে নিতে হয়:</p>
+                            <p>$$f_m = \max(f_1, f_2) = \max(300, 500) = 500\text{ Hz}$$</p>
+                        </div>
+                        <div class="solution-step">
+                            <strong>Step 3: Nyquist Rate ($f_{NQ}$) হিসাব</strong>
+                            <p>$$f_{NQ} = 2 \cdot f_m = 2 \times 500 = 1000\text{ Hz} \quad (1\text{ kHz})$$</p>
+                            <p><strong>উত্তর:</strong> Nyquist Frequency = $1\text{ kHz}$</p>
+                        </div>
+                    </div>
+                    <button class="btn-simulate" onclick="simulateType1(300, 500)">
+                        <i class="fa-solid fa-calculator"></i> Simulate this Problem
+                    </button>
+                </div>
+                <div class="card-right">
+                    <h4 class="formula-guide-title"><i class="fa-solid fa-lightbulb"></i> Quick Formula Guide</h4>
+                    <ul class="formula-guide-list">
+                        <li>যোগ চিহ্নের সিগন্যালে সর্বোচ্চ ফ্রিকোয়েন্সি <code>\max(f_1, f_2)</code> নেওয়া হয়।</li>
+                        <li>রেডিয়ান ফ্রিকোয়েন্সি <code>\omega = 2\pi f</code> থেকে ফ্রিকোয়েন্সি <code>f = \omega / 2\pi</code> করা হয়।</li>
+                        <li>উপরে নাইকুইস্ট রেটকে ১০০০ দিয়ে ভাগ করে কিলোহার্টজ (kHz)-এ রূপান্তর করা হয়েছে।</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Problem 1.2 -->
+            <div class="split-card">
+                <div class="card-left">
+                    <div class="card-meta">
+                        <span class="problem-no">Problem 1.2</span>
+                        <span class="exam-tag">BPDB-23</span>
+                    </div>
+                    <h3 class="problem-title">Multiplied Cosine Signal Nyquist Rate</h3>
+                    <div class="problem-question tex2jax_process">
+                        What will be the Nyquist rate for pulse code modulation of $x(t) = 20 \cos(6400\pi t) \cos(400\pi t)$?
+                    </div>
+                    <div class="problem-solution tex2jax_process">
+                        <h4><i class="fa-solid fa-circle-check"></i> Solution</h4>
+                        <div class="solution-step">
+                            <strong>Step 1: গুণফলকে যোগফলে রূপান্তর</strong>
+                            <p>যেহেতু সিগন্যাল দুটি গুণ অবস্থায় আছে, তাই সরাসরি সর্বোচ্চ ফ্রিকোয়েন্সি নেওয়া ভুল হবে। ত্রিকোণমিতিক সূত্রের সাহায্যে গুণফলকে যোগফলে রূপান্তর করি: $2 \cos A \cos B = \cos(A+B) + \cos(A-B)$</p>
+                            <p>$$x(t) = 10 \cdot [2 \cos(6400\pi t) \cos(400\pi t)]$$</p>
+                            <p>$$x(t) = 10 \cdot [\cos(6400\pi t + 400\pi t) + \cos(6400\pi t - 400\pi t)]$$</p>
+                            <p>$$x(t) = 10 \cos(6800\pi t) + 10 \cos(6000\pi t)$$</p>
+                        </div>
+                        <div class="solution-step">
+                            <strong>Step 2: ফ্রিকোয়েন্সি উপাদানসমূহ বের করা</strong>
+                            <p>প্রথম কম্পোনেন্ট: $2\pi f_1 = 6800\pi \Rightarrow f_1 = 3400\text{ Hz}$</p>
+                            <p>দ্বিতীয় কম্পোনেন্ট: $2\pi f_2 = 6000\pi \Rightarrow f_2 = 3000\text{ Hz}$</p>
+                            <p>সর্বোচ্চ ফ্রিকোয়েন্সি $f_m = 3400\text{ Hz}$</p>
+                        </div>
+                        <div class="solution-step">
+                            <strong>Step 3: Nyquist Rate ($f_{NQ}$) হিসাব</strong>
+                            <p>$$f_{NQ} = 2 \cdot f_m = 2 \times 3400 = 6800\text{ Hz} \quad (6.8\text{ kHz})$$</p>
+                            <p><strong>উত্তর:</strong> Nyquist rate = $6800\text{ Hz}$</p>
+                        </div>
+                    </div>
+                    <button class="btn-simulate" onclick="simulateType1(3000, 3400)">
+                        <i class="fa-solid fa-calculator"></i> Simulate this Problem
+                    </button>
+                </div>
+                <div class="card-right">
+                    <h4 class="formula-guide-title"><i class="fa-solid fa-lightbulb"></i> Quick Formula Guide</h4>
+                    <ul class="formula-guide-list">
+                        <li>যদি দুটি সাইন বা কোসাইন সংকেত গুণ থাকে, তাদের ত্রিকোণমিতিক নিয়মে ভেঙে নিতে হবে।</li>
+                        <li>गुण অবস্থায় থাকলে ফ্রিকোয়েন্সি দুটি যোগ হয়ে সর্বোচ্চ ফ্রিকোয়েন্সি তৈরি করে ($f_{max} = f_1 + f_2$)।</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Quiz Section -->
+            <div class="quiz-section">
+                <h3><i class="fa-solid fa-graduation-cap"></i> অধ্যায় ১-এর কুইজ ও মূল্যায়ন (Concept Check)</h3>
+                <div class="quiz-question-block" id="q-t1-1">
+                    <p class="quiz-question-text">১. একটি সিগন্যালের সর্বোচ্চ ফ্রিকোয়েন্সি ১৫ kHz হলে সিগন্যালটির নাইকুইস্ট হার কত হবে?</p>
+                    <div class="quiz-options">
+                        <button class="quiz-opt-btn" onclick="checkAnswer(this, 'correct', 'q-t1-1-exp')">A. ৩০ kHz</button>
+                        <button class="quiz-opt-btn" onclick="checkAnswer(this, 'wrong', 'q-t1-1-exp')">B. ১৫ kHz</button>
+                        <button class="quiz-opt-btn" onclick="checkAnswer(this, 'wrong', 'q-t1-1-exp')">C. ৭.৫ kHz</button>
+                        <button class="quiz-opt-btn" onclick="checkAnswer(this, 'wrong', 'q-t1-1-exp')">D. ৬০ kHz</button>
+                    </div>
+                    <div class="quiz-explanation" id="q-t1-1-exp">
+                        <strong>ব্যাখ্যা:</strong> নাইকুইস্ট হার ফ্রিকোয়েন্সির দ্বিগুণ। অর্থাৎ $f_{NQ} = 2 \times 15\text{ kHz} = 30\text{ kHz}$।
+                    </div>
+                </div>
+
+                <div class="quiz-question-block" id="q-t1-2">
+                    <p class="quiz-question-text">২. স্যাম্পলিং রেট যদি নাইকুইস্ট হারের চেয়ে কম হয়, তবে তাকে কী বলা হয়?</p>
+                    <div class="quiz-options">
+                        <button class="quiz-opt-btn" onclick="checkAnswer(this, 'wrong', 'q-t1-2-exp')">A. ওভার-স্যাম্পলিং</button>
+                        <button class="quiz-opt-btn" onclick="checkAnswer(this, 'correct', 'q-t1-2-exp')">B. আন্ডার-স্যাম্পলিং (অ্যালাইসিং ঘটবে)</button>
+                        <button class="quiz-opt-btn" onclick="checkAnswer(this, 'wrong', 'q-t1-2-exp')">C. কোয়ান্টাইজেশন</button>
+                        <button class="quiz-opt-btn" onclick="checkAnswer(this, 'wrong', 'q-t1-2-exp')">D. সিঙ্ক লস</button>
+                    </div>
+                    <div class="quiz-explanation" id="q-t1-2-exp">
+                        <strong>ব্যাখ্যা:</strong> স্যাম্পলিং রেট কম হলে আন্ডার-স্যাম্পলিং বলা হয়, এবং এর ফলে সিগন্যালে অ্যালাইসিং ডিস্টরশন ঘটে।
+                    </div>
+                </div>
+            </div>
+
+            <!-- Real-World Application Box -->
+            <div class="app-card">
+                <div class="app-icon">
+                    <i class="fa-solid fa-phone-volume"></i>
+                </div>
+                <div class="app-content">
+                    <h4>বাস্তব জীবনের প্রয়োগ: টেলিফোনি স্ট্যান্ডার্ড ও ব্যান্ডউইডথ</h4>
+                    <p>মানুষের সাধারণ কণ্ঠস্বরের সর্বোচ্চ ফ্রিকোয়েন্সি কম্পোনেন্ট সাধারণত ৩.৪ kHz বা ৩৪০০ Hz পর্যন্ত থাকে। স্যাম্পলিং সহজ করতে এবং অ্যালাইসিং গার্ড ব্যান্ড সহVoice সিগন্যালকে ৪ kHz-এ লিমিট করা হয়। Nyquist থিওরি অনুযায়ী, একে ডিজিটালাইজ করতে হলে সর্বনিম্ন স্যাম্পলিং রেট হতে হবে $2 \times 4\text{ kHz} = 8\text{ kHz}$। আমাদের মোবাইল নেটওয়ার্ক এবং ল্যান্ডফোন সিস্টেমে ৮ kHz স্যাম্পলিং রেট ব্যবহার করা হয় যাতে ভয়েস ডাটা স্পষ্টভাবে পাঠানো যায়।</p>
+                </div>
+            </div>
+
+            <!-- Live Simulator Widget -->
+            <div id="simulator-1" class="simulator-widget">
+                <div class="simulator-header">
+                    <h3><i class="fa-solid fa-gears"></i> Type-1 Live Nyquist Simulator</h3>
+                    <span class="simulator-badge">Active Mode</span>
+                </div>
+                <div class="simulator-grid">
+                    <div class="simulator-inputs">
+                        <div class="input-group">
+                            <label>ফ্রিকোয়েন্সি ১ ($f_1$ in Hz) <span id="val-t1-f1">300</span></label>
+                            <input type="range" id="t1-f1" min="50" max="10000" step="50" value="300" oninput="updateT1()">
+                        </div>
+                        <div class="input-group">
+                            <label>ফ্রিকোয়েন্সি ২ ($f_2$ in Hz) <span id="val-t1-f2">500</span></label>
+                            <input type="range" id="t1-f2" min="50" max="10000" step="50" value="500" oninput="updateT1()">
+                        </div>
+                        <div class="input-group">
+                            <label>স্যাম্পলিং রেটের ওভারহেড (%) <span id="val-t1-overhead">0</span></label>
+                            <input type="range" id="t1-overhead" min="0" max="100" step="5" value="0" oninput="updateT1()">
+                        </div>
+                    </div>
+                    <div class="simulator-outputs">
+                        <h4 class="output-heading"><i class="fa-solid fa-square-poll-vertical"></i> Live Calculation Outputs</h4>
+                        <div class="output-value-block">
+                            <div class="output-row">
+                                <span class="output-label">সর্বোচ্চ ফ্রিকোয়েন্সি ($f_m$)</span>
+                                <span class="output-val" id="out-t1-fm">500 Hz</span>
+                            </div>
+                            <div class="output-row">
+                                <span class="output-label">Nyquist Rate ($f_{NQ}$)</span>
+                                <span class="output-val text-cyan" id="out-t1-fnq">1000 Hz</span>
+                            </div>
+                            <div class="output-row">
+                                <span class="output-label">প্রকৃত স্যাম্পলিং ফ্রিকোয়েন্সি ($f_s$)</span>
+                                <span class="output-val" id="out-t1-fs">1000 Hz</span>
+                            </div>
+                            <div class="output-row">
+                                <span class="output-label">স্যাম্পলিং ইন্টারভাল ($T_s$)</span>
+                                <span class="output-val" id="out-t1-ts">1 ms</span>
+                            </div>
+                        </div>
+                        <div class="output-math-steps tex2jax_process">
+                            <h5>ধাপভিত্তিক গাণিতিক হিসাব:</h5>
+                            <div id="out-t1-math">
+                                $$f_m = \max(300, 500) = 500\text{ Hz}$$
+                                $$f_{NQ} = 2 \cdot f_m = 1000\text{ Hz}$$
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ======================= TAB 2: CHAPTER-2 ======================= -->
+        <div id="panel-1" class="tab-panel">
+            <!-- Theory Section (প্রাথমিক আলোচনা) -->
+            <div class="theory-section">
+                <span class="theory-badge">প্রাথমিক আলোচনা • Basic Concepts</span>
+                <h2><i class="fa-solid fa-book-open-reader"></i> অধ্যায় ২: বিট রেট ও টাইম ডিভিশন মাল্টিপ্লেক্সিং (TDM)</h2>
+                <div class="theory-content tex2jax_process">
+                    <p>স্যাম্পলিং এর মাধ্যমে এনালগ সিগন্যালকে স্যাম্পল আকারে রূপান্তর করার পর প্রতিটি স্যাম্পলকে বাইনারি বিটে রূপান্তর করা হয়। প্রতি সেকেন্ডে ট্রান্সমিট করা মোট বিটের সংখ্যাকে বিট রেট (Bit Rate) বলে, যা ডিজিটাল কমুনিকেশনে প্রয়োজনীয় ব্যান্ডউইডথ বা ধারণক্ষমতা নির্দেশ করে।</p>
+                    
+                    <h4>২.১ বিট রেট এবং চ্যানেল ধারণক্ষমতা</h4>
+                    <p>একটি সিঙ্গেল চ্যানেল বা চ্যানেলের ক্ষেত্রে প্রতি স্যাম্পলে যদি $n$ সংখ্যক বিট কোড করা হয় এবং সিগন্যালের স্যাম্পলিং রেট $f_s$ হয়, তবে প্রতি সেকেন্ডে সংগৃহীত মোট বিটের সংখ্যা হবে:</p>
+                    <p style="text-align: center; margin: 15px 0; font-weight: bold; font-size: 1.1rem; color: #00f2fe;">$$R_b = n \cdot f_s$$</p>
+                    <p>কোয়ান্টাইজেশন লেভেল $L$ এর সাথে বিটের সম্পর্ক $L = 2^n$ অথবা $n = \log_2(L)$।</p>
+                    
+                    <h4>২.২ টাইম ডিভিশন মাল্টিপ্লেক্সিং (TDM) ও ফ্রেম সাইজ</h4>
+                    <p>টেলিফোনি বা ডেটা নেটওয়ার্কে হাজার হাজার গ্রাহকের ডেটা একক চ্যানেলে পাঠানোর জন্য <strong>TDM</strong> ব্যবহার করা হয়। এখানে সময়কে ভাগ করে প্রতিটি চ্যানেলকে পর্যায়ক্রমে খুব ক্ষুদ্র সময় স্লট দেওয়া হয়। একটি পূর্ণ সাইকেলে যখন সবকটি চ্যানেলের একটি করে স্যাম্পল পাঠানো হয়, তখন তাকে ১টি <strong>Frame</strong> বলে।</p>
+                    <p>রিসিভার সাইডে কোন চ্যানেলের পর কোন চ্যানেল আসছে তা নিখুঁতভাবে সিঙ্ক বা আলাদা করতে ফ্রেমের শুরুতে অতিরিক্ত কিছু বিট যোগ করা হয়। এগুলোকে <strong>Synchronization Bits</strong> বা সিঙ্ক বিট এবং কন্ট্রোল সিগন্যাল পাঠানোর বিটকে **Control Bits** বলে।</p>
+                    
+                    <div class="theory-highlight-box">
+                        <p><strong>টিডিএম ফ্রেম সমীকরণ:</strong> যদি $M$ সংখ্যক চ্যানেল একসাথে পাঠানো হয়, প্রতিটি স্যাম্পলে $n$ বিট থাকে, এবং ফ্রেমে অতিরিক্ত $a$ সিঙ্ক বিট ও $c$ কন্ট্রোল বিট থাকে, তবে ফ্রেমের মোট দৈর্ঘ্য এবং বিট রেট হবে:</p>
+                        <p style="text-align: center; margin-top: 10px; font-weight: bold; color: var(--accent-color);">$$\text{Frame Length} = n \cdot M + a + c \quad \text{bits}$$</p>
+                        <p style="text-align: center; margin-top: 10px; font-weight: bold; color: var(--accent-color);">$$R_b = f_s \cdot (n \cdot M + a + c) \quad \text{bps}$$</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Formula Summary Card -->
+            <div class="formula-summary-card">
+                <h3><i class="fa-solid fa-list-check"></i> অধ্যায় ২-এর মূল সূত্রসমূহ</h3>
+                <div class="formula-grid">
+                    <div class="formula-item">
+                        <strong>Bit Rate ($R_b$) - Single Channel</strong>
+                        <code>R_b = n \cdot f_s</code>
+                        <p>$n$ হলো বিটের সংখ্যা এবং $f_s$ স্যাম্পলিং রেট।</p>
+                    </div>
+                    <div class="formula-item">
+                        <strong>Bit Rate ($R_b$) - TDM Frame</strong>
+                        <code>R_b = f_s \cdot (n \cdot M + a + c)</code>
+                        <p>$M$ = চ্যানেলের সংখ্যা, $a$ = সিঙ্ক বিট এবং $c$ = কন্ট্রোল বিট।</p>
+                    </div>
+                    <div class="formula-item">
+                        <strong>Min Bandwidth ($B_{min}$)</strong>
+                        <code>B_{min} = \frac{R_b}{2}</code>
+                        <p>তাত্ত্বিকভাবে সর্বনিম্ন প্রয়োজনীয় ট্রাস্টমিশন ব্যান্ডউইডথ।</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Solved Problems Section -->
+            <h3 class="solved-problems-header"><i class="fa-solid fa-square-poll-vertical"></i> অধ্যায় ২: সমাধানকৃত গাণিতিক সমস্যাসমূহ</h3>
+
+            <!-- Problem 2.1 -->
+            <div class="split-card">
+                <div class="card-left">
+                    <div class="card-meta">
+                        <span class="problem-no">Problem 2.1</span>
+                        <span class="exam-tag">PetroBangla-22</span>
+                    </div>
+                    <h3 class="problem-title">High-Frequency Bat Ultrasound Bit Rate</h3>
+                    <div class="problem-question tex2jax_process">
+                        A bat creates sounds up to a frequency of 100 kHz. If we need a 65,536-level quantization to record its sound, what is the bit rate needed?
+                    </div>
+                    <div class="problem-solution tex2jax_process">
+                        <h4><i class="fa-solid fa-circle-check"></i> Solution</h4>
+                        <div class="solution-step">
+                            <strong>Step 1: স্যাম্পলিং রেট বের করা</strong>
+                            <p>সর্বোচ্চ ফ্রিকোয়েন্সি $f_m = 100\text{ kHz}$</p>
+                            <p>স্যাম্পলিং রেট নাইকুইস্ট হার অনুযায়ী: $f_s = 2 \cdot f_m = 2 \times 100\text{ kHz} = 200\text{ kHz}$</p>
+                        </div>
+                        <div class="solution-step">
+                            <strong>Step 2: বিটের সংখ্যা ($n$) বের করা</strong>
+                            <p>কোয়ান্টাইজেশন লেভেল $L = 65536$</p>
+                            <p>$$L = 2^n \Rightarrow 65536 = 2^{16} \Rightarrow n = 16\text{ bits}$$</p>
+                        </div>
+                        <div class="solution-step">
+                            <strong>Step 3: বিট রেট ($R_b$) হিসাব</strong>
+                            <p>$$R_b = n \cdot f_s = 16 \times 200\text{ kHz} = 3200\text{ kbps} \quad (3.2\text{ Mbps})$$</p>
+                            <p><strong>উত্তর:</strong> বিট রেট = $3.2\text{ Mbps}$</p>
+                        </div>
+                    </div>
+                    <button class="btn-simulate" onclick="simulateType2(1, 100000, 16, 0, 0)">
+                        <i class="fa-solid fa-calculator"></i> Simulate this Problem
+                    </button>
+                </div>
+                <div class="card-right">
+                    <h4 class="formula-guide-title"><i class="fa-solid fa-lightbulb"></i> Quick Formula Guide</h4>
+                    <ul class="formula-guide-list">
+                        <li>লেভেল <code>L</code> ও বিটের সম্পর্ক <code>n = \log_2(L)</code>।</li>
+                        <li>আল্ট্রাসনিক বা বাদুরের শব্দ অনেক সূক্ষ্ম ও উচ্চ কম্পাঙ্কের হওয়ায় ডেটা সাইজ অনেক বড় লাগে।</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Problem 2.2 -->
+            <div class="split-card">
+                <div class="card-left">
+                    <div class="card-meta">
+                        <span class="problem-no">Problem 2.2</span>
+                        <span class="exam-tag">BUET M.Sc.-21 / BCIC-22</span>
+                    </div>
+                    <h3 class="problem-title">TDM with Sync and Control Bits</h3>
+                    <div class="problem-question tex2jax_process">
+                        Ten voice channels, each sampled at 8 kHz and encoded into 8-bit PCM, are time-division multiplexed with 1 bit/frame for synchronization and 1 bit/frame for control. Find the overall bit rate and frame length.
+                    </div>
+                    <div class="problem-solution tex2jax_process">
+                        <h4><i class="fa-solid fa-circle-check"></i> Solution</h4>
+                        <div class="solution-step">
+                            <strong>Step 1: ফ্রেমের দৈর্ঘ্য (Frame Length) হিসাব</strong>
+                            <p>চ্যানেল সংখ্যা $M = 10$, প্রতি স্যাম্পলে বিট $n = 8$</p>
+                            <p>ফ্রেমের তথ্য বিট = $n \cdot M = 8 \times 10 = 80\text{ bits}$</p>
+                            <p>অতিরিক্ত সিঙ্ক বিট ($a$) = $1\text{ bit}$, কন্ট্রোল বিট ($c$) = $1\text{ bit}$</p>
+                            <p>মোট ফ্রেম দৈর্ঘ্য: $N_{frame} = 80 + 1 + 1 = 82\text{ bits/frame}$</p>
+                        </div>
+                        <div class="solution-step">
+                            <strong>Step 2: বিট রেট ($R_b$) হিসাব</strong>
+                            <p>প্রতি সেকেন্ডে ফ্রেম ট্রান্সমিশন রেট স্যাম্পলিং ফ্রিকোয়েন্সির সমান, অর্থাৎ $f_s = 8000\text{ Hz}$</p>
+                            <p>$$R_b = N_{frame} \times f_s = 82 \times 8000 = 656,000\text{ bps} \quad (656\text{ kbps})$$</p>
+                            <p><strong>উত্তর:</strong> ফ্রেমের বিট = $82\text{ bits}$, বিট রেট = $656\text{ kbps}$</p>
+                        </div>
+                    </div>
+                    <button class="btn-simulate" onclick="simulateType2(10, 4000, 8, 1, 1)">
+                        <i class="fa-solid fa-calculator"></i> Simulate this Problem
+                    </button>
+                </div>
+                <div class="card-right">
+                    <h4 class="formula-guide-title"><i class="fa-solid fa-lightbulb"></i> Quick Formula Guide</h4>
+                    <ul class="formula-guide-list">
+                        <li>ফ্রেমের মোট সাইজ নির্ধারণে সিঙ্ক ও কন্ট্রোল বিট সবসময় সরাসরি ডেটা বিটের সাথে যোগ হয়।</li>
+                        <li>বিট রেট বের করতে সম্পূর্ণ ফ্রেম সাইজের সাথে স্যাম্পলিং রেট গুণ করা হয়।</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Quiz Section -->
+            <div class="quiz-section">
+                <h3><i class="fa-solid fa-graduation-cap"></i> অধ্যায় ২-এর কুইজ ও মূল্যায়ন (Concept Check)</h3>
+                <div class="quiz-question-block" id="q-t2-1">
+                    <p class="quiz-question-text">১. স্ট্যান্ডার্ড ডিজিটাল টেলিফোন সিস্টেমে ভয়েস কল পাঠানোর জন্য স্যাম্পলিং রেট কত রাখা হয়?</p>
+                    <div class="quiz-options">
+                        <button class="quiz-opt-btn" onclick="checkAnswer(this, 'wrong', 'q-t2-1-exp')">A. ৪ kHz</button>
+                        <button class="quiz-opt-btn" onclick="checkAnswer(this, 'correct', 'q-t2-1-exp')">B. ৮ kHz</button>
+                        <button class="quiz-opt-btn" onclick="checkAnswer(this, 'wrong', 'q-t2-1-exp')">C. ১৬ kHz</button>
+                        <button class="quiz-opt-btn" onclick="checkAnswer(this, 'wrong', 'q-t2-1-exp')">D. ২২ kHz</button>
+                    </div>
+                    <div class="quiz-explanation" id="q-t2-1-exp">
+                        <strong>ব্যাখ্যা:</strong> মানুষের সাধারণ ভয়েস ফ্রিকোয়েন্সি ৩.৪ kHz বা ৪ kHz পর্যন্ত সীমিত রাখা হয়। তাই নাইকুইস্ট রেট ৮ kHz স্যাম্পলিং রেট হলো স্ট্যান্ডার্ড।
+                    </div>
+                </div>
+
+                <div class="quiz-question-block" id="q-t2-2">
+                    <p class="quiz-question-text">২. উত্তর আমেরিকার স্ট্যান্ডার্ড T1 ক্যারিয়ার লাইনের মোট ব্যান্ডউইডথ বা ডাটা রেট কত?</p>
+                    <div class="quiz-options">
+                        <button class="quiz-opt-btn" onclick="checkAnswer(this, 'wrong', 'q-t2-2-exp')">A. ২.০৪৮ Mbps</button>
+                        <button class="quiz-opt-btn" onclick="checkAnswer(this, 'correct', 'q-t2-2-exp')">B. ১.৫৪৪ Mbps</button>
+                        <button class="quiz-opt-btn" onclick="checkAnswer(this, 'wrong', 'q-t2-2-exp')">C. ৬৪ kbps</button>
+                        <button class="quiz-opt-btn" onclick="checkAnswer(this, 'wrong', 'q-t2-2-exp')">D. ১২৮ kbps</button>
+                    </div>
+                    <div class="quiz-explanation" id="q-t2-2-exp">
+                        <strong>ব্যাখ্যা:</strong> T1 ক্যারিয়ারে ২৪টি ভয়েস চ্যানেল ও ১টি অতিরিক্ত সিঙ্ক বিট থাকে। $R_b = 8000 \times (24 \times 8 + 1) = 1.544\text{ Mbps}$।
+                    </div>
+                </div>
+            </div>
+
+            <!-- Real-World Application Box -->
+            <div class="app-card">
+                <div class="app-icon">
+                    <i class="fa-solid fa-tower-cell"></i>
+                </div>
+                <div class="app-content">
+                    <h4>বাস্তব জীবনের প্রয়োগ: E1 এবং T1 ক্যারিয়ার সিস্টেম</h4>
+                    <p>টেলিকম সিস্টেমে ডিজিটাল ট্রাংক লাইনে বহু গ্রাহকের ভয়েস কল একসাথে পাঠানোর জন্য E1 এবং T1 ক্যারিয়ার স্ট্যান্ডার্ড ব্যবহার করা হয়। উত্তর আমেরিকায় ব্যবহৃত T1 লাইনে ২৪টি চ্যানেল একসাথে পাঠানো হয় এবং ফ্রেম প্রতি ১টি সিঙ্ক বিট থাকে, যার মোট ব্যান্ডউইডথ ১.৫৪৪ Mbps। অন্যদিকে ইউরোপীয় স্ট্যান্ডার্ড E1-এ ৩২টি চ্যানেল (৩০টি ভয়েসের জন্য এবং ২টি সিঙ্ক/কন্ট্রোলের জন্য) থাকে যার ডেটা রেট ২.০৪৮ Mbps। এটি আমাদের মোবাইল বিটিএস কানেক্টিভিটিতে ব্যাপকভাবে ব্যবহৃত হয়।</p>
+                </div>
+            </div>
+
+            <!-- Live Simulator Widget -->
+            <div id="simulator-2" class="simulator-widget">
+                <div class="simulator-header">
+                    <h3><i class="fa-solid fa-gears"></i> Type-2 TDM &amp; Bit Rate Simulator</h3>
+                    <span class="simulator-badge">Active Mode</span>
+                </div>
+                <div class="simulator-grid">
+                    <div class="simulator-inputs">
+                        <div class="input-group">
+                            <label>চ্যানেলের সংখ্যা ($M$) <span id="val-t2-channels">10</span></label>
+                            <input type="range" id="t2-channels" min="1" max="100" step="1" value="10" oninput="updateT2()">
+                        </div>
+                        <div class="input-group">
+                            <label>মেসেজ সর্বোচ্চ ফ্রিকোয়েন্সি ($f_m$ in Hz) <span id="val-t2-fm">4000</span></label>
+                            <input type="range" id="t2-fm" min="100" max="20000" step="100" value="4000" oninput="updateT2()">
+                        </div>
+                        <div class="input-group">
+                            <label>বিটস পার স্যাম্পল ($n$) <span id="val-t2-bits">8</span></label>
+                            <input type="range" id="t2-bits" min="1" max="32" step="1" value="8" oninput="updateT2()">
+                        </div>
+                        <div class="input-group">
+                            <label>সিনক্রোনাইজেশন বিট ($a$) <span id="val-t2-sync">1</span></label>
+                            <input type="range" id="t2-sync" min="0" max="10" step="1" value="1" oninput="updateT2()">
+                        </div>
+                        <div class="input-group">
+                            <label>কন্ট্রোল বিট ($c$) <span id="val-t2-control">1</span></label>
+                            <input type="range" id="t2-control" min="0" max="10" step="1" value="1" oninput="updateT2()">
+                        </div>
+                    </div>
+                    <div class="simulator-outputs">
+                        <h4 class="output-heading"><i class="fa-solid fa-square-poll-vertical"></i> Live Calculation Outputs</h4>
+                        <div class="output-value-block">
+                            <div class="output-row">
+                                <span class="output-label">স্যাম্পলিং ফ্রিকোয়েন্সি ($f_s$)</span>
+                                <span class="output-val" id="out-t2-fs">8000 Hz</span>
+                            </div>
+                            <div class="output-row">
+                                <span class="output-label">ফ্রেম দৈর্ঘ্য (Frame Length)</span>
+                                <span class="output-val" id="out-t2-flen">82 bits</span>
+                            </div>
+                            <div class="output-row">
+                                <span class="output-label">মোট বিট রেট ($R_b$)</span>
+                                <span class="output-val text-cyan" id="out-t2-rb">656 kbps</span>
+                            </div>
+                            <div class="output-row">
+                                <span class="output-label">সর্বনিম্ন ব্যান্ডউইডথ ($B_{min}$)</span>
+                                <span class="output-val" id="out-t2-bw">328 kHz</span>
+                            </div>
+                        </div>
+                        <div class="output-math-steps tex2jax_process">
+                            <h5>ধাপভিত্তিক গাণিতিক হিসাব:</h5>
+                            <div id="out-t2-math">
+                                $$f_s = 2 \cdot 4000 = 8000\text{ Hz}$$
+                                $$\text{Frame Length} = 8 \times 10 + 1 + 1 = 82\text{ bits}$$
+                                $$R_b = 82 \times 8000 = 656\text{ kbps}$$
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ======================= TAB 3: CHAPTER-3 ======================= -->
+        <div id="panel-2" class="tab-panel">
+            <!-- Theory Section (প্রাথমিক আলোচনা) -->
+            <div class="theory-section">
+                <span class="theory-badge">প্রাথমিক আলোচনা • Basic Concepts</span>
+                <h2><i class="fa-solid fa-book-open-reader"></i> অধ্যায় ৩: কোয়ান্টাইজেশন ত্রুটি, SQNR ও কম্প্যান্ডিং</h2>
+                <div class="theory-content tex2jax_process">
+                    <p>অ্যানালগ সিগন্যালের স্যাম্পলিং মানসমূহ দশমিক বা ফ্র্যাকশন হতে পারে। ডিজিটাল ডোমেইনে এগুলোকে সংরক্ষণ করতে হলে প্রতিটি স্যাম্পলকে একটি নির্দিষ্ট ফিক্সড পূর্ণ সংখ্যার কাছাকাছি নিয়ে যেতে হয়। এই প্রক্রিয়াকে বলা হয় কোয়ান্টাইজেশন (Quantization)।</p>
+                    
+                    <h4>৩.১ স্টেপ সাইজ ($\Delta$) ও কোয়ান্টাইজেশন নয়েজ</h4>
+                    <p>সিগন্যালের সর্বোচ্চ ধনাত্মক ও ঋণাত্মক বিস্তারের মোট পার্থক্য $2 m_p$-কে যদি কোয়ান্টাইজেশন লেভেল $L$ দিয়ে সমান ভাগে ভাগ করা হয়, তবে প্রতিটি ভাগের উচ্চতাকে স্টেপ সাইজ বা রেজোলিউশন ($\Delta$) বলা হয়।</p>
+                    <p style="text-align: center; margin: 15px 0; font-weight: bold; font-size: 1.1rem; color: #00f2fe;">$$\Delta = \frac{2 \cdot m_p}{L}$$</p>
+                    <p>কোয়ান্টাইজেশনের ফলে আসল স্যাম্পলের মানের সাথে ডিজিটাল মানের যে পার্থক্য থাকে তাকে কোয়ান্টাইজেশন ত্রুটি (Quantization Error) বলে। এই ত্রুটির সর্বোচ্চ মান হতে পারে $\pm \frac{\Delta}{2}$। যেহেতু এটি নয়েজ বা গোলযোগের জন্ম দেয়, তাই একে কোয়ান্টাইজেশন নয়েজ বলা হয়।</p>
+                    
+                    <h4>৩.২ SQNR (Signal-to-Quantization-Noise Ratio)</h4>
+                    <p>কোয়ান্টাইজেশন প্রক্রিয়াটি কতটুকু নির্ভুল বা সিগন্যাল কোয়ালিটি কেমন তা পরিমাপ করা হয় SQNR এর মাধ্যমে। ইউনিফর্ম কোয়ান্টাইজেশনের জন্য এর মান:</p>
+                    <p style="text-align: center; margin: 15px 0; font-weight: bold; font-size: 1.1rem; color: #00f2fe;">$$\text{SQNR}_{dB} = 1.76 + 6.02 \cdot n$$</p>
+                    <p>এখানে $n$ হলো বিটের সংখ্যা। এই সূত্র অনুযায়ী, প্রতি ১ বিট বাড়ানোর জন্য সিগন্যাল টু নয়েজ রেশিও প্রায় <strong>৬ dB বৃদ্ধি পায়</strong> (6 dB Rule)।</p>
+                    
+                    <div class="theory-highlight-box">
+                        <p><strong>কম্প্যান্ডিং ও নন-ইউনিফর্ম কোয়ান্টাইজেশন:</strong> মানুষের ভয়েস সিগন্যালে দুর্বল ভলিউমের শব্দ সবচেয়ে বেশি থাকে। ইউনিফর্ম পদ্ধতিতে দুর্বল সংকেতে ত্রুটি বেশি অনুভব হয়। এটি দূর করতে সংকেত পাঠানোর সময় দুর্বল অংশকে এমপ্লিফাই (Compress) এবং গ্রহণের সময় উল্টো প্রক্রিয়া (Expand) করা হয়। একে একসাথে **Companding** (Compression + Expansion) বলে। এর জন্য জনপ্রিয় দুটি স্ট্যান্ডার্ড হলো $\mu$-law এবং A-law। $\mu$-law কম্প্রেশনে SQNR এর সূত্রটি হলো:</p>
+                        <p style="text-align: center; margin-top: 10px; font-weight: bold; color: var(--accent-color);">$$\text{SQNR}_{\mu\text{-law}} = 10 \log_{10} \left( \frac{3 \cdot L^2}{[\ln(1+\mu)]^2} \right)$$</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Formula Summary Card -->
+            <div class="formula-summary-card">
+                <h3><i class="fa-solid fa-list-check"></i> অধ্যায় ৩-এর মূল সূত্রসমূহ</h3>
+                <div class="formula-grid">
+                    <div class="formula-item">
+                        <strong>Quantization Step Size ($\Delta$)</strong>
+                        <code>\Delta = \frac{2 \cdot m_p}{L}</code>
+                        <p>$m_p$ হলো পিক ভোল্টেজ এবং $L$ হলো কোয়ান্টাইজেশন লেভেল।</p>
+                    </div>
+                    <div class="formula-item">
+                        <strong>SQNR (Uniform Quantization)</strong>
+                        <code>\text{SQNR}_{dB} = 1.76 + 6.02 \cdot n</code>
+                        <p>প্রতিটি অতিরিক্ত বাইনারি বিটের জন্য প্রায় ৬ dB SQNR বৃদ্ধি পায়।</p>
+                    </div>
+                    <div class="formula-item">
+                        <strong>SQNR ($\mu$-Law Compression)</strong>
+                        <code>\text{SQNR}_{dB} \approx 10 \log_{10} \left( \frac{3 \cdot L^2}{[\ln(1+\mu)]^2} \right)</code>
+                        <p>নন-ইউনিফর্ম কোডেক সিস্টেমের জন্য সিগন্যাল টু নয়েজ রেশিও।</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Solved Problems Section -->
+            <h3 class="solved-problems-header"><i class="fa-solid fa-square-poll-vertical"></i> অধ্যায় ৩: সমাধানকৃত গাণিতিক সমস্যাসমূহ</h3>
+
+            <!-- Problem 3.1 -->
+            <div class="split-card">
+                <div class="card-left">
+                    <div class="card-meta">
+                        <span class="problem-no">Problem 3.1</span>
+                        <span class="exam-tag">BUET MSC-14 / ECG telemetry</span>
+                    </div>
+                    <h3 class="problem-title">ECG Telemetry Minimum Cable Bandwidth</h3>
+                    <div class="problem-question tex2jax_process">
+                        An ECG signal bandwidth is 100 Hz. The maximum acceptable error is 0.25% of peak amplitude. The sampling rate must be twice the Nyquist rate. Find the minimum cable bandwidth for 10 patients.
+                    </div>
+                    <div class="problem-solution tex2jax_process">
+                        <h4><i class="fa-solid fa-circle-check"></i> Solution</h4>
+                        <div class="solution-step">
+                            <strong>Step 1: স্যাম্পলিং ফ্রিকোয়েন্সি নির্ধারণ</strong>
+                            <p>$f_m = 100\text{ Hz} \Rightarrow f_{NQ} = 2 \cdot f_m = 200\text{ Hz}$</p>
+                            <p>স্যাম্পলিং রেট: $f_s = 2 \cdot f_{NQ} = 400\text{ Hz}$</p>
+                        </div>
+                        <div class="solution-step">
+                            <strong>Step 2: লেভেল ($L$) ও বিট সংখ্যা ($n$) বের করা</strong>
+                            <p>সর্বোচ্চ ত্রুটি $e_{max} = \frac{\Delta}{2} \le 0.25\% \cdot m_p \Rightarrow \frac{m_p}{L} \le 0.0025 \cdot m_p \Rightarrow L \ge 400$</p>
+                            <p>পরবর্তী ২ এর ঘাত নিয়ে পাই: $L = 512 = 2^9 \Rightarrow n = 9\text{ bits}$</p>
+                        </div>
+                        <div class="solution-step">
+                            <strong>Step 3: মোট বিট রেট এবং সর্বনিম্ন ব্যান্ডউইডথ</strong>
+                            <p>১০ জন রোগীর জন্য মোট বিট রেট: $R_b = M \cdot n \cdot f_s = 10 \times 9 \times 400 = 36,000\text{ bps}$</p>
+                            <p>সর্বনিম্ন চ্যানেল ব্যান্ডউইডথ: $$B_{min} = \frac{R_b}{2} = \frac{36000}{2} = 18,000\text{ Hz} \quad (18\text{ kHz})$$</p>
+                            <p><strong>উত্তর:</strong> সর্বনিম্ন ক্যাবল ব্যান্ডউইডথ = $18\text{ kHz}$</p>
+                        </div>
+                    </div>
+                    <button class="btn-simulate" onclick="simulateType3(1, 100, 0.25, 10)">
+                        <i class="fa-solid fa-calculator"></i> Simulate this Problem
+                    </button>
+                </div>
+                <div class="card-right">
+                    <h4 class="formula-guide-title"><i class="fa-solid fa-lightbulb"></i> Quick Formula Guide</h4>
+                    <ul class="formula-guide-list">
+                        <li>সর্বোচ্চ গ্রহণযোগ্য ত্রুটি <code>p\%</code> হলে সূত্র <code>L \ge 100 / p</code>।</li>
+                        <li>লেভেলের সংখ্যা <code>L</code> অবশ্যই ২ এর পাওয়ারে উন্নীত হতে হবে যাতে কম্পিউটার সহজে পড়তে পারে।</li>
+                        <li>ডিজিটাল ব্যান্ডউইডথ নির্ধারণ করতে নাইকুইস্ট এর <code>B = R_b / 2</code> নিয়ম প্রযোজ্য।</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Problem 3.2 -->
+            <div class="split-card">
+                <div class="card-left">
+                    <div class="card-meta">
+                        <span class="problem-no">Problem 3.2</span>
+                        <span class="exam-tag">ERL-22, Lathi 6.2-8</span>
+                    </div>
+                    <h3 class="problem-title">Required Levels for $\mu$-Law SQNR</h3>
+                    <div class="problem-question tex2jax_process">
+                        For a $\mu$-law compression system with $\mu = 100$, the minimum SQNR is required to be at least 45 dB. Find the required number of quantization levels $L$.
+                    </div>
+                    <div class="problem-solution tex2jax_process">
+                        <h4><i class="fa-solid fa-circle-check"></i> Solution</h4>
+                        <div class="solution-step">
+                            <strong>Step 1: সমীকরণ সাজানো</strong>
+                            <p>$$\text{SQNR}_{dB} = 10 \log_{10} \left( \frac{3 \cdot L^2}{[\ln(1+\mu)]^2} \right) \ge 45$$</p>
+                        </div>
+                        <div class="solution-step">
+                            <strong>Step 2: $L$ এর জন্য মান বের করা</strong>
+                            <p>$$\frac{3 \cdot L^2}{[\ln(101)]^2} = 10^{4.5} \approx 31622.78$$</p>
+                            <p>$$L^2 = \frac{31622.78 \times (4.615)^2}{3} \approx 224,521$$</p>
+                            <p>$$L = \sqrt{224521} \approx 473.8$$</p>
+                        </div>
+                        <div class="solution-step">
+                            <strong>Step 3: ২ এর ঘাতে উন্নীতকরণ</strong>
+                            <p>পরবর্তী ২ এর পাওয়ার হলো: $$L = 512 = 2^9 \quad (n = 9\text{ bits})$$</p>
+                            <p><strong>উত্তর:</strong> কোয়ান্টাইজেশন লেভেল $L = 512$</p>
+                        </div>
+                    </div>
+                    <button class="btn-simulate-mu" onclick="simulateMuLaw(100, 45)">
+                        <i class="fa-solid fa-calculator"></i> Simulate this Problem
+                    </button>
+                </div>
+                <div class="card-right">
+                    <h4 class="formula-guide-title"><i class="fa-solid fa-lightbulb"></i> Quick Formula Guide</h4>
+                    <ul class="formula-guide-list">
+                        <li><code>\ln(101) = 4.615</code> মান ব্যবহার করা হয়েছে।</li>
+                        <li>পাওয়ার অফ ২ রাউন্ড-আপ করতে <code>Math.pow(2, Math.ceil(Math.log2(L)))</code> ব্যবহৃত হয়।</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Quiz Section -->
+            <div class="quiz-section">
+                <h3><i class="fa-solid fa-graduation-cap"></i> অধ্যায় ৩-এর কুইজ ও মূল্যায়ন (Concept Check)</h3>
+                <div class="quiz-question-block" id="q-t3-1">
+                    <p class="quiz-question-text">১. একটি ৮-বিট এনালগ-টু-ডিজিটাল কনভার্টারের (ADC) জন্য মোট কোয়ান্টাইজেশন লেভেল সংখ্যা কত?</p>
+                    <div class="quiz-options">
+                        <button class="quiz-opt-btn" onclick="checkAnswer(this, 'wrong', 'q-t3-1-exp')">A. ৮</button>
+                        <button class="quiz-opt-btn" onclick="checkAnswer(this, 'wrong', 'q-t3-1-exp')">B. ৬৪</button>
+                        <button class="quiz-opt-btn" onclick="checkAnswer(this, 'correct', 'q-t3-1-exp')">C. ২৫৬</button>
+                        <button class="quiz-opt-btn" onclick="checkAnswer(this, 'wrong', 'q-t3-1-exp')">D. ৫১২</button>
+                    </div>
+                    <div class="quiz-explanation" id="q-t3-1-exp">
+                        <strong>ব্যাখ্যা:</strong> $L = 2^n = 2^8 = 256$ টি লেভেল।
+                    </div>
+                </div>
+
+                <div class="quiz-question-block" id="q-t3-2">
+                    <p class="quiz-question-text">২. ৬ dB রুল অনুযায়ী কোয়ান্টাইজার বিট ৩ থেকে বাড়িয়ে ৪ বিট করলে SQNR কত বৃদ্ধি পাবে?</p>
+                    <div class="quiz-options">
+                        <button class="quiz-opt-btn" onclick="checkAnswer(this, 'correct', 'q-t3-2-exp')">A. ৬ dB</button>
+                        <button class="quiz-opt-btn" onclick="checkAnswer(this, 'wrong', 'q-t3-2-exp')">B. ১২ dB</button>
+                        <button class="quiz-opt-btn" onclick="checkAnswer(this, 'wrong', 'q-t3-2-exp')">C. ২৪ dB</button>
+                        <button class="quiz-opt-btn" onclick="checkAnswer(this, 'wrong', 'q-t3-2-exp')">D. ৩ dB</button>
+                    </div>
+                    <div class="quiz-explanation" id="q-t3-2-exp">
+                        <strong>ব্যাখ্যা:</strong> প্রতিটি ১ বিট বৃদ্ধির জন্য SQNR বাড়ে ৬.০২ dB (প্রায় ৬ dB)।
+                    </div>
+                </div>
+            </div>
+
+            <!-- Real-World Application Box -->
+            <div class="app-card">
+                <div class="app-icon">
+                    <i class="fa-solid fa-heart-pulse"></i>
+                </div>
+                <div class="app-content">
+                    <h4>বাস্তব জীবনের প্রয়োগ: আইসিইউ (ICU) সেন্ট্রাল মনিটরিং ও ইসিজি ডাটা</h4>
+                    <p>হাসপাতালের আইসিইউ বা করোনারি কেয়ার ইউনিটে একসাথে অনেক রোগীর ইসিজি (ECG) ডাটা রিয়েল-টাইমে ডাক্তারদের মনিটরে পাঠাতে হয়। হার্টবিটের অ্যানালগ সিগন্যাল স্যাম্পলিং করে, ডিজিটাল বাউন্ডেড ত্রুটির মধ্যে নিয়ে এসে টিডিএম (TDM) করে সিঙ্গেল ডাটা ক্যাবলের মাধ্যমে পাঠানো হয়। যথাযথ ফিল্টারিং এবং কোয়ান্টাইজেশন লেভেল নির্ধারণের মাধ্যমে এই ব্যান্ডউইডথ অপ্টিমাইজড রাখা হয় যাতে ডাটা প্যাকেট লস ছাড়া ১০০% নির্ভুল হার্ট রেট প্রদর্শন করা যায়।</p>
+                </div>
+            </div>
+
+            <!-- Live Simulator Widget -->
+            <div id="simulator-3" class="simulator-widget">
+                <div class="simulator-header">
+                    <h3><i class="fa-solid fa-gears"></i> Type-3 SQNR &amp; Quantization Simulator</h3>
+                    <span class="simulator-badge">Active Mode</span>
+                </div>
+                <div class="simulator-grid">
+                    <div class="simulator-inputs">
+                        <div class="input-group">
+                            <label>মেসেজ ব্যান্ডউইডথ ($f_m$ in Hz) <span id="val-t3-fm">100</span></label>
+                            <input type="range" id="t3-fm" min="50" max="5000" step="50" value="100" oninput="updateT3()">
+                        </div>
+                        <div class="input-group">
+                            <label>সর্বোচ্চ গ্রহণযোগ্য ত্রুটি (%) <span id="val-t3-error">0.25</span></label>
+                            <input type="range" id="t3-error" min="0.05" max="5.0" step="0.05" value="0.25" oninput="updateT3()">
+                        </div>
+                        <div class="input-group">
+                            <label>রোগী বা চ্যানেল সংখ্যা ($M$) <span id="val-t3-patients">10</span></label>
+                            <input type="range" id="t3-patients" min="1" max="50" step="1" value="10" oninput="updateT3()">
+                        </div>
+                        <div class="input-group">
+                            <label>কম্প্রেশন প্যারামিটার ($\mu$) <span id="val-t3-mu">100</span></label>
+                            <input type="range" id="t3-mu" min="0" max="255" step="5" value="100" oninput="updateT3()">
+                        </div>
+                    </div>
+                    <div class="simulator-outputs">
+                        <h4 class="output-heading"><i class="fa-solid fa-square-poll-vertical"></i> Live Calculation Outputs</h4>
+                        <div class="output-value-block">
+                            <div class="output-row">
+                                <span class="output-label">ন্যূনতম কোয়ান্টাইজেশন লেভেল ($L$)</span>
+                                <span class="output-val" id="out-t3-levels">512</span>
+                            </div>
+                            <div class="output-row">
+                                <span class="output-label">বিটের সংখ্যা ($n$)</span>
+                                <span class="output-val" id="out-t3-bits">9 bits</span>
+                            </div>
+                            <div class="output-row">
+                                <span class="output-label">Uniform SQNR (dB)</span>
+                                <span class="output-val" id="out-t3-sqnr-uni">55.94 dB</span>
+                            </div>
+                            <div class="output-row">
+                                <span class="output-label">$\mu$-Law SQNR (dB)</span>
+                                <span class="output-val text-cyan" id="out-t3-sqnr-mu">45.67 dB</span>
+                            </div>
+                            <div class="output-row">
+                                <span class="output-label">সর্বনিম্ন ক্যাবল ব্যান্ডউইডথ</span>
+                                <span class="output-val" id="out-t3-bw">18 kHz</span>
+                            </div>
+                        </div>
+                        <div class="output-math-steps tex2jax_process">
+                            <h5>ধাপভিত্তিক গাণিতিক হিসাব:</h5>
+                            <div id="out-t3-math">
+                                $$L \ge 100 / 0.25 = 400 \Rightarrow L_{actual} = 512$$
+                                $$n = 9\text{ bits}$$
+                                $$\text{SQNR (Uniform)} = 1.76 + 6.02(9) = 55.94\text{ dB}$$
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ======================= TAB 4: CHAPTER-4 ======================= -->
+        <div id="panel-3" class="tab-panel">
+            <!-- Theory Section (প্রাথমিক আলোচনা) -->
+            <div class="theory-section">
+                <span class="theory-badge">প্রাথমিক আলোচনা • Basic Concepts</span>
+                <h2><i class="fa-solid fa-book-open-reader"></i> অধ্যায় ৪: ডিজিটাল স্টোরেজ ক্ষমতা ও ডাইনামিক রেঞ্জ</h2>
+                <div class="theory-content tex2jax_process">
+                    <p>আজকাল আমরা আমাদের ফোনে যে গান বা অডিও রেকর্ড করি বা খেলি, তা ডিজিটাল ডেটা হিসেবে সেভ থাকে। কতটুকু মেমোরি প্রয়োজন হবে তা বের করার জন্য নাইকুইস্ট ফ্রিকোয়েন্সি, বিটের সংখ্যা এবং সময়ের গুণফল ব্যবহার করতে হয়।</p>
+                    
+                    <h4>৪.১ ডিজিটাল অডিও স্টোরেজ হিসাব</h4>
+                    <p>একটি ডিজিটাল অডিওর স্টোরেজ নির্ধারণে বিট রেট ও রেকর্ডিং সময় সবচেয়ে গুরুত্বপূর্ণ ভূমিকা রাখে। প্রতি সেকেন্ডে উৎপাদিত বিট সংখ্যা $R_b$ হলে, মোট মেমোরি সাইজ হবে:</p>
+                    <p style="text-align: center; margin: 15px 0; font-weight: bold; font-size: 1.1rem; color: #00f2fe;">$$\text{Storage (bits)} = R_b \times t \times \text{Channels}$$</p>
+                    <p>যেখানে $t$ হলো সেকেন্ডে রেকর্ডিং এর সময় এবং Channels হলো অডিও মোড:</p>
+                    <p>১. মনো অডিও (Mono): ১টি চ্যানেল।</p>
+                    <p>২. স্টেরিও অডিও (Stereo): ২টি চ্যানেল (লেফট ও রাইট স্পিকারের জন্য আলাদা)। এটি মনো সিগন্যালের চেয়ে <strong>দ্বিগুণ স্টোরেজ</strong> খরচ করে।</p>
+                    
+                    <h4>৪.২ ডাইনামিক রেঞ্জ (Dynamic Range)</h4>
+                    <p>সিগন্যালের সর্বোচ্চ এবং সর্বনিম্ন অ্যাম্পলিটিউডের অনুপাতকে ডাইনামিক রেঞ্জ ($DR$) বলে। ডাইনামিক রেঞ্জের সাথে ডিজিটাল সিস্টেমে প্রয়োজনীয় লেভেলের সম্পর্ক হলো:</p>
+                    <p style="text-align: center; margin: 15px 0; font-weight: bold; font-size: 1.1rem; color: #00f2fe;">$$L = DR + 1$$</p>
+                    <p>এখান থেকে প্রয়োজনীয় বিটের সংখ্যা $n = \lceil \log_2(L) \rceil$ বের করা হয়।</p>
+                </div>
+            </div>
+
+            <!-- Formula Summary Card -->
+            <div class="formula-summary-card">
+                <h3><i class="fa-solid fa-list-check"></i> অধ্যায় ৪-এর মূল সূত্রসমূহ</h3>
+                <div class="formula-grid">
+                    <div class="formula-item">
+                        <strong>Storage Space (Bits)</strong>
+                        <code>\text{Storage} = R_b \cdot t \cdot \text{Channels}</code>
+                        <p>$t$ হলো সেকেন্ডে সিগন্যালের দৈর্ঘ্য, এবং Channels হলো ১ (মনো) বা ২ (স্টেরিও)।</p>
+                    </div>
+                    <div class="formula-item">
+                        <strong>File Size Conversions</strong>
+                        <code>\text{Size}_{MB} = \frac{\text{Bits}}{8 \cdot 10^6}</code>
+                        <p>মেমোরি বাইট ও মেগাবাইটে রূপান্তরের সমীকরণ।</p>
+                    </div>
+                    <div class="formula-item">
+                        <strong>Dynamic Range ($DR$)</strong>
+                        <code>L = DR + 1 \Rightarrow n = \lceil \log_2(L) \rceil</code>
+                        <p>সর্বোচ্চ ও সর্বনিম্ন রিসিভড সিগন্যালের অনুপাত এবং তার বিট রিলেশন।</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Solved Problems Section -->
+            <h3 class="solved-problems-header"><i class="fa-solid fa-square-poll-vertical"></i> অধ্যায় ৪: সমাধানকৃত গাণিতিক সমস্যাসমূহ</h3>
+
+            <!-- Problem 4.1 -->
+            <div class="split-card">
+                <div class="card-left">
+                    <div class="card-meta">
+                        <span class="problem-no">Problem 4.1</span>
+                        <span class="exam-tag">CPGCBL-25</span>
+                    </div>
+                    <h3 class="problem-title">Stereophonic Music Storage Capacity</h3>
+                    <div class="problem-question tex2jax_process">
+                        A music signal with bandwidth 20 kHz is sampled at its Nyquist rate using 16 bits per sample. Derive the memory required to store a 10-minute passage of stereophonic music.
+                    </div>
+                    <div class="problem-solution tex2jax_process">
+                        <h4><i class="fa-solid fa-circle-check"></i> Solution</h4>
+                        <div class="solution-step">
+                            <strong>Step 1: ১টি চ্যানেলের বিট রেট বের করা (Mono)</strong>
+                            <p>সর্বোচ্চ ফ্রিকোয়েন্সি $f_m = 20\text{ kHz}$</p>
+                            <p>স্যাম্পলিং রেট $f_s = 2 \cdot f_m = 40\text{ kHz}$</p>
+                            <p>বিট সংখ্যা $n = 16\text{ bits}$</p>
+                            <p>বিট রেট (মনো): $R_{b, mono} = n \cdot f_s = 16 \times 40 = 640\text{ kbps}$</p>
+                        </div>
+                        <div class="solution-step">
+                            <strong>Step 2: স্টেরিও বিট রেট বের করা</strong>
+                            <p>স্টেরিও সিগন্যালে লেফট এবং রাইট দুটি আলাদা চ্যানেল থাকে:</p>
+                            <p>$$R_{b, stereo} = 2 \times R_{b, mono} = 2 \times 640 = 1280\text{ kbps}$$</p>
+                        </div>
+                        <div class="solution-step">
+                            <strong>Step 3: মেমোরি সাইজ হিসাব</strong>
+                            <p>সময় $t = 10\text{ minutes} = 600\text{ seconds}$</p>
+                            <p>মোট বিট সংখ্যা = $1280\text{ kbps} \times 600\text{ sec} = 768,000\text{ kbits}$</p>
+                            <p>বাইট সংখ্যা = $\frac{768,000,000}{8} = 96,000,000\text{ Bytes}$</p>
+                            <p>মেগাবাইট (MB) = $\frac{96,000,000}{10^6} = 96\text{ MB}$</p>
+                            <p><strong>উত্তর:</strong> প্রয়োজনীয় মেমোরি = $96\text{ MB}$</p>
+                        </div>
+                    </div>
+                    <button class="btn-simulate" onclick="simulateType4(20000, 16, 2, 600)">
+                        <i class="fa-solid fa-calculator"></i> Simulate this Problem
+                    </button>
+                </div>
+                <div class="card-right">
+                    <h4 class="formula-guide-title"><i class="fa-solid fa-lightbulb"></i> Quick Formula Guide</h4>
+                    <ul class="formula-guide-list">
+                        <li>স্টেরিও মিউজিকের জন্য বিট রেট সবসময় মনো এর দ্বিগুণ করতে হবে।</li>
+                        <li>বিট সংখ্যাকে ৮ দিয়ে ভাগ করে বাইটে রূপান্তর করা হয়েছে।</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Quiz Section -->
+            <div class="quiz-section">
+                <h3><i class="fa-solid fa-graduation-cap"></i> অধ্যায় ৪-এর কুইজ ও মূল্যায়ন (Concept Check)</h3>
+                <div class="quiz-question-block" id="q-t4-1">
+                    <p class="quiz-question-text">১. একটি স্টেরিও সিস্টেমে ৮ kHz স্যাম্পলিং রেট ও ৮ বিট পিডিএম অনুযায়ী ১ সেকেন্ডের অডিও ফাইলের বিট রেট কত হবে?</p>
+                    <div class="quiz-options">
+                        <button class="quiz-opt-btn" onclick="checkAnswer(this, 'wrong', 'q-t4-1-exp')">A. ৬৪ kbps</button>
+                        <button class="quiz-opt-btn" onclick="checkAnswer(this, 'correct', 'q-t4-1-exp')">B. ১২৮ kbps (২ চ্যানেল)</button>
+                        <button class="quiz-opt-btn" onclick="checkAnswer(this, 'wrong', 'q-t4-1-exp')">C. ৩২ kbps</button>
+                        <button class="quiz-opt-btn" onclick="checkAnswer(this, 'wrong', 'q-t4-1-exp')">D. ২৫৬ kbps</button>
+                    </div>
+                    <div class="quiz-explanation" id="q-t4-1-exp">
+                        <strong>ব্যাখ্যা:</strong> স্টেরিও মানেই ২টি চ্যানেল। অতএব, $R_b = 2 \times n \times f_s = 2 \times 8 \times 8 = 128\text{ kbps}$।
+                    </div>
+                </div>
+
+                <div class="quiz-question-block" id="q-t4-2">
+                    <p class="quiz-question-text">২. যদি কোনো রিসিভারে ডাইনামিক রেঞ্জ ৩ হয়, তবে প্রয়োজনীয় নুন্যতম কোয়ান্টাইজেশন বিটের সংখ্যা কত হবে?</p>
+                    <div class="quiz-options">
+                        <button class="quiz-opt-btn" onclick="checkAnswer(this, 'wrong', 'q-t4-2-exp')">A. ১ বিট</button>
+                        <button class="quiz-opt-btn" onclick="checkAnswer(this, 'correct', 'q-t4-2-exp')">B. ২ বিট (কারণ L = DR + 1 = 4)</button>
+                        <button class="quiz-opt-btn" onclick="checkAnswer(this, 'wrong', 'q-t4-2-exp')">C. ৩ বিট</button>
+                        <button class="quiz-opt-btn" onclick="checkAnswer(this, 'wrong', 'q-t4-2-exp')">D. ৪ বিট</button>
+                    </div>
+                    <div class="quiz-explanation" id="q-t4-2-exp">
+                        <strong>ব্যাখ্যা:</strong> লেভেল সংখ্যা $L = DR + 1 = 3 + 1 = 4$। বিট সংখ্যা $n = \log_2(4) = 2$ বিট।
+                    </div>
+                </div>
+            </div>
+
+            <!-- Real-World Application Box -->
+            <div class="app-card">
+                <div class="app-icon">
+                    <i class="fa-solid fa-compact-disc"></i>
+                </div>
+                <div class="app-content">
+                    <h4>বাস্তব জীবনের প্রয়োগ: অডিও সিডি এবং এমপি৩ স্টোরেজ স্পেস</h4>
+                    <p>স্ট্যান্ডার্ড অডিও সিডিতে (Compact Disc) হাই-কোয়ালিটি মিউজিক রেকর্ড করার জন্য ৪৪.১ kHz স্যাম্পলিং রেট এবং ১৬-বিট কোয়ান্টাইজেশন ব্যবহার করা হয়। এটি স্টেরিও (Stereো) হওয়ার কারণে প্রতি সেকেন্ডে ডাটা রেট দাঁড়ায় $2 \times 16 \times 44100 = 1.411\text{ Mbps}$। এই বিশাল মেমোরি রিকোয়ারমেন্টের কারণেই পরবর্তীতে MP3 বা AAC-এর মতো অডিও কম্প্রেশন এডিটর ডিজাইন করা হয়েছিল যা মানুষের কানের শ্রবণ ক্ষমতার সীমাকে বিবেচনা করে ডাটা সাইজ প্রায় ১০ গুণ পর্যন্ত কমিয়ে আনে।</p>
+                </div>
+            </div>
+
+            <!-- Live Simulator Widget -->
+            <div id="simulator-4" class="simulator-widget">
+                <div class="simulator-header">
+                    <h3><i class="fa-solid fa-gears"></i> Type-4 Storage &amp; Space Simulator</h3>
+                    <span class="simulator-badge">Active Mode</span>
+                </div>
+                <div class="simulator-grid">
+                    <div class="simulator-inputs">
+                        <div class="input-group">
+                            <label>মেসেজ ফ্রিকোয়েন্সি ($f_m$ in Hz) <span id="val-t4-fm">20000</span></label>
+                            <input type="range" id="t4-fm" min="1000" max="44100" step="500" value="20000" oninput="updateT4()">
+                        </div>
+                        <div class="input-group">
+                            <label>বিটস পার স্যাম্পল ($n$) <span id="val-t4-bits">16</span></label>
+                            <input type="range" id="t4-bits" min="4" max="32" step="4" value="16" oninput="updateT4()">
+                        </div>
+                        <div class="input-group">
+                            <label>চ্যানেল অপশন (Mono/Stereo)</label>
+                            <select id="t4-channels" onchange="updateT4()">
+                                <option value="1">Mono (1 Channel)</option>
+                                <option value="2" selected>Stereo (2 Channels)</option>
+                            </select>
+                        </div>
+                        <div class="input-group">
+                            <label>অডিওর মোট দৈর্ঘ্য (সেকেন্ড) <span id="val-t4-duration">600</span></label>
+                            <input type="range" id="t4-duration" min="10" max="3600" step="10" value="600" oninput="updateT4()">
+                        </div>
+                    </div>
+                    <div class="simulator-outputs">
+                        <h4 class="output-heading"><i class="fa-solid fa-square-poll-vertical"></i> Live Calculation Outputs</h4>
+                        <div class="output-value-block">
+                            <div class="output-row">
+                                <span class="output-label">স্যাম্পলিং ফ্রিকোয়েন্সি ($f_s$)</span>
+                                <span class="output-val" id="out-t4-fs">40000 Hz</span>
+                            </div>
+                            <div class="output-row">
+                                <span class="output-label">স্টেরিও বিট রেট ($R_b$)</span>
+                                <span class="output-val" id="out-t4-rb">1280 kbps</span>
+                            </div>
+                            <div class="output-row">
+                                <span class="output-label">মোট সাইজ (মেগাবাইট - MB)</span>
+                                <span class="output-val text-cyan" id="out-t4-size">96.00 MB</span>
+                            </div>
+                        </div>
+                        <div class="output-math-steps tex2jax_process">
+                            <h5>ধাপভিত্তিক গাণিতিক হিসাব:</h5>
+                            <div id="out-t4-math">
+                                $$R_{b} = 2 \times 16 \times 40000 = 1.28\text{ Mbps}$$
+                                $$\text{Size} = \frac{1280000 \times 600}{8 \times 10^6} = 96\text{ MB}$$
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Global variables
+        let activeTab = 0;
+
+        function switchTab(index) {
+            activeTab = index;
+            // Hide all tab panels
+            document.querySelectorAll('.tab-panel').forEach(panel => {
+                panel.classList.remove('active');
+            });
+            // Remove active style from tab buttons
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+
+            // Show target panel and set active button
+            document.getElementById(`panel-${index}`).classList.add('active');
+            document.querySelectorAll('.tab-btn')[index].classList.add('active');
+
+            // Retypeset MathJax
+            triggerMathJax();
+        }
+
+        function triggerMathJax() {
+            if (window.MathJax && window.MathJax.typesetPromise) {
+                window.MathJax.typesetPromise();
+            }
+        }
+
+        // --- THEME ENGINE ---
+        function setTheme(theme) {
+            const body = document.body;
+            const darkBtn = document.getElementById('theme-dark-btn');
+            const lightBtn = document.getElementById('theme-light-btn');
+            
+            if (theme === 'light') {
+                body.classList.add('light-theme');
+                if (lightBtn) lightBtn.classList.add('active');
+                if (darkBtn) darkBtn.classList.remove('active');
+                localStorage.setItem('theme', 'light');
+            } else {
+                body.classList.remove('light-theme');
+                if (darkBtn) darkBtn.classList.add('active');
+                if (lightBtn) lightBtn.classList.remove('active');
+                localStorage.setItem('theme', 'dark');
+            }
+        }
+
+        // --- QUIZ ENGINE ---
+        function checkAnswer(btn, result, explanationId) {
+            const parent = btn.parentElement;
+            // Reset options inside this block
+            parent.querySelectorAll('.quiz-opt-btn').forEach(opt => {
+                opt.classList.remove('correct', 'wrong');
+            });
+
+            if (result === 'correct') {
+                btn.classList.add('correct');
+            } else {
+                btn.classList.add('wrong');
+                // Auto highlight the correct one
+                parent.querySelectorAll('.quiz-opt-btn').forEach(opt => {
+                    if (opt.innerText.includes('A. ৩০ kHz') || 
+                        opt.innerText.includes('B. আন্ডার-স্যাম্পলিং') || 
+                        opt.innerText.includes('B. ৮ kHz') || 
+                        opt.innerText.includes('B. ১.৫৪৪ Mbps') ||
+                        opt.innerText.includes('C. ২৫কে') || 
+                        opt.innerText.includes('C. ২৫৬') || 
+                        opt.innerText.includes('A. ৬ dB') ||
+                        opt.innerText.includes('B. ১২৮ kbps') || 
+                        opt.innerText.includes('B. ২ বিট')) {
+                        opt.classList.add('correct');
+                    }
+                });
+            }
+
+            // Show explanation
+            document.getElementById(explanationId).style.display = 'block';
+            triggerMathJax();
+        }
+
+        // --- TYPE-1 LOGIC ---
+        function updateT1() {
+            const f1 = parseFloat(document.getElementById('t1-f1').value);
+            const f2 = parseFloat(document.getElementById('t1-f2').value);
+            const overhead = parseFloat(document.getElementById('t1-overhead').value);
+
+            document.getElementById('val-t1-f1').innerText = f1;
+            document.getElementById('val-t1-f2').innerText = f2;
+            document.getElementById('val-t1-overhead').innerText = overhead;
+
+            const fm = Math.max(f1, f2);
+            const fnq = 2 * fm;
+            const fs = fnq * (1 + overhead / 100);
+            const ts = 1000 / fs; // ms
+
+            document.getElementById('out-t1-fm').innerText = `${fm} Hz`;
+            document.getElementById('out-t1-fnq').innerText = `${fnq} Hz`;
+            document.getElementById('out-t1-fs').innerText = `${fs.toFixed(0)} Hz`;
+            document.getElementById('out-t1-ts').innerText = `${ts.toFixed(3)} ms`;
+
+            // LaTeX formatting
+            const mathOut = document.getElementById('out-t1-math');
+            mathOut.innerHTML = `
+                $$f_m = \\max(${f1}, ${f2}) = ${fm}\\text{ Hz}$$
+                $$f_{NQ} = 2 \\cdot f_m = ${fnq}\\text{ Hz}$$
+                $$f_s = f_{NQ} \\cdot (1 + ${overhead}\\\%) = ${fs.toFixed(0)}\\text{ Hz}$$
+                $$T_s = \\frac{1}{f_s} = ${ts.toFixed(3)}\\text{ ms}$$
+            `;
+            triggerMathJax();
+        }
+
+        function simulateType1(f1, f2) {
+            document.getElementById('t1-f1').value = f1;
+            document.getElementById('t1-f2').value = f2;
+            document.getElementById('t1-overhead').value = 0;
+            updateT1();
+            
+            const widget = document.getElementById('simulator-1');
+            smoothScroll(widget);
+            flashWidget(widget);
+        }
+
+        // --- TYPE-2 LOGIC ---
+        function updateT2() {
+            const channels = parseInt(document.getElementById('t2-channels').value);
+            const fm = parseFloat(document.getElementById('t2-fm').value);
+            const bits = parseInt(document.getElementById('t2-bits').value);
+            const sync = parseInt(document.getElementById('t2-sync').value);
+            const control = parseInt(document.getElementById('t2-control').value);
+
+            document.getElementById('val-t2-channels').innerText = channels;
+            document.getElementById('val-t2-fm').innerText = fm;
+            document.getElementById('val-t2-bits').innerText = bits;
+            document.getElementById('val-t2-sync').innerText = sync;
+            document.getElementById('val-t2-control').innerText = control;
+
+            const fs = 2 * fm;
+            const fLength = bits * channels + sync + control;
+            const rb = fs * fLength; // bps
+            const bw = rb / 2; // Hz (min Nyquist BW)
+
+            document.getElementById('out-t2-fs').innerText = `${fs} Hz`;
+            document.getElementById('out-t2-flen').innerText = `${fLength} bits`;
+            document.getElementById('out-t2-rb').innerText = `${(rb / 1000).toFixed(1)} kbps`;
+            document.getElementById('out-t2-bw').innerText = `${(bw / 1000).toFixed(1)} kHz`;
+
+            const mathOut = document.getElementById('out-t2-math');
+            mathOut.innerHTML = `
+                $$f_s = 2 \\cdot f_m = 2 \\times ${fm} = ${fs}\\text{ Hz}$$
+                $$\\text{Frame Length} = (M \\cdot n) + a + c = (${channels} \\times ${bits}) + ${sync} + ${control} = ${fLength}\\text{ bits}$$
+                $$R_b = f_s \\cdot \\text{Length} = ${fs} \\times ${fLength} = ${(rb/1000).toFixed(1)}\\text{ kbps}$$
+                $$B_{min} = \\frac{R_b}{2} = ${(bw/1000).toFixed(1)}\\text{ kHz}$$
+            `;
+            triggerMathJax();
+        }
+
+        function simulateType2(channels, fm, bits, sync, control) {
+            document.getElementById('t2-channels').value = channels;
+            document.getElementById('t2-fm').value = fm;
+            document.getElementById('t2-bits').value = bits;
+            document.getElementById('t2-sync').value = sync;
+            document.getElementById('t2-control').value = control;
+            updateT2();
+
+            const widget = document.getElementById('simulator-2');
+            smoothScroll(widget);
+            flashWidget(widget);
+        }
+
+        // --- TYPE-3 LOGIC ---
+        function updateT3() {
+            const fm = parseFloat(document.getElementById('t3-fm').value);
+            const error = parseFloat(document.getElementById('t3-error').value);
+            const patients = parseInt(document.getElementById('t3-patients').value);
+            const mu = parseFloat(document.getElementById('t3-mu').value);
+
+            document.getElementById('val-t3-fm').innerText = fm;
+            document.getElementById('val-t3-error').innerText = error;
+            document.getElementById('val-t3-patients').innerText = patients;
+            document.getElementById('val-t3-mu').innerText = mu;
+
+            // Quantization calculations
+            // error_max = mp/L <= p% mp => L >= 100/p
+            const lMin = 100 / error;
+            const bitsRequired = Math.ceil(Math.log2(lMin));
+            const levels = Math.pow(2, bitsRequired); // Strict 2^n rounding
+
+            const fs = 4 * fm; // Twice the Nyquist Rate (Nyquist = 2fm => 2*2fm = 4fm)
+            const rb = levels > 0 ? (bitsRequired * fs * patients) : 0;
+            const bw = rb / 2;
+
+            // SQNR calculations
+            const sqnrUni = 1.76 + 6.02 * bitsRequired;
+            let sqnrMu = 0;
+            if (mu > 0) {
+                const num = 3 * Math.pow(levels, 2);
+                const den = Math.pow(Math.log(1 + mu), 2);
+                sqnrMu = 10 * Math.log10(num / den);
+            } else {
+                sqnrMu = sqnrUni;
+            }
+
+            document.getElementById('out-t3-levels').innerText = levels;
+            document.getElementById('out-t3-bits').innerText = `${bitsRequired} bits`;
+            document.getElementById('out-t3-sqnr-uni').innerText = `${sqnrUni.toFixed(2)} dB`;
+            document.getElementById('out-t3-sqnr-mu').innerText = `${sqnrMu.toFixed(2)} dB`;
+            document.getElementById('out-t3-bw').innerText = `${(bw / 1000).toFixed(1)} kHz`;
+
+            const mathOut = document.getElementById('out-t3-math');
+            mathOut.innerHTML = `
+                $$L \\ge 100 / 0.25 = 400 \\Rightarrow L_{actual} = ${levels}$$
+                $$n = ${bitsRequired}\\text{ bits}$$
+                $$\\text{SQNR (Uniform)} = 1.76 + 6.02(${bitsRequired}) = ${sqnrUni.toFixed(2)}\\text{ dB}$$
+            `;
+            triggerMathJax();
+        }
+
+        function simulateType3(patients, fm, error, patientCount) {
+            document.getElementById('t3-fm').value = fm;
+            document.getElementById('t3-error').value = error;
+            document.getElementById('t3-patients').value = patientCount;
+            document.getElementById('t3-mu').value = 100;
+            updateT3();
+
+            const widget = document.getElementById('simulator-3');
+            smoothScroll(widget);
+            flashWidget(widget);
+        }
+
+        function simulateMuLaw(mu, targetSqnr) {
+            document.getElementById('t3-mu').value = mu;
+            // Preset values for ERL-22 problem (45dB SNR, mu=100)
+            document.getElementById('t3-fm').value = 100;
+            // Let's set error threshold to yield n=9 bits
+            document.getElementById('t3-error').value = 0.2; 
+            document.getElementById('t3-patients').value = 1;
+            updateT3();
+
+            const widget = document.getElementById('simulator-3');
+            smoothScroll(widget);
+            flashWidget(widget);
+        }
+
+        // --- TYPE-4 LOGIC ---
+        function updateT4() {
+            const fm = parseFloat(document.getElementById('t4-fm').value);
+            const bits = parseInt(document.getElementById('t4-bits').value);
+            const channels = parseInt(document.getElementById('t4-channels').value);
+            const duration = parseFloat(document.getElementById('t4-duration').value);
+
+            document.getElementById('val-t4-fm').innerText = fm;
+            document.getElementById('val-t4-bits').innerText = bits;
+            document.getElementById('val-t4-duration').innerText = duration;
+
+            const fs = 2 * fm;
+            const rb = fs * bits * channels;
+            const totalBits = rb * duration;
+            const totalSize = totalBits / (8 * 1000 * 1000); // MB in decimal
+
+            document.getElementById('out-t4-fs').innerText = `${fs} Hz`;
+            document.getElementById('out-t4-rb').innerText = `${(rb / 1000).toFixed(1)} kbps`;
+            document.getElementById('out-t4-size').innerText = `${totalSize.toFixed(2)} MB`;
+
+            const mathOut = document.getElementById('out-t4-math');
+            mathOut.innerHTML = `
+                $$R_b = M \\cdot n \\cdot f_s = ${channels} \\times ${bits} \\times ${fs} = ${(rb/1000).toFixed(1)}\\text{ kbps}$$
+                $$\\text{Storage Size} = \\frac{R_b \\cdot \\text{Time}}{8 \\cdot 10^6} = \\frac{${rb} \\times ${duration}}{8 \\cdot 10^6} = ${totalSize.toFixed(2)}\\text{ MB}$$
+            `;
+            triggerMathJax();
+        }
+
+        function simulateType4(fm, bits, channels, duration) {
+            document.getElementById('t4-fm').value = fm;
+            document.getElementById('t4-bits').value = bits;
+            document.getElementById('t4-channels').value = channels;
+            document.getElementById('t4-duration').value = duration;
+            updateT4();
+
+            const widget = document.getElementById('simulator-4');
+            smoothScroll(widget);
+            flashWidget(widget);
+        }
+
+        function simulateType4Dynamic(dr, code) {
+            // Set values to simulate Problem 4.2 (Dynamic Range = 2)
+            document.getElementById('t4-fm').value = 4000;
+            document.getElementById('t4-bits').value = 4; // Yields n=2 bits
+            document.getElementById('t4-channels').value = 1;
+            document.getElementById('t4-duration').value = 10;
+            updateT4();
+
+            const widget = document.getElementById('simulator-4');
+            smoothScroll(widget);
+            flashWidget(widget);
+        }
+
+        // --- COMMON UTILITIES ---
+        function smoothScroll(target) {
+            target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        function flashWidget(target) {
+            target.classList.add('highlighted');
+            setTimeout(() => {
+                target.classList.remove('highlighted');
+            }, 1000);
+        }
+
+        // Initialize calculators & load saved theme
+        window.addEventListener('load', () => {
+            const savedTheme = localStorage.getItem('theme') || 'dark';
+            setTheme(savedTheme);
+            
+            updateT1();
+            updateT2();
+            updateT3();
+            updateT4();
+        });
+    </script>
+</body>
+</html>
