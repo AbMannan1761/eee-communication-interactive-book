@@ -1184,7 +1184,488 @@
             color: var(--text-secondary);
             line-height: 1.5;
         }
-    </style>
+    
+        /* --- STYLES FOR EDITABLE SIMULATOR INPUTS & VISUALIZERS --- */
+        .label-input {
+            background: rgba(9, 13, 22, 0.4);
+            border: 1px solid var(--border-color);
+            color: var(--accent-color);
+            font-weight: bold;
+            font-size: 0.9rem;
+            width: 80px;
+            text-align: center;
+            border-radius: 4px;
+            outline: none;
+            padding: 2px 5px;
+            font-family: inherit;
+            transition: var(--transition);
+        }
+        .label-input:focus {
+            border-color: var(--accent-color);
+            background: rgba(0, 242, 254, 0.15);
+            box-shadow: 0 0 5px rgba(0, 242, 254, 0.4);
+        }
+        body.light-theme .label-input {
+            background: rgba(255, 255, 255, 0.8);
+            border: 1px solid #d1dfed;
+        }
+
+        .visualizer-box {
+            margin-top: 15px;
+            margin-bottom: 20px;
+            background: rgba(9, 13, 22, 0.6);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+        body.light-theme .visualizer-box {
+            background: rgba(240, 245, 250, 0.8);
+            border-color: #d1dfed;
+        }
+        .visualizer-box canvas {
+            width: 100%;
+            height: auto;
+            max-height: 160px;
+            display: block;
+        }
+
+        /* --- STYLES FOR FLASHCARDS MODULE (TAB 5) --- */
+        .flashcards-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px 0;
+        }
+        .flashcards-controls {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .flashcard-deck {
+            perspective: 1000px;
+            width: 100%;
+            max-width: 500px;
+            height: 320px;
+            margin: 0 auto 30px auto;
+            cursor: pointer;
+        }
+        .flashcard-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-style: preserve-3d;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            border-radius: 15px;
+        }
+        .flashcard-deck.flipped .flashcard-inner {
+            transform: rotateY(180deg);
+        }
+        .flashcard-front, .flashcard-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            border-radius: 15px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 30px;
+            box-sizing: border-box;
+            border: 2px solid var(--border-color);
+        }
+        .flashcard-front {
+            background: linear-gradient(135deg, rgba(26, 44, 64, 0.9) 0%, rgba(9, 13, 22, 0.9) 100%);
+            color: var(--text-primary);
+        }
+        body.light-theme .flashcard-front {
+            background: linear-gradient(135deg, #ffffff 0%, #f0f5fa 100%);
+            color: var(--text-primary);
+            border-color: #d1dfed;
+        }
+        .flashcard-back {
+            background: linear-gradient(135deg, rgba(9, 13, 22, 0.9) 0%, rgba(13, 33, 53, 0.9) 100%);
+            color: var(--accent-color);
+            transform: rotateY(180deg);
+        }
+        body.light-theme .flashcard-back {
+            background: linear-gradient(135deg, #f0f5fa 0%, #e1e9f0 100%);
+            color: #0072ff;
+            border-color: #d1dfed;
+        }
+        .flashcard-question {
+            font-size: 1.35rem;
+            font-weight: 600;
+            line-height: 1.5;
+            margin-bottom: 15px;
+        }
+        .flashcard-answer {
+            font-size: 1.15rem;
+            line-height: 1.6;
+            color: var(--text-primary);
+        }
+        body.light-theme .flashcard-answer {
+            color: #1a2c40;
+        }
+        .flashcard-badge {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            font-size: 0.75rem;
+            padding: 4px 10px;
+            border-radius: 20px;
+            background: rgba(0, 242, 254, 0.15);
+            color: var(--accent-color);
+            border: 1px solid rgba(0, 242, 254, 0.3);
+        }
+        body.light-theme .flashcard-badge {
+            background: rgba(0, 114, 255, 0.1);
+            color: #0072ff;
+            border-color: rgba(0, 114, 255, 0.2);
+        }
+        .flashcard-tip {
+            position: absolute;
+            bottom: 15px;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+        .flashcard-nav-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        .flashcard-progress {
+            width: 100%;
+            max-width: 500px;
+            margin: 20px auto 0 auto;
+        }
+        .flashcard-progress-bar-container {
+            height: 8px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-top: 8px;
+        }
+        body.light-theme .flashcard-progress-bar-container {
+            background: rgba(0,0,0,0.05);
+        }
+        .flashcard-progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #00f2fe, #0072ff);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        /* --- STYLES FOR MCQ PRACTICE MODULE (TAB 6) --- */
+        .mcq-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px 0;
+        }
+        .quiz-modes {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        .quiz-mode-card {
+            background: rgba(26, 44, 64, 0.4);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        body.light-theme .quiz-mode-card {
+            background: #ffffff;
+            border-color: #d1dfed;
+        }
+        .quiz-mode-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-color);
+            box-shadow: 0 5px 15px rgba(0, 242, 254, 0.15);
+        }
+        .quiz-mode-card i {
+            font-size: 2rem;
+            color: var(--accent-color);
+            margin-bottom: 12px;
+        }
+        .quiz-mode-card h4 {
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+            color: var(--text-primary);
+        }
+        .quiz-mode-card p {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .quiz-active-area {
+            background: rgba(26, 44, 64, 0.2);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 25px;
+        }
+        body.light-theme .quiz-active-area {
+            background: #ffffff;
+            border-color: #d1dfed;
+        }
+
+        .quiz-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        body.light-theme .quiz-header {
+            border-color: #d1dfed;
+        }
+
+        .quiz-timer {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #ff007f;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        .mcq-question-text {
+            font-size: 1.25rem;
+            font-weight: 600;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            color: var(--text-primary);
+        }
+
+        .mcq-options-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        @media (min-width: 600px) {
+            .mcq-options-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .mcq-option-btn {
+            background: rgba(9, 13, 22, 0.5);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 15px 20px;
+            text-align: left;
+            color: var(--text-primary);
+            font-size: 0.98rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            width: 100%;
+        }
+        body.light-theme .mcq-option-btn {
+            background: #f8fafc;
+            border-color: #e2e8f0;
+        }
+        .mcq-option-btn:hover:not(:disabled) {
+            border-color: var(--accent-color);
+            background: rgba(0, 242, 254, 0.08);
+        }
+        .mcq-option-btn:disabled {
+            cursor: not-allowed;
+        }
+        .mcq-option-badge {
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--border-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            font-size: 0.85rem;
+            flex-shrink: 0;
+        }
+        body.light-theme .mcq-option-badge {
+            background: #ffffff;
+            border-color: #cbd5e1;
+        }
+
+        /* Option states */
+        .mcq-option-btn.correct {
+            border-color: #00ff66 !important;
+            background: rgba(0, 255, 102, 0.15) !important;
+            color: #ffffff !important;
+        }
+        body.light-theme .mcq-option-btn.correct {
+            color: #0d5a2b !important;
+            background: #e6fced !important;
+        }
+        .mcq-option-btn.correct .mcq-option-badge {
+            background: #00ff66 !important;
+            border-color: #00ff66 !important;
+            color: #000000 !important;
+        }
+
+        .mcq-option-btn.incorrect {
+            border-color: #ff0033 !important;
+            background: rgba(255, 0, 51, 0.15) !important;
+            color: #ffffff !important;
+        }
+        body.light-theme .mcq-option-btn.incorrect {
+            color: #7f1d1d !important;
+            background: #fef2f2 !important;
+        }
+        .mcq-option-btn.incorrect .mcq-option-badge {
+            background: #ff0033 !important;
+            border-color: #ff0033 !important;
+            color: #ffffff !important;
+        }
+
+        .mcq-explanation-panel {
+            background: rgba(0, 242, 254, 0.05);
+            border-left: 4px solid var(--accent-color);
+            border-radius: 0 8px 8px 0;
+            padding: 20px;
+            margin-top: 20px;
+            animation: slideDown 0.3s ease-out;
+        }
+        body.light-theme .mcq-explanation-panel {
+            background: #f0f9ff;
+            border-left-color: #0072ff;
+        }
+        .mcq-explanation-panel h5 {
+            color: var(--accent-color);
+            margin-bottom: 8px;
+            font-size: 1rem;
+        }
+        body.light-theme .mcq-explanation-panel h5 {
+            color: #0072ff;
+        }
+        .mcq-explanation-panel p {
+            font-size: 0.92rem;
+            line-height: 1.6;
+        }
+
+        .quiz-footer {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        /* Results Screen */
+        .quiz-results-screen {
+            text-align: center;
+            padding: 30px 10px;
+        }
+        .result-score-circle {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #00f2fe, #0072ff);
+            margin: 0 auto 20px auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: #090d16;
+            box-shadow: 0 8px 25px rgba(0, 242, 254, 0.3);
+        }
+        .result-score-circle .score-num {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: #000000 !important;
+        }
+        .result-score-circle .score-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #000000 !important;
+        }
+        .result-feedback {
+            font-size: 1.4rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: var(--text-primary);
+        }
+        .result-stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            max-width: 500px;
+            margin: 0 auto 30px auto;
+        }
+        .result-stat-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 10px;
+        }
+        body.light-theme .result-stat-card {
+            background: #f8fafc;
+            border-color: #cbd5e1;
+        }
+        .result-stat-card .stat-val {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--accent-color);
+        }
+        body.light-theme .result-stat-card .stat-val {
+            color: #0072ff;
+        }
+        .result-stat-card .stat-lbl {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            margin-top: 4px;
+        }
+
+        .results-review-section {
+            text-align: left;
+            margin-top: 40px;
+            border-top: 1px solid var(--border-color);
+            padding-top: 30px;
+        }
+        .review-item {
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 1px dashed var(--border-color);
+        }
+        .review-item:last-child {
+            border-bottom: none;
+        }
+        .review-question {
+            font-weight: 600;
+            font-size: 1.05rem;
+            margin-bottom: 10px;
+        }
+        .review-user-ans {
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+        }
+        .review-correct-ans {
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+        }
+</style>
 </head>
 <body class="tex2jax_ignore">
 
@@ -1229,6 +1710,12 @@
                 </button>
                 <button class="tab-btn" onclick="switchTab(4)">
                     <i class="fa-solid fa-circle-play"></i> Video Lectures (লেকচার ভিডিও)
+                </button>
+                <button class="tab-btn" onclick="switchTab(5)">
+                    <i class="fa-solid fa-clone"></i> Ch-5: যোগাযোগ ফ্ল্যাশকার্ড
+                </button>
+                <button class="tab-btn" onclick="switchTab(6)">
+                    <i class="fa-solid fa-circle-question"></i> Ch-6: কুইজ প্র্যাকটিস
                 </button>
             </div>
         </div>
@@ -1423,20 +1910,21 @@
                 <div class="simulator-grid">
                     <div class="simulator-inputs">
                         <div class="input-group">
-                            <label>ফ্রিকোয়েন্সি ১ ($f_1$ in Hz) <span id="val-t1-f1">300</span></label>
+                            <label>ফ্রিকোয়েন্সি ১ ($f_1$ in Hz) <input type="number" id="val-t1-f1" class="label-input" value="300" oninput="syncVal(\'t1-f1\', this, updateT1)"></label>
                             <input type="range" id="t1-f1" min="50" max="10000" step="50" value="300" oninput="updateT1()">
                         </div>
                         <div class="input-group">
-                            <label>ফ্রিকোয়েন্সি ২ ($f_2$ in Hz) <span id="val-t1-f2">500</span></label>
+                            <label>ফ্রিকোয়েন্সি ২ ($f_2$ in Hz) <input type="number" id="val-t1-f2" class="label-input" value="500" oninput="syncVal(\'t1-f2\', this, updateT1)"></label>
                             <input type="range" id="t1-f2" min="50" max="10000" step="50" value="500" oninput="updateT1()">
                         </div>
                         <div class="input-group">
-                            <label>স্যাম্পলিং রেটের ওভারহেড (%) <span id="val-t1-overhead">0</span></label>
+                            <label>স্যাম্পলিং রেটের ওভারহেড (%) <input type="number" id="val-t1-overhead" class="label-input" value="0" oninput="syncVal(\'t1-overhead\', this, updateT1)"></label>
                             <input type="range" id="t1-overhead" min="0" max="100" step="5" value="0" oninput="updateT1()">
                         </div>
                     </div>
                     <div class="simulator-outputs">
                         <h4 class="output-heading"><i class="fa-solid fa-square-poll-vertical"></i> Live Calculation Outputs</h4>
+                        <div class="visualizer-box"><canvas id="canvas-t1" width="400" height="150"></canvas></div>
                         <div class="output-value-block">
                             <div class="output-row">
                                 <span class="output-label">সর্বোচ্চ ফ্রিকোয়েন্সি ($f_m$)</span>
@@ -1750,28 +2238,29 @@
                 <div class="simulator-grid">
                     <div class="simulator-inputs">
                         <div class="input-group">
-                            <label>চ্যানেলের সংখ্যা ($M$) <span id="val-t2-channels">10</span></label>
+                            <label>চ্যানেলের সংখ্যা ($M$) <input type="number" id="val-t2-channels" class="label-input" value="10" oninput="syncVal(\'t2-channels\', this, updateT2)"></label>
                             <input type="range" id="t2-channels" min="1" max="100" step="1" value="10" oninput="updateT2()">
                         </div>
                         <div class="input-group">
-                            <label>মেসেজ সর্বোচ্চ ফ্রিকোয়েন্সি ($f_m$ in Hz) <span id="val-t2-fm">4000</span></label>
+                            <label>মেসেজ সর্বোচ্চ ফ্রিকোয়েন্সি ($f_m$ in Hz) <input type="number" id="val-t2-fm" class="label-input" value="4000" oninput="syncVal(\'t2-fm\', this, updateT2)"></label>
                             <input type="range" id="t2-fm" min="100" max="20000" step="100" value="4000" oninput="updateT2()">
                         </div>
                         <div class="input-group">
-                            <label>বিটস পার স্যাম্পল ($n$) <span id="val-t2-bits">8</span></label>
+                            <label>বিটস পার স্যাম্পল ($n$) <input type="number" id="val-t2-bits" class="label-input" value="8" oninput="syncVal(\'t2-bits\', this, updateT2)"></label>
                             <input type="range" id="t2-bits" min="1" max="32" step="1" value="8" oninput="updateT2()">
                         </div>
                         <div class="input-group">
-                            <label>সিনক্রোনাইজেশন বিট ($a$) <span id="val-t2-sync">1</span></label>
+                            <label>সিনক্রোনাইজেশন বিট ($a$) <input type="number" id="val-t2-sync" class="label-input" value="1" oninput="syncVal(\'t2-sync\', this, updateT2)"></label>
                             <input type="range" id="t2-sync" min="0" max="10" step="1" value="1" oninput="updateT2()">
                         </div>
                         <div class="input-group">
-                            <label>কন্ট্রোল বিট ($c$) <span id="val-t2-control">1</span></label>
+                            <label>কন্ট্রোল বিট ($c$) <input type="number" id="val-t2-control" class="label-input" value="1" oninput="syncVal(\'t2-control\', this, updateT2)"></label>
                             <input type="range" id="t2-control" min="0" max="10" step="1" value="1" oninput="updateT2()">
                         </div>
                     </div>
                     <div class="simulator-outputs">
                         <h4 class="output-heading"><i class="fa-solid fa-square-poll-vertical"></i> Live Calculation Outputs</h4>
+                        <div class="visualizer-box"><canvas id="canvas-t2" width="400" height="150"></canvas></div>
                         <div class="output-value-block">
                             <div class="output-row">
                                 <span class="output-label">স্যাম্পলিং ফ্রিকোয়েন্সি ($f_s$)</span>
@@ -1999,24 +2488,25 @@
                 <div class="simulator-grid">
                     <div class="simulator-inputs">
                         <div class="input-group">
-                            <label>মেসেজ ব্যান্ডউইডথ ($f_m$ in Hz) <span id="val-t3-fm">100</span></label>
+                            <label>মেসেজ ব্যান্ডউইডথ ($f_m$ in Hz) <input type="number" id="val-t3-fm" class="label-input" value="100" oninput="syncVal(\'t3-fm\', this, updateT3)"></label>
                             <input type="range" id="t3-fm" min="50" max="5000" step="50" value="100" oninput="updateT3()">
                         </div>
                         <div class="input-group">
-                            <label>সর্বোচ্চ গ্রহণযোগ্য ত্রুটি (%) <span id="val-t3-error">0.25</span></label>
+                            <label>সর্বোচ্চ গ্রহণযোগ্য ত্রুটি (%) <input type="number" id="val-t3-error" class="label-input" value="0.25" step="0.05" oninput="syncVal(\'t3-error\', this, updateT3)"></label>
                             <input type="range" id="t3-error" min="0.05" max="5.0" step="0.05" value="0.25" oninput="updateT3()">
                         </div>
                         <div class="input-group">
-                            <label>রোগী বা চ্যানেল সংখ্যা ($M$) <span id="val-t3-patients">10</span></label>
+                            <label>রোগী বা চ্যানেল সংখ্যা ($M$) <input type="number" id="val-t3-patients" class="label-input" value="10" oninput="syncVal(\'t3-patients\', this, updateT3)"></label>
                             <input type="range" id="t3-patients" min="1" max="50" step="1" value="10" oninput="updateT3()">
                         </div>
                         <div class="input-group">
-                            <label>কম্প্রেশন প্যারামিটার ($\mu$) <span id="val-t3-mu">100</span></label>
+                            <label>কম্প্রেশন প্যারামিটার ($\mu$) <input type="number" id="val-t3-mu" class="label-input" value="100" oninput="syncVal(\'t3-mu\', this, updateT3)"></label>
                             <input type="range" id="t3-mu" min="0" max="255" step="5" value="100" oninput="updateT3()">
                         </div>
                     </div>
                     <div class="simulator-outputs">
                         <h4 class="output-heading"><i class="fa-solid fa-square-poll-vertical"></i> Live Calculation Outputs</h4>
+                        <div class="visualizer-box"><canvas id="canvas-t3" width="400" height="150"></canvas></div>
                         <div class="output-value-block">
                             <div class="output-row">
                                 <span class="output-label">ন্যূনতম কোয়ান্টাইজেশন লেভেল ($L$)</span>
@@ -2242,11 +2732,11 @@
                 <div class="simulator-grid">
                     <div class="simulator-inputs">
                         <div class="input-group">
-                            <label>মেসেজ ফ্রিকোয়েন্সি ($f_m$ in Hz) <span id="val-t4-fm">20000</span></label>
+                            <label>মেসেজ ফ্রিকোয়েন্সি ($f_m$ in Hz) <input type="number" id="val-t4-fm" class="label-input" value="20000" oninput="syncVal(\'t4-fm\', this, updateT4)"></label>
                             <input type="range" id="t4-fm" min="1000" max="44100" step="500" value="20000" oninput="updateT4()">
                         </div>
                         <div class="input-group">
-                            <label>বিটস পার স্যাম্পল ($n$) <span id="val-t4-bits">16</span></label>
+                            <label>বিটস পার স্যাম্পল ($n$) <input type="number" id="val-t4-bits" class="label-input" value="16" oninput="syncVal(\'t4-bits\', this, updateT4)"></label>
                             <input type="range" id="t4-bits" min="4" max="32" step="4" value="16" oninput="updateT4()">
                         </div>
                         <div class="input-group">
@@ -2257,12 +2747,13 @@
                             </select>
                         </div>
                         <div class="input-group">
-                            <label>অডিওর মোট দৈর্ঘ্য (সেকেন্ড) <span id="val-t4-duration">600</span></label>
+                            <label>অডিওর মোট দৈর্ঘ্য (সেকেন্ড) <input type="number" id="val-t4-duration" class="label-input" value="600" oninput="syncVal(\'t4-duration\', this, updateT4)"></label>
                             <input type="range" id="t4-duration" min="10" max="3600" step="10" value="600" oninput="updateT4()">
                         </div>
                     </div>
                     <div class="simulator-outputs">
                         <h4 class="output-heading"><i class="fa-solid fa-square-poll-vertical"></i> Live Calculation Outputs</h4>
+                        <div class="visualizer-box"><canvas id="canvas-t4" width="400" height="150"></canvas></div>
                         <div class="output-value-block">
                             <div class="output-row">
                                 <span class="output-label">স্যাম্পলিং ফ্রিকোয়েন্সি ($f_s$)</span>
@@ -2355,6 +2846,199 @@
                 </div>
             </div>
         </div>
+        <!-- ======================= TAB 6: FLASHCARDS ======================= -->
+        <div id="panel-5" class="tab-panel">
+            <div class="theory-section">
+                <span class="theory-badge">রিভিশন ফ্ল্যাশকার্ড • Revision Deck</span>
+                <h2><i class="fa-solid fa-clone"></i> যোগাযোগ প্রকৌশল রিভিশন ফ্ল্যাশকার্ড</h2>
+                <div class="theory-content">
+                    <p>যোগাযোগ প্রকৌশল বা ও পালস কোড মডুলেশন (PCM) সিস্টেমের প্রধান বিষয়গুলো সহজে মুখস্থ এবং দ্রুত রিভিশন করতে এই ১০০টি ফ্ল্যাশকার্ড ব্যবহার করো। কার্ডটিতে ক্লিক করলে এটি উল্টে যাবে এবং সঠিক উত্তরটি দেখাবে।</p>
+                </div>
+            </div>
+
+            <div class="flashcards-container">
+                <div class="flashcards-controls">
+                    <div>
+                        <label for="flashcard-cat-select" style="font-size: 0.9rem; font-weight: bold; margin-right: 8px;">ক্যাটাগরি ফিল্টার:</label>
+                        <select id="flashcard-cat-select" onchange="filterFlashcards(this.value)" style="padding: 8px 12px; border-radius: 6px; background-color: rgba(9, 13, 22, 0.8); border: 1px solid var(--border-color); color: var(--text-primary); outline: none; font-family: inherit;">
+                            <option value="all">সকল ক্যাটাগরি (১০০টি)</option>
+                            <option value="Sampling Basics">Sampling Basics</option>
+                            <option value="Nyquist Theorem">Nyquist Theorem</option>
+                            <option value="Aliasing">Aliasing</option>
+                            <option value="Composite Signals">Composite Signals</option>
+                            <option value="PCM Basics">PCM Basics</option>
+                            <option value="Multiplexing">Multiplexing</option>
+                            <option value="TDM">TDM</option>
+                            <option value="Standards">Standards</option>
+                            <option value="Quantization Basics">Quantization Basics</option>
+                            <option value="Companding">Companding</option>
+                            <option value="Delta Modulation">Delta Modulation</option>
+                            <option value="Noise & Power">Noise & Power</option>
+                            <option value="Storage Calculations">Storage Calculations</option>
+                            <option value="Dynamic Range">Dynamic Range</option>
+                            <option value="Modulation Basics">Modulation Basics</option>
+                            <option value="Carrier Modulation">Carrier Modulation</option>
+                            <option value="Detection">Detection</option>
+                        </select>
+                    </div>
+                    <button class="btn btn-secondary" onclick="shuffleFlashcards()"><i class="fa-solid fa-shuffle"></i> সাফল করুন (Shuffle)</button>
+                </div>
+
+                <div class="flashcard-deck" onclick="flipFlashcard()">
+                    <div class="flashcard-inner">
+                        <div class="flashcard-front">
+                            <span class="flashcard-badge" id="fc-badge">Sampling</span>
+                            <div class="flashcard-question" id="fc-question">প্রশ্ন লোড হচ্ছে...</div>
+                            <span class="flashcard-tip"><i class="fa-solid fa-arrow-pointer"></i> দেখতে ক্লিক করুন</span>
+                        </div>
+                        <div class="flashcard-back">
+                            <span class="flashcard-badge" id="fc-badge-back">Sampling</span>
+                            <div class="flashcard-answer" id="fc-answer">উত্তর লোড হচ্ছে...</div>
+                            <span class="flashcard-tip"><i class="fa-solid fa-arrow-pointer"></i> পুনরায় দেখতে ক্লিক করুন</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flashcard-nav-buttons">
+                    <button class="btn btn-secondary" onclick="prevFlashcard()"><i class="fa-solid fa-chevron-left"></i> পূর্ববর্তী</button>
+                    <button class="btn btn-primary" onclick="markFlashcardLearned()" id="btn-fc-learned"><i class="fa-solid fa-check"></i> শিখেছি / জানি</button>
+                    <button class="btn btn-secondary" onclick="nextFlashcard()">পরবর্তী <i class="fa-solid fa-chevron-right"></i></button>
+                </div>
+
+                <div class="flashcard-progress">
+                    <div style="display: flex; justify-content: space-between; font-size: 0.85rem; color: var(--text-secondary);">
+                        <span id="fc-counter">কার্ড ১/১০০</span>
+                        <span id="fc-learned-counter">শেখা হয়েছে: ০টি (০%)</span>
+                    </div>
+                    <div class="flashcard-progress-bar-container">
+                        <div class="flashcard-progress-bar" id="fc-progress-bar"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ======================= TAB 7: MCQ PRACTICE ======================= -->
+        <div id="panel-6" class="tab-panel">
+            <div class="theory-section">
+                <span class="theory-badge">মূল্যায়ন মডিউল • Practice Engine</span>
+                <h2><i class="fa-solid fa-circle-question"></i> ইইই জব প্রিপারেশন: কুইজ প্র্যাকটিস ও মক টেস্ট</h2>
+                <div class="theory-content">
+                    <p>পরীক্ষার জন্য প্রস্তুতি যাচাই করতে ১০০টি প্রশ্ন নিয়ে সাজানো এই কুইজ ইঞ্জিন ব্যবহার করো। তুমি কুইক প্র্যাকটিস বা পূর্ণাঙ্গ টাইমারযুক্ত মক টেস্ট দিতে পারো।</p>
+                </div>
+            </div>
+
+            <div class="mcq-container">
+                <!-- Select Quiz Mode -->
+                <div id="quiz-intro-area">
+                    <div class="quiz-modes">
+                        <div class="quiz-mode-card" onclick="startQuiz('quick')">
+                            <i class="fa-solid fa-bolt"></i>
+                            <h4>কুইক প্র্যাকটিস</h4>
+                            <p>১০টি র‍্যান্ডম প্রশ্ন নিয়ে সাধারণ প্রস্তুতি অনুশীলন করুন।</p>
+                        </div>
+                        <div class="quiz-mode-card" onclick="startQuiz('mock')">
+                            <i class="fa-solid fa-stopwatch"></i>
+                            <h4>মক টেস্ট (Timed)</h4>
+                            <p>২০টি র‍্যান্ডম প্রশ্ন এবং ২০ মিনিট সময় নিয়ে পরীক্ষা দিন।</p>
+                        </div>
+                        <div class="quiz-mode-card" onclick="showCategoryQuizSelector()">
+                            <i class="fa-solid fa-list-check"></i>
+                            <h4>অধ্যায় ভিত্তিক পরীক্ষা</h4>
+                            <p>নির্দিষ্ট একটি বিষয়ের ওপরে সবগুলো প্রশ্ন প্র্যাকটিস করুন।</p>
+                        </div>
+                    </div>
+                    
+                    <div id="cat-quiz-selector-box" class="quiz-active-area" style="display: none; text-align: center;">
+                        <h4 style="margin-bottom: 15px;">অনুশীলনের জন্য অধ্যায় নির্বাচন করুন:</h4>
+                        <select id="mcq-cat-select" style="padding: 10px 15px; border-radius: 6px; background-color: rgba(9, 13, 22, 0.8); border: 1px solid var(--border-color); color: var(--text-primary); outline: none; width: 100%; max-width: 400px; margin-bottom: 20px; font-family: inherit;">
+                            <option value="Sampling">অধ্যায় ১: Sampling & Nyquist Rate (২০টি MCQ)</option>
+                            <option value="PCM & TDM">অধ্যায় ২: PCM Bit Rate & TDM (২০টি MCQ)</option>
+                            <option value="SQNR">অধ্যায় ৩: SQNR & Companding (২০টি MCQ)</option>
+                            <option value="Storage">অধ্যায় ৪: Storage & Dynamic Range (২০টি MCQ)</option>
+                            <option value="Modulation">অধ্যায় ৫: Carrier Modulation (২০টি MCQ)</option>
+                        </select>
+                        <div>
+                            <button class="btn btn-primary" onclick="startQuiz('category')">শুরু করুন</button>
+                            <button class="btn btn-secondary" onclick="hideCategoryQuizSelector()">ফিরে যান</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Active Quiz Area -->
+                <div id="quiz-play-area" class="quiz-active-area" style="display: none;">
+                    <div class="quiz-header">
+                        <div>
+                            <span class="badge" id="quiz-mode-badge" style="background-color: var(--accent-color); color: #000; font-weight: bold; padding: 4px 10px; border-radius: 4px; font-size: 0.8rem; margin-right: 8px;">Quick Practice</span>
+                            <span id="quiz-q-counter" style="font-weight: 500;">প্রশ্ন ১/১০</span>
+                        </div>
+                        <div class="quiz-timer" id="quiz-timer-box" style="display: none;">
+                            <i class="fa-solid fa-clock"></i> <span id="quiz-timer-text">20:00</span>
+                        </div>
+                    </div>
+
+                    <div class="mcq-question-area">
+                        <div class="mcq-question-text tex2jax_process" id="mcq-q-text">
+                            স্যাম্পলিং থিওরেম অনুযায়ী, এনালগ সিগন্যালকে বিকৃতি ছাড়া পুনর্গঠন করতে স্যাম্পলিং রেট ($f_s$) কত হতে হবে?
+                        </div>
+                        <div class="mcq-options-grid" id="mcq-options-box">
+                            <!-- Options rendered dynamically -->
+                        </div>
+                        
+                        <!-- Explanation revealed on click -->
+                        <div class="mcq-explanation-panel tex2jax_process" id="mcq-explanation-box" style="display: none;">
+                            <h5><i class="fa-solid fa-circle-info"></i> ব্যাখ্যা ও বিশ্লেষণ:</h5>
+                            <p id="mcq-explanation-text">ব্যাখ্যা টেক্সট...</p>
+                        </div>
+                    </div>
+
+                    <div class="quiz-footer">
+                        <button class="btn btn-secondary" onclick="quitQuiz()"><i class="fa-solid fa-xmark"></i> শেষ করুন</button>
+                        <button class="btn btn-primary" id="btn-next-q" onclick="nextQuizQuestion()" disabled>পরবর্তী প্রশ্ন <i class="fa-solid fa-arrow-right"></i></button>
+                    </div>
+                </div>
+
+                <!-- Results Summary Screen -->
+                <div id="quiz-result-area" class="quiz-active-area" style="display: none;">
+                    <div class="quiz-results-screen">
+                        <div class="result-score-circle">
+                            <span class="score-num" id="res-score">১৮</span>
+                            <span class="score-label" id="res-total">/ ২০</span>
+                        </div>
+                        <div class="result-feedback" id="res-feedback">অসাধারণ! আপনি চমৎকার প্রস্তুতি নিয়েছেন।</div>
+                        
+                        <div class="result-stats-grid">
+                            <div class="result-stat-card">
+                                <div class="stat-val" id="res-percentage">৯০%</div>
+                                <div class="stat-lbl">সঠিকতার হার</div>
+                            </div>
+                            <div class="result-stat-card">
+                                <div class="stat-val" id="res-time">০৪:২৫</div>
+                                <div class="stat-lbl">ব্যয়িত সময়</div>
+                            </div>
+                            <div class="result-stat-card">
+                                <div class="stat-val" id="res-correct-count">১৮/২০</div>
+                                <div class="stat-lbl">সঠিক উত্তর</div>
+                            </div>
+                        </div>
+
+                        <div style="display: flex; gap: 15px; justify-content: center;">
+                            <button class="btn btn-primary" onclick="restartQuiz()"><i class="fa-solid fa-rotate-left"></i> আবার পরীক্ষা দিন</button>
+                            <button class="btn btn-secondary" onclick="showReviewScreen()"><i class="fa-solid fa-list-check"></i> ভুলগুলো রিভিউ করুন</button>
+                            <button class="btn btn-secondary" onclick="quitQuiz()"><i class="fa-solid fa-house"></i> হোম</button>
+                        </div>
+
+                        <!-- Review of questions -->
+                        <div class="results-review-section" id="quiz-review-box" style="display: none;">
+                            <h3 style="margin-bottom: 20px; border-bottom: 2px solid var(--border-color); padding-bottom: 10px;"><i class="fa-solid fa-clipboard-question"></i> বিস্তারিত প্রশ্নোত্তর ও ব্যাখ্যা রিভিউ</h3>
+                            <div id="quiz-review-list">
+                                <!-- Review items dynamically populated -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 
     <script>
@@ -2403,6 +3087,14 @@
                 if (lightBtn) lightBtn.classList.remove('active');
                 localStorage.setItem('theme', 'dark');
             }
+            
+            // Redraw visualizers
+            if (typeof updateT1 === 'function') {
+                updateT1();
+                updateT2();
+                updateT3();
+                updateT4();
+            }
         }
 
         // --- QUIZ ENGINE ---
@@ -2444,9 +3136,9 @@
             const f2 = parseFloat(document.getElementById('t1-f2').value);
             const overhead = parseFloat(document.getElementById('t1-overhead').value);
 
-            document.getElementById('val-t1-f1').innerText = f1;
-            document.getElementById('val-t1-f2').innerText = f2;
-            document.getElementById('val-t1-overhead').innerText = overhead;
+            setDisplayValue('val-t1-f1', f1);
+            setDisplayValue('val-t1-f2', f2);
+            setDisplayValue('val-t1-overhead', overhead);
 
             const fm = Math.max(f1, f2);
             const fnq = 2 * fm;
@@ -2467,6 +3159,7 @@
                 $$T_s = \\frac{1}{f_s} = ${ts.toFixed(3)}\\text{ ms}$$
             `;
             triggerMathJax();
+            drawT1Plot(f1, f2, fs);
         }
 
         function simulateType1(f1, f2) {
@@ -2488,11 +3181,11 @@
             const sync = parseInt(document.getElementById('t2-sync').value);
             const control = parseInt(document.getElementById('t2-control').value);
 
-            document.getElementById('val-t2-channels').innerText = channels;
-            document.getElementById('val-t2-fm').innerText = fm;
-            document.getElementById('val-t2-bits').innerText = bits;
-            document.getElementById('val-t2-sync').innerText = sync;
-            document.getElementById('val-t2-control').innerText = control;
+            setDisplayValue('val-t2-channels', channels);
+            setDisplayValue('val-t2-fm', fm);
+            setDisplayValue('val-t2-bits', bits);
+            setDisplayValue('val-t2-sync', sync);
+            setDisplayValue('val-t2-control', control);
 
             const fs = 2 * fm;
             const fLength = bits * channels + sync + control;
@@ -2512,6 +3205,7 @@
                 $$B_{min} = \\frac{R_b}{2} = ${(bw/1000).toFixed(1)}\\text{ kHz}$$
             `;
             triggerMathJax();
+            drawT2Plot(channels, bits, sync, control);
         }
 
         function simulateType2(channels, fm, bits, sync, control) {
@@ -2534,18 +3228,17 @@
             const patients = parseInt(document.getElementById('t3-patients').value);
             const mu = parseFloat(document.getElementById('t3-mu').value);
 
-            document.getElementById('val-t3-fm').innerText = fm;
-            document.getElementById('val-t3-error').innerText = error;
-            document.getElementById('val-t3-patients').innerText = patients;
-            document.getElementById('val-t3-mu').innerText = mu;
+            setDisplayValue('val-t3-fm', fm);
+            setDisplayValue('val-t3-error', error);
+            setDisplayValue('val-t3-patients', patients);
+            setDisplayValue('val-t3-mu', mu);
 
             // Quantization calculations
-            // error_max = mp/L <= p% mp => L >= 100/p
             const lMin = 100 / error;
             const bitsRequired = Math.ceil(Math.log2(lMin));
             const levels = Math.pow(2, bitsRequired); // Strict 2^n rounding
 
-            const fs = 4 * fm; // Twice the Nyquist Rate (Nyquist = 2fm => 2*2fm = 4fm)
+            const fs = 4 * fm; // Twice the Nyquist Rate
             const rb = levels > 0 ? (bitsRequired * fs * patients) : 0;
             const bw = rb / 2;
 
@@ -2568,11 +3261,12 @@
 
             const mathOut = document.getElementById('out-t3-math');
             mathOut.innerHTML = `
-                $$L \\ge 100 / 0.25 = 400 \\Rightarrow L_{actual} = ${levels}$$
+                $$L \\ge 100 / ${error} = ${lMin.toFixed(0)} \\Rightarrow L_{actual} = ${levels}$$
                 $$n = ${bitsRequired}\\text{ bits}$$
                 $$\\text{SQNR (Uniform)} = 1.76 + 6.02(${bitsRequired}) = ${sqnrUni.toFixed(2)}\\text{ dB}$$
             `;
             triggerMathJax();
+            drawT3Plot(levels, mu);
         }
 
         function simulateType3(patients, fm, error, patientCount) {
@@ -2608,9 +3302,9 @@
             const channels = parseInt(document.getElementById('t4-channels').value);
             const duration = parseFloat(document.getElementById('t4-duration').value);
 
-            document.getElementById('val-t4-fm').innerText = fm;
-            document.getElementById('val-t4-bits').innerText = bits;
-            document.getElementById('val-t4-duration').innerText = duration;
+            setDisplayValue('val-t4-fm', fm);
+            setDisplayValue('val-t4-bits', bits);
+            setDisplayValue('val-t4-duration', duration);
 
             const fs = 2 * fm;
             const rb = fs * bits * channels;
@@ -2627,6 +3321,7 @@
                 $$\\text{Storage Size} = \\frac{R_b \\cdot \\text{Time}}{8 \\cdot 10^6} = \\frac{${rb} \\times ${duration}}{8 \\cdot 10^6} = ${totalSize.toFixed(2)}\\text{ MB}$$
             `;
             triggerMathJax();
+            drawT4Plot(totalSize);
         }
 
         function simulateType4(fm, bits, channels, duration) {
@@ -2676,6 +3371,692 @@
             updateT3();
             updateT4();
         });
-    </script>
+    
+        // --- INLINED STUDY DECK DATABASE (100 MCQs & 100 Flashcards) ---
+        const studyDataset = {"mcqs": [{"id": 1, "q": "স্যাম্পলিং থিওরেম অনুযায়ী, এনালগ সিগন্যালকে বিকৃতি ছাড়া পুনর্গঠন করতে স্যাম্পলিং রেট ($f_s$) কত হতে হবে?", "options": ["fs < fm", "fs = fm", "fs >= 2fm", "fs < 2fm"], "correct": 2, "explanation": "স্যাম্পলিং থিওরেম অনুযায়ী, স্যাম্পলিং ফ্রিকোয়েন্সি অবশ্যই সিগন্যালের সর্বোচ্চ ফ্রিকোয়েন্সির ($f_m$) দ্বিগুণের সমান বা তার বেশি হতে হবে ($f_s \\ge 2f_m$)।"}, {"id": 2, "q": "একটি সিগন্যালের সর্বোচ্চ ফ্রিকোয়েন্সি ৩ kHz হলে এর নাইকুইস্ট রেট কত?", "options": ["১.৫ kHz", "৩ kHz", "৬ kHz", "১২ kHz"], "correct": 2, "explanation": "নাইকুইস্ট রেট $f_{NQ} = 2 \\cdot f_m = 2 \\times 3\\text{ kHz} = 6\\text{ kHz}$।"}, {"id": 3, "q": "স্যাম্পলিং রেট নাইকুইস্ট রেটের চেয়ে কম হলে ($f_s < 2f_m$) সিগন্যালে কী ধরনের বিকৃতি ঘটে?", "options": ["Quantization Noise", "Aliasing Distortion", "Phase Deviation", "Thermal Noise"], "correct": 1, "explanation": "স্যাম্পলিং রেট নাইকুইস্ট হারের চেয়ে কম হলে স্পেকট্রাম ওভারল্যাপ করে, যাকে Aliasing Distortion বলা হয়।"}, {"id": 4, "q": "অ্যালাইসিং ডিস্টরশন এড়াতে স্যাম্পলিংয়ের পূর্বে কোন ফিল্টার ব্যবহার করা হয়?", "options": ["High-pass Filter", "Band-stop Filter", "Anti-aliasing Low-pass Filter", "All-pass Filter"], "correct": 2, "explanation": "Anti-aliasing Low-pass Filter স্যাম্পলিং করার আগে অতিরিক্ত উচ্চ ফ্রিকোয়েন্সি উপাদানসমূহ কেটে দেয়।"}, {"id": 5, "q": "সিগন্যাল $x(t) = 10 \\cos(600\\pi t) + 20 \\sin(1000\\pi t)$ এর সর্বোচ্চ ফ্রিকোয়েন্সি ($f_m$) কত?", "options": ["৩০০ Hz", "৫০০ Hz", "৬০০ Hz", "১০০০ Hz"], "correct": 1, "explanation": "কম্পোনেন্ট ১: $2\\pi f_1 = 600\\pi \\Rightarrow f_1 = 300\\text{ Hz}$। কম্পোনেন্ট ২: $2\\pi f_2 = 1000\\pi \\Rightarrow f_2 = 500\\text{ Hz}$। সর্বোচ্চ ফ্রিকোয়েন্সি $f_m = \\max(300, 500) = 500\\text{ Hz}$।"}, {"id": 6, "q": "সিগন্যাল $x(t) = 5 \\cos(200\\pi t) \\cos(800\\pi t)$ এর নাইকুইস্ট হার কত?", "options": ["২০০ Hz", "৮০০ Hz", "১০০০ Hz", "৫০০ Hz"], "correct": 2, "explanation": "ত্রিকোণমিতিক সূত্রে রূপান্তর করলে ফ্রিকোয়েন্সি দুটি যোগ ও বিয়োগ হয়। সর্বোচ্চ ফ্রিকোয়েন্সি হবে $f_m = f_1 + f_2 = 100 + 400 = 500\\text{ Hz}$। নাইকুইস্ট রেট = $2 \\times 500 = 1000\\text{ Hz}$।"}, {"id": 7, "q": "একটি ভয়েস সিগন্যাল ৩০০ Hz থেকে ৩৪০০ Hz এ সীমাবদ্ধ। এর জন্য নাইকুইস্ট রেট কত?", "options": ["৬০০ Hz", "৬৮০০ Hz", "৮০০০ Hz", "৩০০০ Hz"], "correct": 1, "explanation": "সর্বোচ্চ ফ্রিকোয়েন্সি $f_m = 3400\\text{ Hz}$। নাইকুইস্ট রেট $f_{NQ} = 2 \\times 3400 = 6800\\text{ Hz}$।"}, {"id": 8, "q": "টেলিফোন সিস্টেমে গার্ড ব্যান্ডসহ ভয়েস চ্যানেলের জন্য স্ট্যান্ডার্ড স্যাম্পলিং রেট কত ব্যবহার করা হয়?", "options": ["৪ kHz", "৬.৮ kHz", "৮ kHz", "১৬ kHz"], "correct": 2, "explanation": "গার্ড ব্যান্ডসহ ৪ kHz লিমিটের কারণে স্ট্যান্ডার্ড স্যাম্পলিং রেট ৮ kHz ব্যবহার করা হয়।"}, {"id": 9, "q": "ফ্ল্যাট-টপ স্যাম্পলিং (Flat-top Sampling)-এ কোন ইফেক্ট দেখা যায়?", "options": ["Aperture Effect", "Jitter Effect", "Slope Overload", "Granular Noise"], "correct": 0, "explanation": "ফ্ল্যাট-টপ স্যাম্পলিংয়ে স্যাম্পলের সসীম প্রস্থের কারণে Aperture Effect বা অ্যাম্প্লিচিউড বিকৃতি ঘটে, যা Equalizer দিয়ে দূর করা হয়।"}, {"id": 10, "q": "যদি কোনো সিগন্যালকে নাইকুইস্ট হারের চেয়ে ২৫% বেশি হারে স্যাম্পল করা হয়, তবে স্যাম্পলিং ফ্রিকোয়েন্সি কত হবে? (ধরি, $f_m = 4\\text{ kHz}$)", "options": ["৮ kHz", "১০ kHz", "১২ kHz", "১৬ kHz"], "correct": 1, "explanation": "নাইকুইস্ট রেট = $2 \\times 4 = 8\\text{ kHz}$। স্যাম্পলিং রেট = $8 \\times 1.25 = 10\\text{ kHz}$।"}, {"id": 11, "q": "স্যাম্পলিং ইন্টারভাল ($T_s$) এবং স্যাম্পলিং ফ্রিকোয়েন্সি ($f_s$) এর মধ্যে সম্পর্ক কী?", "options": ["Ts = fs", "Ts = 1 / fs", "Ts = 2 / fs", "Ts = fs / 2"], "correct": 1, "explanation": "স্যাম্পলিং ইন্টারভাল হলো স্যাম্পলিং রেটের ব্যস্তানুপাতিক: $T_s = 1 / f_s$।"}, {"id": 12, "q": "কোন ধরনের স্যাম্পলিংয়ে ইমপালস ট্রেন (Impulse train) দ্বারা এনালগ সিগন্যালকে গুণ করা হয়?", "options": ["Natural Sampling", "Flat-top Sampling", "Ideal/Instantaneous Sampling", "PAM"], "correct": 2, "explanation": "আইডিয়াল বা ইনস্ট্যান্টেনিয়াস স্যাম্পলিংয়ে গাণিতিক ইমপালস ট্রেন ($\\delta$ ফাংশন) ব্যবহার করা হয়।"}, {"id": 13, "q": "কোসিন ফাংশন $\\cos(2000\\pi t)$ এর পিচ বা ফান্ডামেন্টাল ফ্রিকোয়েন্সি কত?", "options": ["১০০০ Hz", "২০০০ Hz", "৫০০ Hz", "১০০ Hz"], "correct": 0, "explanation": "$2\\pi f = 2000\\pi \\Rightarrow f = 1000\\text{ Hz}$।"}, {"id": 14, "q": "কম্পোজিট সিগন্যাল $x(t) = \\sin(600\\pi t) + \\cos(800\\pi t)$ এর ফান্ডামেন্টাল ফ্রিকোয়েন্সি (পিচ) কত?", "options": ["১০০ Hz", "৩০০ Hz", "৪০০ Hz", "৭০০ Hz"], "correct": 0, "explanation": "ফ্রিকোয়েন্সি দুটি হলো ৩০০ Hz এবং ৪০০ Hz। এদের GCD (গ.সা.গু) = ১০০ Hz।"}, {"id": 15, "q": "আইডিয়াল স্যাম্পলিং স্পেকট্রাম কেমন হয়?", "options": ["একটি মাত্র স্পাইক", "নির্দিষ্ট ফ্রিকোয়েন্সির পর শূন্য", "স্যাম্পলিং ফ্রিকোয়েন্সি পর পর মেসেজ স্পেকট্রামের পুনরাবৃত্তি", "সম্পূর্ণ সাদা নয়েজ"], "correct": 2, "explanation": "স্যাম্পলড সিগন্যালের স্পেকট্রাম হলো মেসেজ স্পেকট্রামের পর্যায়বৃত্তিক রূপ যা $f_s$ ব্যবধানে পুনরাবৃত্ত হয়।"}, {"id": 16, "q": "অ্যালাইসিং বিকৃতি এড়ানোর গাণিতিক শর্ত কোনটি?", "options": ["fs < 2fm", "fs = fm", "fs >= 2fm", "fs <= fm"], "correct": 2, "explanation": "অ্যালাইসিং এড়াতে স্যাম্পলিং রেট নাইকুইস্ট রেটের সমান বা বেশি হতে হবে ($f_s \\ge 2f_m$)।"}, {"id": 17, "q": "একটি ব্যান্ডপাস সিগন্যালের ব্যান্ডউইথ ৪ kHz এবং সর্বনিম্ন ফ্রিকোয়েন্সি ১২ kHz হলে এর সর্বনিম্ন স্যাম্পলিং হার কত?", "options": ["৮ kHz", "২৪ kHz", "৩২ kHz", "১৬ kHz"], "correct": 0, "explanation": "ব্যান্ডপাস স্যাম্পলিং থিওরেম অনুযায়ী সর্বনিম্ন স্যাম্পলিং হার $2 \\times \\text{Bandwidth} = 2 \\times 4 = 8\\text{ kHz}$।"}, {"id": 18, "q": "ন্যাচারাল স্যাম্পলিং (Natural Sampling)-এ ডিস্টরশন কম হওয়ার কারণ কী?", "options": ["স্যাম্পলের টপ অংশ সিগন্যালের অ্যানালগ শেপ বজায় রাখে", "স্যাম্পলগুলো ফ্ল্যাট থাকে", "এটি হাই-পাস ফিল্টার ব্যবহার করে", "এর কোয়ান্টাইজেশন প্রয়োজন হয় না"], "correct": 0, "explanation": "ন্যাচারাল স্যাম্পলিংয়ে স্যাম্পলের টপ কার্ভটি অ্যানালগ সিগন্যালের মতনই অ্যাম্প্লিচিউড বজায় রাখে।"}, {"id": 19, "q": "স্যাম্পলিং প্রক্রিয়া মূলত সিগন্যালের কোন ডোমেইনকে বিচ্ছিন্ন (discrete) করে?", "options": ["Amplitude Domain", "Frequency Domain", "Time Domain", "Phase Domain"], "correct": 2, "explanation": "স্যাম্পলিং অ্যানালগ সময় অক্ষকে বিচ্ছিন্ন সময়ে রূপান্তর করে, অর্থাৎ Time Domain বিচ্ছিন্ন হয়।"}, {"id": 20, "q": "একটি সিগন্যাল সর্বোচ্চ ৫ kHz পর্যন্ত ফ্রিকোয়েন্সি ধারণ করে। সিগন্যাল রিকনস্ট্রাকশন ফিল্টারের কাট-অফ ফ্রিকোয়েন্সি কত হওয়া উচিত?", "options": ["২.৫ kHz", "৫ kHz", "১০ kHz", "১৫ kHz"], "correct": 1, "explanation": "রিকনস্ট্রাকশন ফিল্টার (লো-পাস ফিল্টার) এর কাট-অফ ফ্রিকোয়েন্সি মেসেজের সর্বোচ্চ ফ্রিকোয়েন্সি $f_m$-এর সমান (৫ kHz) রাখা হয়।"}, {"id": 21, "q": "পালস কোড মডুলেশন (PCM) সিগন্যাল তৈরির সঠিক ক্রম কোনটি?", "options": ["Quantizing -> Sampling -> Coding", "Sampling -> Quantizing -> Coding", "Coding -> Sampling -> Quantizing", "Sampling -> Coding -> Quantizing"], "correct": 1, "explanation": "PCM সিস্টেমে প্রথমে এনালগ সিগন্যাল স্যাম্পল করা হয়, তারপর ডিসক্রিট লেভেলে কোয়ান্টাইজ করা হয় এবং সবশেষে বাইনারি কোড করা হয়।"}, {"id": 22, "q": "একটি সিঙ্গেল চ্যানেল PCM সিস্টেমে প্রতি স্যাম্পলে ৮টি বিট থাকলে এবং স্যাম্পলিং রেট ৮ kHz হলে বিট রেট কত?", "options": ["৮ kbps", "১৬ kbps", "৩২ kbps", "৬৪ kbps"], "correct": 3, "explanation": "$R_b = n \\cdot f_s = 8 \\times 8\\text{ kHz} = 64\\text{ kbps}$।"}, {"id": 23, "q": "একটি PCM সিস্টেমে কোয়ান্টাইজেশন লেভেল সংখ্যা ৪ থেকে বাড়িয়ে ৬৪ করলে প্রয়োজনীয় ব্যান্ডউইথ কত গুণ বৃদ্ধি পাবে?", "options": ["৩ গুণ", "৮ গুণ", "১৬ গুণ", "৩২ গুণ"], "correct": 0, "explanation": "লেভেল ৪ হলে $n_1 = 2$ বিট। লেভেল ৬৪ হলে $n_2 = 6$ বিট। ব্যান্ডউইথ বিট সংখ্যার সমানুপাতিক, তাই $6/2 = 3$ গুণ বৃদ্ধি পাবে।"}, {"id": 24, "q": "ইউরোপিয়ান E1 ক্যারিয়ার সিস্টেমে মোট কতটি চ্যানেল থাকে এবং এর ডাটা রেট কত?", "options": ["২৪ চ্যানেল, ১.৫৪৪ Mbps", "৩২ চ্যানেল, ২.০৪৮ Mbps", "৩০ চ্যানেল, ৬৪ kbps", "১২ channel, ১.৫ Mbps"], "correct": 1, "explanation": "E1 স্ট্যান্ডার্ড ক্যারিয়ারে ৩২টি চ্যানেল (৩০টি ভয়েস + ১টি সিঙ্ক + ১টি সিগন্যালিং) থাকে এবং ডাটা রেট ২.০৪৮ Mbps ($32 \\times 64\\text{ kbps}$)."}, {"id": 25, "q": "উত্তর আমেরিকান T1 ক্যারিয়ার সিস্টেমে মোট কতটি চ্যানেল থাকে এবং এর ডাটা রেট কত?", "options": ["২৪ চ্যানেল, ১.৫৪৪ Mbps", "৩২ চ্যানেল, ২.০৪৮ Mbps", "৩০ চ্যানেল, ২.০৪৮ Mbps", "১৬ চ্যানেল, ১.৫৪ Mbps"], "correct": 0, "explanation": "T1 ক্যারিয়ারে ২৪টি ভয়েস চ্যানেল থাকে এবং এর ডাটা রেট ১.৫৪৪ Mbps ($24 \\times 64\\text{ kbps} + 8\\text{ kbps}$ সিঙ্ক ওভারহেড)।"}, {"id": 26, "q": "Time Division Multiplexing (TDM) কোন ধরনের ডোমেইনে একাধিক সিগন্যালকে ভাগ করে?", "options": ["Frequency Domain", "Time Domain", "Phase Domain", "Code Domain"], "correct": 1, "explanation": "TDM সিস্টেমে একাধিক ব্যবহারকারীকে আলাদা আলাদা টাইম স্লট বরাদ্দ দেওয়া হয়, তাই এটি Time Domain এ বিভক্ত।"}, {"id": 27, "q": "একটি TDM সিস্টেমে ১০টি চ্যানেল এবং প্রতি চ্যানেলে ৮টি বিট আছে। প্রতি ফ্রেমে ১টি অতিরিক্ত সিঙ্ক বিট থাকলে ফ্রেমের মোট বিট সংখ্যা কত?", "options": ["৮০", "৮১", "৯০", "৮২"], "correct": 1, "explanation": "মোট বিট = $M \\cdot n + a = 10 \\times 8 + 1 = 81\\text{ bits}$।"}, {"id": 28, "q": "TDM সিস্টেমে ফ্রেম ডিউরেশন ($T_f$) কিসের সমান হয়?", "options": ["বিট ডিউরেশনের সমান", "স্যাম্পলিং পিরিয়ড ($T_s$) এর সমান", "চ্যানেল সংখ্যার গুণফল", "১ সেকেন্ডের সমান"], "correct": 1, "explanation": "TDM সিস্টেমে প্রতিটি স্যাম্পলিং চক্রে একটি করে সম্পূর্ণ ফ্রেম তৈরি হয়, তাই ফ্রেম ডিউরেশন স্যাম্পলিং পিরিয়ডের সমান ($T_f = T_s = 1/f_s$)।"}, {"id": 29, "q": "কোন ধরনের মাল্টিপ্লেক্সিং এ অপটিক্যাল ফাইবার কেবলে ভিন্ন ভিন্ন রঙের আলো ব্যবহার করা হয়?", "options": ["FDM", "TDM", "WDM (Wavelength Division)", "CDM"], "correct": 2, "explanation": "Wavelength Division Multiplexing (WDM) অপটিক্যাল ফাইবার লাইনে বিভিন্ন তরঙ্গদৈর্ঘ্যের আলো ব্যবহার করে।"}, {"id": 30, "q": "ভিন্ন ভিন্ন ফ্রিকোয়েন্সির সিগন্যাল মাল্টিপ্লেক্স করার জন্য TDM কমিউটেটরের স্পিড নির্ধারণে কোনটি ব্যবহার করা হয়?", "options": ["LCM (ল.সা.গু)", "HCF (গ.সা.গু)", "যোগফল", "গড়"], "correct": 1, "explanation": "ভিন্ন ভিন্ন ফ্রিকোয়েন্সির স্যাম্পলিং হার থাকলে কমিউটেটর বা সুইচের ঘূর্ণন বেগ নির্ধারণ করতে ফ্রিকোয়েন্সিগুলোর HCF বা গ.সা.গু নেওয়া হয়।"}, {"id": 31, "q": "একটি TDM সিস্টেমে ১টি চ্যানেল ৪ kHz স্যাম্পল করা হয় এবং ৩টি চ্যানেল ২ kHz স্যাম্পল করা হয়। কমিউটেটরের ঘূর্ণন বেগ কত হওয়া উচিত?", "options": ["১ kHz", "২ kHz", "৩ kHz", "৪ kHz"], "correct": 1, "explanation": "ঘূর্ণন বেগ = $\\text{HCF}(4\\text{ kHz}, 2\\text{ kHz}, 2\\text{ kHz}, 2\\text{ kHz}) = 2\\text{ kHz}$ (২০০০ ঘূর্ণন প্রতি সেকেন্ড)।"}, {"id": 32, "q": "PCM এর রিসিভারের শেষ ব্লকে রিকনস্ট্রাকশন ফিল্টারের কাজ কী?", "options": ["অ্যানালগ মানকে বাইনারি করা", "কোয়ান্টাইজেশন লেভেল ঠিক করা", "ডিজিটাল সিগন্যালকে স্মুথ এনালগ তরঙ্গে রূপান্তর করা", "নয়েজ যুক্ত করা"], "correct": 2, "explanation": "ডিকোডার থেকে আসা পালসগুলোকে এনালগ স্মুথ তরঙ্গে পুনর্গঠন করতে রিকনস্ট্রাকশন লো-পাস ফিল্টার ব্যবহৃত হয়।"}, {"id": 33, "q": "রিজেনারেটিভ রিপিটার (Regenerative Repeater) কোথায় ব্যবহৃত হয়?", "options": [" bigotry", " receiver", "ডিজিটাল চ্যানেল বা ট্রান্সমিশন লাইনে", "এনালগ এফএম মডুলেটরে"], "correct": 2, "explanation": "রিজেনারেটিভ রিপিটার ট্রান্সমিশন লাইনে নয়েজ দূর করে এবং সিগন্যালকে পুনরায় তার মূল ডিজিটাল শেপে তৈরি (regenerate) করে।"}, {"id": 34, "q": "টেলিফোনিতে PCM বিট রেট ৬৪ kbps কিভাবে নির্ধারিত হয়?", "options": ["৪ kHz sampling x ১৬ bits", "৮ kHz sampling x ৮ bits", "১৬ kHz sampling x ৪ bits", "৩২ kHz sampling x ২ bits"], "correct": 1, "explanation": "স্ট্যান্ডার্ড ভয়েস স্যাম্পলিং রেট ৮ kHz এবং কোডিং ৮ বিট হওয়ায় $8 \\times 8 = 64\\text{ kbps}$।"}, {"id": 35, "q": "কোন ধরনের সিগন্যালে একই সাথে টাইম ডোমেইন ও ফ্রিকোয়েন্সি ডোমেইন ভাগ করা হয়?", "options": ["TDM", "FDM", "Orthogonal FDM (OFDM) / CDMA", "WDM"], "correct": 2, "explanation": "CDMA কোড ডোমেইন ব্যবহার করে, কিন্তু OFDM একাধিক অর্থোগোনাল ফ্রিকোয়েন্সি ও টাইম স্লট নিয়ে কাজ করে।"}, {"id": 36, "q": "E1 ক্যারিয়ার লাইনে ৩০টি ভয়েস চ্যানেল ছাড়া বাকি ২টি চ্যানেলের কাজ কী?", "options": ["ভয়েস ডাটা রিডান্ড্যান্সি", "সিনক্রোনাইজেশন (চ্যানেল ০) ও সিগন্যালিং (চ্যানেল ১৬)", "নয়েজ ক্যান্সেলিং এবং ইকো দূর করা", "ভিডিও স্ট্রিমিং ও ইমেজ ডাটা"], "correct": 1, "explanation": "E1 ক্যারিয়ারের চ্যানেল ০ সিনক্রোনাইজেশনের জন্য এবং চ্যানেল ১৬ সিগন্যালিং/কন্ট্রোল ডাটা পাঠানোর জন্য ব্যবহৃত হয়।"}, {"id": 37, "q": "T1 ক্যারিয়ারে ১ ফ্রেমের দৈর্ঘ্য ১৯৩ বিট হওয়ার কারণ কী?", "options": ["২৪ channel x ৮ bits + ১ sync bit", "৩২ channel x ৬ bits + ১ sync bit", "২৪ channel x ৮ bits + ৯ sync bits", "১২ channel x ১৬ bits + ১ sync bit"], "correct": 0, "explanation": "T1 এ প্রতি ফ্রেমে ২৪টি চ্যানেল থাকে, প্রতিটিতে ৮ বিট করে মোট $24 \\times 8 = 192$ বিট এবং ফ্রেমিং ওভারহেডের জন্য অতিরিক্ত ১টি সিঙ্ক বিট যুক্ত হয়ে মোট ১৯৩ বিট হয়।"}, {"id": 38, "q": "টেলিফোনি PCM সিস্টেমে মেইড সিগন্যালে ৮ বিটের মধ্যে কতটি বিট কোডিং এবং কতটি বিট সাইন (MSB) হিসেবে থাকে?", "options": ["৬ বিট কোড + ২ বিট সাইন", "৭ বিট কোড + ১ বিট সাইন (MSB)", "৮ বিট কোড + ০ বিট সাইন", "৫ বিট কোড + ৩ বিট সাইন"], "correct": 1, "explanation": "স্ট্যান্ডার্ড টেলিফোনিতে ৭টি বিট কোয়ান্টাইজেশন লেভেল নির্দেশ করে এবং ১ম বিট বা MSB টি পজিটিভ/নেগেটিভ সাইন (polarity) নির্দেশ করে।"}, {"id": 39, "q": "একটি TDM চ্যানেলে বিট রেট ১.৫৪৪ Mbps হলে এবং ফ্রেম সাইজ ১৯৩ বিট হলে প্রতি সেকেন্ডে ফ্রেম রেট কত?", "options": ["৪০০০ ফ্রেম/সেকেন্ড", "৮০০০ ফ্রেম/সেকেন্ড", "১৬০০০ ফ্রেম/সেকেন্ড", "২০০০ ফ্রেম/সেকেন্ড"], "correct": 1, "explanation": "ফ্রেম রেট = $\\frac{\\text{Bit Rate}}{\\text{Frame Size}} = \\frac{1544000}{193} = 8000\\text{ frames/sec}$ (যা ভয়েস স্যাম্পলিং ফ্রিকোয়েন্সির সমান)।"}, {"id": 40, "q": "নন-রিটার্ন-টু-জিরো (NRZ) কোডিং স্কিমে ন্যূনতম প্রয়োজনীয় ব্যান্ডউইথ কত?", "options": ["Rb", "Rb / 2", "2Rb", "Rb / 4"], "correct": 1, "explanation": " can transmit up to 2 bits/s per 1 Hz Bandwidth. So minimum bandwidth is half the bit rate ($BW_{min} = R_b / 2$)."}, {"id": 41, "q": "কোয়ান্টাইজেশন এরর বা গোলযোগ (Quantization Error) বলতে কী বোঝায়?", "options": ["স্যাম্পলিং হারের ত্রুটি", "আসল স্যাম্পল মান এবং কোয়ান্টাইজড লেভেল মানের মধ্যবর্তী পার্থক্য", "ক্যাবলের থার্মাল গোলযোগ", "সিনক্রোনাইজেশন ফেইলার"], "correct": 1, "explanation": "এনালগ স্যাম্পলের প্রকৃত মান এবং তার ডিজিটাল স্তরের মানের পার্থক্যের কারণে কোয়ান্টাইজেশন এরর তৈরি হয়।"}, {"id": 42, "q": "কোয়ান্টাইজেশন স্টেপ সাইজ (Step Size, $\\Delta$) এর সাথে লেভেল সংখ্যা $L$ এবং পিক ভ্যালু $m_p$ এর সম্পর্ক কী?", "options": ["Delta = mp / L", "Delta = 2mp / L", "Delta = mp / 2L", "Delta = L / 2mp"], "correct": 1, "explanation": "স্টেপ সাইজ হলো পিক-টু-পিক রেঞ্জের অনুপাত: $\\Delta = \\frac{2m_p}{L}$।"}, {"id": 43, "q": "একটি ইউনিফর্ম কোয়ান্টিজারে সর্বোচ্চ সম্ভাব্য কোয়ান্টাইজেশন এরর কত?", "options": ["Delta", "Delta / 2", "2 * Delta", "Delta^2 / 12"], "correct": 1, "explanation": "সর্বোচ্চ কোয়ান্টাইজেশন ত্রুটি হলো অর্ধেক স্টেপ সাইজের সমান, অর্থাৎ $\\pm \\frac{\\Delta}{2}$।"}, {"id": 44, "q": "ইউনিফর্ম কোয়ান্টিজারে কোয়ান্টাইজেশন নয়েজ পাওয়ার ($P_Q$ বা $\\sigma_q^2$) কত?", "options": ["Delta / 2", "Delta^2 / 4", "Delta^2 / 12", "Delta^2 / 6"], "correct": 2, "explanation": "নয়েজ ভ্যারিয়েন্স বা গড় গোলযোগ শক্তি সমীকরণ হলো $P_Q = \\frac{\\Delta^2}{12}$।"}, {"id": 45, "q": "PCM সিস্টেমে প্রতি স্যাম্পলে ১টি বিট বৃদ্ধি করলে SQNR কত dB বৃদ্ধি পায়?", "options": ["১.৭৬ dB", "৩ dB", "৬.০২ dB", "১২ dB"], "correct": 2, "explanation": "$SQNR_{dB} = 1.76 + 6.02n$। অতএব প্রতি বিট ($n$) বৃদ্ধিতে SQNR প্রায় ৬.০২ dB (বা ৬ dB নিয়ম) বৃদ্ধি পায়।"}, {"id": 46, "q": "কম্প্যান্ডিং (Companding) প্রক্রিয়ার দুটি প্রধান ধাপ কী কী?", "options": ["Sampling and Coding", "Compression (Transmitter) and Expansion (Receiver)", "Modulation and Demodulation", "Multiplexing and Demultiplexing"], "correct": 1, "explanation": "কম্প্যান্ডিং শব্দটি Compression (কম্প্রেস করা) এবং Expansion (এক্সপ্যান্ড করা) শব্দ দুটি থেকে এসেছে।"}, {"id": 47, "q": "কম্প্যান্ডিং প্রধানত কোন সিগন্যালগুলোর ক্ষেত্রে গোলযোগ কমাতে বেশি সাহায্য করে?", "options": [" sideline", "লো-অ্যাম্প্লিচিউড বা দুর্বল সংকেতে", "উচ্চ ফ্রিকোয়েন্সির সংকেতে", "সব ধরনের নয়েজ সিগন্যালে সমান"], "correct": 1, "explanation": "দুর্বল বা কম অ্যামপ্লিচিউডের সংকেতগুলো সহজে নয়েজের শিকার হয়। কম্প্যান্ডিং দুর্বল সংকেতের ধাপ ছোট করে তাদের সুরক্ষা বাড়ায়।"}, {"id": 48, "q": "উত্তর আমেরিকা এবং জাপানের টেলিফোন স্ট্যান্ডার্ডে কোন কম্প্যান্ডিং নিয়মটি ব্যবহার করা হয়?", "options": ["A-Law", "u-Law (mu-law)", "Linear Law", "Adaptive Law"], "correct": 1, "explanation": "উত্তর আমেরিকা ও জাপানে $\\mu$-law ব্যবহার করা হয় (যেখানে স্ট্যান্ডার্ড $\\mu = 255$)।"}, {"id": 49, "q": "ইউরোপ এবং আন্তর্জাতিক (ITU-T) স্ট্যান্ডার্ডে কোন কম্প্যান্ডিং নিয়মটি ব্যবহার করা হয়?", "options": ["A-Law", "u-Law (mu-law)", "Logarithmic Law", "Non-linear Law"], "correct": 0, "explanation": "ইউরোপে A-law ব্যবহার করা হয় (যেখানে স্ট্যান্ডার্ড A = ৮৭.৬)।"}, {"id": 50, "q": "কম্প্যান্ডিং মূলত কোন ধরনের কোয়ান্টাইজেশন সম্পন্ন করার জন্য অ্যানালগ সার্কিটে করা হয়?", "options": ["Uniform Quantization", "Non-uniform Quantization (অ-সম কোয়ান্টাইজেশন)", "Linear Quantization", "Adaptive Quantization"], "correct": 1, "explanation": "কম্প্যান্ডিংয়ের মাধ্যমে দুর্বল সিগন্যালের অ্যাম্প্লিচিউডকে প্রসারিত করা হয় যা পরোক্ষভাবে Non-uniform Quantization সম্পন্ন করে।"}, {"id": 51, "q": "কোয়ান্টাইজেশন নয়েজ সিগন্যালের কোন প্যারামিটারের ওপর সরাসরি নির্ভর করে না?", "options": ["কোয়ান্টাইজেশন লেভেল", "বিটের সংখ্যা", "স্যাম্পলিং ফ্রিকোয়েন্সি", "পিক-টু-পিক বিস্তার"], "correct": 2, "explanation": "কোয়ান্টাইজেশন গোলযোগ স্যাম্পলিং ফ্রিকোয়েন্সির ওপর সরাসরি নির্ভর করে না, এটি স্টেপ সাইজ ($\\Delta$) ও লেভেল সংখ্যার ওপর নির্ভর করে।"}, {"id": 52, "q": "একটি ৮-বিট ইউনিফর্ম PCM সিস্টেমে পিক সাইন ওয়েভের জন্য SQNR কত হবে?", "options": ["৩০ dB", "৩৮ dB", "৫০ dB", "৪৯.৯২ dB"], "correct": 3, "explanation": "$SQNR_{dB} = 1.76 + 6.02 \\times 8 = 1.76 + 48.16 = 49.92\\text{ dB}$। "}, {"id": 53, "q": "যদি সর্বোচ্চ গ্রহণযোগ্য গোলযোগ peak amplitude এর ১% হয়, তবে ন্যূনতম প্রয়োজনীয় লেভেল ($L$) কত হতে হবে?", "options": ["৫০", "১০০", "১২৮", "২৫৬"], "correct": 2, "explanation": "$L \\ge 100 / 1 = 100$। ২ এর পরবর্তী ঘাত হলো $128 = 2^7$।"}, {"id": 54, "q": "পিক-টু-পিক বিস্তার দ্বিগুণ করলে এবং কোয়ান্টাইজেশন লেভেল অপরিবর্তিত রাখলে স্টেপ সাইজের কী পরিবর্তন হবে?", "options": ["অর্ধেক হবে", "দ্বিগুণ হবে", "একই থাকবে", "চারগুণ হবে"], "correct": 1, "explanation": "যেহেতু $\\Delta = 2m_p/L$, তাই বিস্তার $2m_p$ দ্বিগুণ হলে স্টেপ সাইজও দ্বিগুণ হবে।"}, {"id": 55, "q": "ডেল্টা মডুলেশন (DM)-এ কোন ধরনের বিকৃতি নয়েজ দেখা যায়?", "options": ["Slope Overload and Granular Noise", "Aliasing and Jitter", "Aperture Effect and Quantization Noise", "Thermal and Crosstalk"], "correct": 0, "explanation": "ডেল্টা মডুলেশনে স্টেপ সাইজ খুব ছোট হলে Slope Overload এবং খুব বড় হলে Granular Noise দেখা যায়।"}, {"id": 56, "q": "ডেল্টা মডুলেশনে স্লোপ ওভারলোড (Slope Overload) ডিস্টরশন কমানোর উপায় কী?", "options": ["স্যাম্পলিং হার কমানো", "স্টেপ সাইজ বৃদ্ধি করা", "স্টেপ সাইজ কমানো", "কম্প্যান্ডিং ব্যবহার করা"], "correct": 1, "explanation": "স্লোপ ওভারলোড ডিস্টরশন কমাতে স্টেপ সাইজ বৃদ্ধি করা প্রয়োজন যাতে সিগন্যালের দ্রুত পরিবর্তন ট্র্যাক করা যায়।"}, {"id": 57, "q": "অ্যাডাপ্টিভ ডেল্টা মডুলেশন (ADM) ব্যবহারের প্রধান কারণ কী?", "options": ["ব্যান্ডউইথ কমানো", "ডিটেকশন সহজ করা", "ইনপুট সিগন্যালের ঢাল অনুযায়ী স্টেপ সাইজ স্বয়ংক্রিয়ভাবে পরিবর্তন করে গোলযোগ কমানো", "বিটের সংখ্যা বৃদ্ধি করা"], "correct": 2, "explanation": "ADM ইনপুট তরঙ্গের পরিবর্তন হার বুঝে স্বয়ংক্রিয়ভাবে তার স্টেপ সাইজ বড় বা ছোট করতে পারে, যা গোলযোগ অনেকাংশে দূর করে।"}, {"id": 58, "q": "একটি ইউনিফর্ম কোয়ান্টাইজেশন সিস্টেমে SNR কিসের অনুপাত?", "options": ["সিগন্যাল ফ্রিকোয়েন্সি ও স্যাম্পলিং ফ্রিকোয়েন্সির অনুপাত", "সিগন্যাল পাওয়ার ও কোয়ান্টাইজেশন নয়েজ পাওয়ারের অনুপাত", "ক্যারিয়ার পাওয়ার ও মডুলেটিং পাওয়ারের অনুপাত", "ভোল্টেজ ও কারেন্টের অনুপাত"], "correct": 1, "explanation": "SNR বা SQNR হলো সংকেত শক্তি (Signal Power) এবং কোয়ান্টাইজেশন গোলযোগ শক্তির (Noise Power) অনুপাত।"}, {"id": 59, "q": "সাইন ওয়েভ সিগন্যালের ক্ষেত্রে এভারেজ সিগন্যাল পাওয়ার ($P_M$) কত?", "options": ["mp^2 / 2", "mp^2", "2 * mp^2", "mp^2 / 3"], "correct": 0, "explanation": "একটি গড় সাইন তরঙ্গের ক্ষমতা $P = m_p^2 / 2$।"}, {"id": 60, "q": "স্টেপ সাইজ ছোট করলে কোয়ান্টাইজেশন নয়েজের মানের কী পরিবর্তন ঘটে?", "options": ["নয়েজ বৃদ্ধি পায়", "নয়েজ হ্রাস পায়", "নয়েজ অপরিবর্তিত থাকে", "অ্যালাইসিং ঘটে"], "correct": 1, "explanation": "স্টেপ সাইজ $\\Delta$ কমানো হলে নয়েজ পাওয়ার $P_Q = \\Delta^2/12$ কমে যায়।"}, {"id": 61, "q": "ডিজিটাল অডিও স্টোরেজ সাইজ হিসাবের সঠিক সমীকরণ কোনটি?", "options": ["Size = Sampling Rate * bits * duration * Channels", "Size = Sampling Rate * bits * duration / Channels", "Size = Sampling Rate * duration / bits", "Size = bits * duration / Sampling Rate"], "correct": 0, "explanation": "মোট স্টোরেজ বিট সংখ্যা = স্যাম্পলিং রেট ($f_s$) $\\times$ বিট সংখ্যা ($n$) $\\times$ সময় ($t$) $\\times$ চ্যানেল সংখ্যা।"}, {"id": 62, "q": "স্টেরিওফোনিক (Stereo) মিউজিক ফাইলের ক্ষেত্রে মনো (Mono) ফাইলের চেয়ে স্টোরেজ কত গুণ বেশি লাগে?", "options": ["অর্ধেক", "একই থাকে", "দ্বিগুণ", "চারগুণ"], "correct": 2, "explanation": "স্টেরিও ফাইলে লেফট ও রাইট স্পিকারের জন্য ২টি পৃথক চ্যানেল ডাটা সংরক্ষণ করতে হয়, তাই মনো-এর চেয়ে দ্বিগুণ স্টোরেজ প্রয়োজন।"}, {"id": 63, "q": "একটি ১০ মিনিটের মনো (Mono) অডিওর স্যাম্পলিং হার ৪৪.১ kHz এবং বিট গভীরতা ১৬ বিট হলে মোট সাইজ কত বাইট?", "options": ["৫২.৯২ MB", "১০৫.৮৪ MB", "২৬.৪৬ MB", "৫.২৯ MB"], "correct": 0, "explanation": "মোট বিট = $44100 \\times 16 \\times 600 \\times 1 = 423,360,000\\text{ bits}$। বাইট = $423,360,000 / 8 = 52,920,000\\text{ Bytes} = 52.92\\text{ MB}$।"}, {"id": 64, "q": "রিসিভারে ডাইনামিক রেঞ্জ (Dynamic Range, $DR$) বলতে কী বোঝায়?", "options": ["ফ্রিকোয়েন্সির সর্বোচ্চ ও সর্বনিম্ন মানের অনুপাত", "সর্বোচ্চ এবং সর্বনিম্ন সিগন্যাল অ্যাম্প্লিচিউডের অনুপাত", "স্যাম্পলিং সময়ের রেঞ্জ", "ভোল্টেজ ও মেমরির অনুপাত"], "correct": 1, "explanation": "ডাইনামিক রেঞ্জ হলো ডিকোডযোগ্য সর্বোচ্চ অ্যাম্প্লিচিউড ও সর্বনিম্ন অ্যাম্প্লিচিউড ভোল্টেজের অনুপাত ($DR = \\frac{V_{max}}{V_{min}}$)।"}, {"id": 65, "q": "ডাইনামিক রেঞ্জ $DR$ এর সাথে প্রয়োজনীয় কোয়ান্টাইজেশন লেভেল $L$ এর সম্পর্ক কী?", "options": ["L = DR", "L = DR + 1", "L = DR / 2", "L = 2^DR"], "correct": 1, "explanation": "ডিজিটাল সিস্টেমে প্রয়োজনীয় ন্যূনতম লেভেল সংখ্যা $L = DR + 1$।"}, {"id": 66, "q": "যদি কোনো সিগন্যালের ডাইনামিক রেঞ্জ ৩ হয়, তবে প্রয়োজনীয় ন্যূনতম কোডিং বিট ($n$) কতটি?", "options": ["১ বিট", "২ বিট", "৩ বিট", "৪ বিট"], "correct": 1, "explanation": "$L = DR + 1 = 3 + 1 = 4$। বিট সংখ্যা $n = \\log_2(4) = 2$ বিট।"}, {"id": 67, "q": "ডিজিটাল সিডি (CD) অডিওর স্ট্যান্ডার্ড স্যাম্পলিং হার এবং বিট গভীরতা কত রাখা হয়?", "options": ["৮ kHz, ৮ bits", "১৬ kHz, ১২ bits", "৪৪.১ kHz, ১৬ bits", "৯৬ kHz, ২৪ bits"], "correct": 2, "explanation": "স্ট্যান্ডার্ড অডিও সিডিতে উচ্চ মানের সাউন্ডের জন্য ৪৪.১ kHz স্যাম্পলিং রেট এবং ১৬-বিট কোয়ান্টাইজেশন ব্যবহার করা হয়।"}, {"id": 68, "q": "স্ট্যান্ডার্ড অডিও সিডি (CD) স্টেরিও বিট রেট কত?", "options": ["৬৪ kbps", "১২৮ kbps", "৭০৫ kbps", "১৪১১ kbps (১.৪১১ Mbps)"], "correct": 3, "explanation": "$R_b = 2 \\times 16 \\times 44100 = 1,411,200\\text{ bps} \\approx 1.411\\text{ Mbps}$।"}, {"id": 69, "q": "অডিও কম্প্রেশন এডিটর (যেমন: MP3) সিডির ফাইলের সাইজ প্রায় কত গুণ কমিয়ে আনে?", "options": ["২ গুণ", "৫ গুণ", "১০ গুণ", "৫০ গুণ"], "correct": 2, "explanation": "MP3 বা AAC-এর মতো সাইকোঅ্যাকোস্টিক কম্প্রেশন অ্যালগরিদম ফাইলের সাইজ কোয়ালিটি খুব বেশি না হারিয়ে প্রায় ১০ গুণ কমিয়ে আনে।"}, {"id": 70, "q": "একটি মনো (Mono) স্পিচ সিগন্যাল স্যাম্পল রেট ৮ kHz এবং কোডিং ৮ বিট। ১০ সেকেন্ডের ফাইলের সাইজ কিলোবাইটে (KB) কত হবে? (১ KB = ১০২৪ Bytes)", "options": ["৮০ KB", "৭৮.১২ KB", "৪০ KB", "৯.৭৬ KB"], "correct": 1, "explanation": "মোট বিট = $8000 \\times 8 \\times 10 = 640,000\\text{ bits}$। বাইট = $640,000 / 8 = 80,000\\text{ Bytes}$। কিলোবাইট (KB) = $80,000 / 1024 = 78.125\\text{ KB}$।"}, {"id": 71, "q": "যদি কোনো ডিজিটাল সিস্টেমে প্রতি স্যাম্পলে বিট সংখ্যা ৮ হয়, তবে তার সর্বোচ্চ ডাইনামিক রেঞ্জ কত হতে পারে?", "options": ["৮", "২৫৫", "২৫৬", "৫১২"], "correct": 1, "explanation": "লেভেল সংখ্যা $L = 2^8 = 256$। ডাইনামিক রেঞ্জ $DR = L - 1 = 256 - 1 = 255$।"}, {"id": 72, "q": "ডিজিটাল ডাটা স্টোরেজে ৮ বিটের গ্রুপকে কী বলা হয়?", "options": ["Bit", "Nibble", "Byte", "Word"], "correct": 2, "explanation": "৮টি বাইনারি বিটের সমন্বয়ে ১টি বাইট (Byte) গঠিত হয়।"}, {"id": 73, "q": "৪টি বাইনারি বিটের গ্রুপকে কী বলা হয়?", "options": ["Byte", "Nibble", "Word", "Doublet"], "correct": 1, "explanation": "৪টি বিটের গ্রুপকে ১টি নিবল (Nibble) বলা হয়, যা অর্ধ-বাইটের সমান।"}, {"id": 74, "q": "ডিজিটাল সিস্টেমে অতিরিক্ত মেমরি খরচের প্রধান কারণ কী?", "options": ["স্যাম্পলিং রেট কমানো", "চ্যানেল সংখ্যা ও বিট ডেপথ (depth) বৃদ্ধি করা", "ভোল্টেজ কমানো", "লাইন কোডিং চেঞ্জ করা"], "correct": 1, "explanation": "স্যাম্পলিং রেট, কোডিং বিট সংখ্যা (বিট ডেপথ) এবং চ্যানেলের সংখ্যা বাড়ালে ডাটা সাইজ এবং মেমরি খরচ বৃদ্ধি পায়।"}, {"id": 75, "q": "হাই-রেজোলিউশন অডিওতে (Hi-Res Audio) সাধারণত কোন স্ট্যান্ডার্ড ব্যবহার করা হয়?", "options": ["৮ kHz / ৮-বিট", "৪৪.১ kHz / ১৬-বিট", "৯৬ kHz / ২৪-বিট বা তার বেশি", "১৬ kHz / ১২-বিট"], "correct": 2, "explanation": "হাই-রেজ অডিওতে স্টুডিও কোয়ালিটির জন্য ৯৬ kHz বা ১৯২ kHz স্যাম্পলিং রেট এবং ২৪-বিট গভীরতা ব্যবহার করা হয়।"}, {"id": 76, "q": "একটি স্পিচ সিগন্যাল যার দৈর্ঘ্য ১ মিনিট, স্যাম্পলিং রেট ৮ kHz এবং বিট depth ৮। এটি স্টোর করতে কত কিলোবাইট মেমরি লাগবে?", "options": ["৪৮০ KB", "৪৬৮.৭৫ KB", "৯৬০ KB", "৬০ KB"], "correct": 1, "explanation": "মোট বিট = $8000 \\times 8 \\times 60 = 3,840,000\\text{ bits}$। বাইট = $3,840,000 / 8 = 480,000\\text{ Bytes}$। KB = $480,000 / 1024 = 468.75\\text{ KB}$।"}, {"id": 77, "q": "স্টোরেজ কনভারশনে ১০^৬ দিয়ে ভাগ করলে অডিও সাইজ কিসে রূপান্তরিত হয়?", "options": ["কিলোবাইট (KB)", "মেগাবাইট (MB)", "গিগাবাইট (GB)", "বাইট (Byte)"], "correct": 1, "explanation": "বাইট সংখ্যাকে ১০^৬ (বা ১০ লাখ) দিয়ে ভাগ করলে তা ডেসিমাল মেগাবাইটে (MB) রূপান্তরিত হয়।"}, {"id": 78, "q": "মনো (Mono) সিস্টেমে মাইক্রোফোন কতটি ব্যবহার করা হয়?", "options": ["১টি", "২টি", "৪টি", "৮টি"], "correct": 0, "explanation": "মনো সিস্টেমে একটি মাত্র ইনপুট সোর্স বা চ্যানেল থেকে অডিও রেকর্ড করা হয়।"}, {"id": 79, "q": "স্টেরিও মিউজিক ফাইলে অডিও তরঙ্গের অনুভূতি কেমন হয়?", "options": ["সম্পূর্ণ ফ্ল্যাট এবং একমুখী", "ত্রিমাত্রিক বা দিক নির্দেশক (বাম ও ডান স্পিকারের ভিন্ন সাউন্ড)", "কম্প্রেসড এবং দুর্বল", "কোনো নয়েজ থাকে না"], "correct": 1, "explanation": "স্টেরিও সিস্টেমে বাম ও ডান কানে আলাদা ডাটা পাঠানো হয়, যা শ্রোতার কাছে দিক নির্দেশক বা স্থানিক অনুভূতি তৈরি করে।"}, {"id": 80, "q": "যদি কোয়ান্টাইজেশন লেভেল $L = DR + 1$ সূত্রে $DR = 7$ হয়, তবে প্রতি স্যাম্পলে কয়টি বিট লাগবে?", "options": ["২ বিট", "৩ বিট", "৪ বিট", "৮ বিট"], "correct": 1, "explanation": "$L = 7 + 1 = 8$। বিট সংখ্যা $n = \\log_2(8) = 3$ বিট।"}, {"id": 81, "q": "ডিজিটাল পাসব্যান্ড ক্যারিয়ার মডুলেশনে তথ্য কিসের মাধ্যমে বাহিত হয়?", "options": ["শুধুমাত্র এনালগ পালস দিয়ে", "ভিন্ন ফ্রিকোয়েন্সির সাইন তরঙ্গের অ্যাম্প্লিচিউড, ফেজ বা ফ্রিকোয়েন্সি পরিবর্তনের মাধ্যমে", "ডিজিটাল বিট সরাসরি পাঠিয়ে", "ক্যাবলের রেজিস্ট্যান্স পরিবর্তন করে"], "correct": 1, "explanation": "ডিজিটাল পাসব্যান্ড মডুলেশনে এনালগ ক্যারিয়ার তরঙ্গের কোনো বৈশিষ্ট্যে (যেমন অ্যাম্প্লিচিউড, ফেজ বা ফ্রিকোয়েন্সি) পরিবর্তন করে ডিজিটাল ডাটা পাঠানো হয়।"}, {"id": 82, "q": "Amplitude Shift Keying (ASK) মূলত কোন অ্যানালগ মডুলেশনের ডিজিটাল রূপ?", "options": ["FM", "AM", "PM", "PAM"], "correct": 1, "explanation": "ASK তে বাহক তরঙ্গের অ্যামপ্লিচিউড পরিবর্তন করে ডিজিটাল বিট ১ ও ০ পাঠানো হয়, যা অ্যানালগ অ্যাম্প্লিচিউড মডুলেশন (AM) এর অনুরূপ।"}, {"id": 83, "q": "BPSK (Binary Phase Shift Keying)-এ ক্যারিয়ার তরঙ্গের ফেজ বা দশা কয়টি কোণে পরিবর্তিত হয়?", "options": ["১টি কোণ", "২টি কোণ (০ ও ১৮০ ডিগ্রি)", "৪টি কোণ", "৮টি কোণ"], "correct": 1, "explanation": "BPSK সিস্টেমে বিট ১-এর জন্য ০ ডিগ্রি এবং বিট ০-এর জন্য ১৮০ ডিগ্রি ফেজ শিফট ব্যবহার করা হয়।"}, {"id": 84, "q": "QPSK (Quadrature Phase Shift Keying) সিস্টেমে প্রতি চিহ্নে (Symbol) কয়টি করে বিট ম্যাপ করা হয়?", "options": ["১টি বিট", "২টি বিট", "৩টি বিট", "৪টি বিট"], "correct": 1, "explanation": "QPSK তে একই সময়ে বাহক তরঙ্গের ৪টি ভিন্ন দশা বা কোণ (যেমন ৪৫, ১৩৫, ২২৫, ৩১৫ ডিগ্রি) ব্যবহার করে ২-বিট করে ডাটা পাঠানো হয়।"}, {"id": 85, "q": "QAM (Quadrature Amplitude Modulation)-এ ডিজিটাল সংকেতের কোন দুটি বৈশিষ্ট্য একসাথে পরিবর্তন করা হয়?", "options": ["ফ্রিকোয়েন্সি এবং ফেজ", "অ্যাম্প্লিচিউড এবং ফ্রিকোয়েন্সি", "অ্যাম্প্লিচিউড এবং ফেজ (Amplitude & Phase)", " sideline"], "correct": 2, "explanation": "QAM একই সাথে অ্যাম্প্লিচিউড এবং ফেজ পরিবর্তন করে অত্যন্ত উচ্চ ব্যান্ডউইথ দক্ষতা অর্জন করে।"}, {"id": 86, "q": "ফ্রিকোয়েন্সি শিফট কিয়িং (FSK) সিস্টেমে ডিজিটাল ডাটা কিসের মাধ্যমে বাহিত হয়?", "options": ["বাহক তরঙ্গের দশা পরিবর্তন করে", "ভিন্ন ভিন্ন বাহক ফ্রিকোয়েন্সি (f1 ও f2) ব্যবহারের মাধ্যমে", "ভোল্টেজ অফ করে", " sideline"], "correct": 1, "explanation": "FSK তে বিট ১ এবং ০ কে প্রকাশ করতে দুটি ভিন্ন ফ্রিকোয়েন্সির সংকেত পাঠানো হয়।"}, {"id": 87, "q": "মিনিমাম শিফট কিয়িং (MSK) কোন মডুলেশনের একটি উন্নত ও অবিচ্ছিন্ন ফেজ সংস্করণ?", "options": ["ASK", "BPSK", "BFSK (Continuous Phase FSK)", "QAM"], "correct": 2, "explanation": "MSK হলো Continuous Phase Frequency Shift Keying (CPFSK) এর বিশেষ রূপ যেখানে ফ্রিকোয়েন্সি পরিবর্তনের সময় সিগন্যালের ফেজ বা দশা মসৃণ বা অবিচ্ছিন্ন থাকে।"}, {"id": 88, "q": "ডিজিটাল ক্যারিয়ার মডুলেশনগুলোর মধ্যে কোনটির নয়েজ প্রতিরোধ ক্ষমতা সবচেয়ে ভালো?", "options": ["ASK", "BPSK / PSK", "BFSK", "Non-coherent ASK"], "correct": 1, "explanation": "PSK এর নয়েজ রেজিস্ট্যান্স পারফরম্যান্স সবচেয়ে ভালো, কারণ নয়েজ মূলত অ্যাম্প্লিচিউডকে প্রভাবিত করে, ফেজকে নয়।"}, {"id": 89, "q": "কোন মডুলেশন পদ্ধতিটি সাধারণ লেজার পয়েন্টার বা ফাইবার অপটিক্সের অন-অফ কিয়িং (OOK) এ ব্যবহৃত হয়?", "options": ["ASK (On-Off Keying)", "BPSK", "QAM", "FSK"], "correct": 0, "explanation": "ASK এর একটি সহজ রূপ হলো On-Off Keying (OOK), যেখানে বিট ১-এর জন্য আলো অন এবং ০-এর জন্য আলো অফ করা হয়।"}, {"id": 90, "q": "QPSK তে বিট হার (Bit Rate) এবং সিম্বল বা প্রতীক হারের (Baud Rate) মধ্যে সম্পর্ক কী?", "options": ["বিট হার সিম্বল হারের সমান", "বিট হার সিম্বল হারের দ্বিগুণ (Bit Rate = 2 * Baud Rate)", "সিম্বল হার বিট হারের দ্বিগুণ", "বিট হার সিম্বল হারের চারগুণ"], "correct": 1, "explanation": "যেহেতু QPSK তে প্রতি সিম্বলে ২ বিট থাকে, তাই বিট রেট সিম্বল রেটের দ্বিগুণ হয়।"}, {"id": 91, "q": "১৬-QAM মডুলেশনে প্রতি সিম্বলে কয়টি বিট বহন করা সম্ভব?", "options": ["২টি", "৩টি", "৪টি (কারণ 2^4 = 16)", "১৬টি"], "correct": 2, "explanation": "লেভেল সংখ্যা $M = 16 \\Rightarrow n = \\log_2(16) = 4$ বিট প্রতি সিম্বল।"}, {"id": 92, "q": "কোহেরেন্ট ডিটেকশন (Coherent Detection) বলতে কী বোঝায়?", "options": ["রিসিভারে ক্যারিয়ার সিগন্যালের কোনো দরকার নেই", "রিসিভারে হুবহু সমদশার লোকাল ক্যারিয়ার সিগন্যাল প্রয়োজন হয়", "এটি ফিল্টার ছাড়া কাজ করে", " sideline"], "correct": 1, "explanation": "কোহেরেন্ট বা সিনক্রোনাস ডিটেকশনে রিসিভারে প্রেরিত বাহক তরঙ্গের সাথে সমদশা ও ফ্রিকোয়েন্সির লোকাল বাহক সিগন্যাল ব্যবহার করা হয়।"}, {"id": 93, "q": "নন-কোহেরেন্ট ডিটেকশন (Non-coherent Detection) এর বড় সুবিধা কী?", "options": ["উচ্চ ডাটা স্পিড", "রিসিভার সার্কিট ডিজাইন সহজ ও লোকাল ক্যারিয়ারের সিনক্রোনাইজেশন প্রয়োজন হয় না", "নয়েজ প্রতিরোধ ক্ষমতা বেশি", " sideline"], "correct": 1, "explanation": "নন-কোহেরেন্ট সার্কিট (যেমন ইনভেলাপ ডিটেক্টর) সস্তা এবং এতে লোকাল ক্যারিয়ার তৈরির জটিল সিনক্রোনাইজেশন ফেইজ লক লুপ প্রয়োজন হয় না।"}, {"id": 94, "q": "নিচের কোন ডিজিটাল পাসব্যান্ড মডুলেশন পদ্ধতিতে সবচেয়ে কম ব্যান্ডউইথ প্রয়োজন হয়?", "options": ["ASK", "BFSK", "BPSK", "MSK"], "correct": 3, "explanation": "MSK এর ন্যূনতম ব্যান্ডউইথ $1.5 f_b$, যা FSK-এর তুলনায় অনেক কম এবং স্পেকট্রাম খুবই সংকীর্ণ।"}, {"id": 95, "q": "Constellation Diagram (তারকামণ্ডল চিত্র) কিসের জন্য ব্যবহৃত হয়?", "options": ["সিগন্যালের স্যাম্পলিং সময়ের গ্রাফ দেখতে", "ডিজিটাল ক্যারিয়ার মডুলেশন লেভেলগুলোর অ্যাম্প্লিচিউড ও ফেজ রিলেশন ম্যাপ করতে", "নয়েজ স্পেকট্রাম বিশ্লেষণ করতে", " sideline"], "correct": 1, "explanation": "কনস্টেলেশন ডায়াগ্রামে ডিজিটাল চিহ্নের বিস্তার ও কোণকে টু-ডাইমেনশনাল পোলার কোঅর্ডিনেট প্লটে বিন্দু আকারে দেখানো হয়।"}, {"id": 96, "q": "ভয়েস ব্যান্ডউইথ লিমিটেড চ্যানেলে অনেক বেশি ডাটা স্পিড পাওয়ার জন্য কোন মডুলেশনটি সবচেয়ে উপযোগী?", "options": ["ASK", "BPSK", "BFSK", "M-ary QAM (যেমন ২৫৬-QAM)"], "correct": 3, "explanation": "M-ary QAM প্রতি প্রতীকে অনেক বেশি বিট বহন করতে পারে, যা ফিক্সড ব্যান্ডউইথের চ্যানেলে ডাটা ট্রান্সমিশন রেট অনেক বাড়িয়ে দেয়।"}, {"id": 97, "q": "ডিজিটাল কমিউনিকেশনে স্পেকট্রাল এফিসিয়েন্সি (Spectral Efficiency) বলতে কী বোঝায়?", "options": ["কতটা নয়েজ ফিল্টার করা গেল", "প্রতি ১ Hz ব্যান্ডউইথে প্রতি সেকেন্ডে কত বিট পাঠানো যায় (bits/s/Hz)", "ভোল্টেজ ও পাওয়ারের অনুপাত", " sideline"], "correct": 1, "explanation": "স্পেকট্রাল এফিসিয়েন্সি পরিমাপ করা হয় bits per second per Hertz (bps/Hz) এককে, যা সিস্টেমের ব্যান্ডউইথ দক্ষতা নির্দেশ করে।"}, {"id": 98, "q": "ASK সিগন্যাল ডিকোড করতে কোন ফিল্টার বা সার্কিট ব্যবহার করা যেতে পারে?", "options": ["Phase Locked Loop (PLL)", "Envelope Detector (খাম ডিটেক্টর)", "Frequency Discriminator", "Equalizer"], "correct": 1, "explanation": "ASK সিগন্যালে ১-এর জন্য বাহক সংকেত থাকে এবং ০-এর জন্য থাকে না, তাই সহজ ডায়োড এনভেলাপ ডিটেক্টর দিয়ে একে ডিকোড করা যায়।"}, {"id": 99, "q": "ডিজিটাল সিগন্যালে ইন্টার-সিম্বল ইন্টারফারেন্স (ISI) দূর করার উপায় কী?", "options": ["ক্যারিয়ার ফ্রিকোয়েন্সি দ্বিগুণ করা", "পালস শেপিং ফিল্টার (যেমন Raised Cosine Filter) ব্যবহার করা", " sideline", " sideline"], "correct": 1, "explanation": "রেজড কোসাইন পালস শেপিং ফিল্টার ব্যবহার করে টাইম ডোমেইনে স্পিলিং রোধ করা যায় এবং ISI দূর করা হয়।"}, {"id": 100, "q": "ডিজিটাল ক্যারিয়ার মডুলেশনগুলোর মধ্যে কোনটির স্পেকট্রাল এফিসিয়েন্সি সবচেয়ে কম?", "options": ["BPSK", "QPSK", "BFSK", "QAM"], "correct": 2, "explanation": "BFSK-তে দুটি ভিন্ন ফ্রিকোয়েন্সি ব্যান্ড ও বড় গার্ড ব্যান্ড ব্যবহার করতে হয়, তাই এর ব্যান্ডউইথ খরচ বেশি এবং স্পেকট্রাল দক্ষতা তুলনামূলক কম।"}], "flashcards": [{"q": "স্যাম্পলিং (Sampling) কী?", "a": "একটি অবিচ্ছিন্ন এনালগ সিগন্যাল থেকে নির্দিষ্ট সময় পরপর তার মানের টুকরো বা স্যাম্পল সংগ্রহ করার প্রক্রিয়া।", "cat": "Sampling Basics"}, {"q": "নাইকুইস্ট স্যাম্পলিং থিওরেম কী?", "a": "কোনো সিগন্যাল থেকে তথ্য না হারিয়ে নিখুঁতভাবে পুনর্গঠন করতে স্যাম্পলিং রেট অবশ্যই সিগন্যালের সর্বোচ্চ ফ্রিকোয়েন্সির দ্বিগুণের সমান বা বেশি হতে হবে ($f_s \\ge 2f_m$)।", "cat": "Nyquist Theorem"}, {"q": "নাইকুইস্ট রেট ($f_{NQ}$) কী?", "a": "নিখুঁত পুনর্গঠনের জন্য প্রয়োজনীয় সর্বনিম্ন স্যাম্পলিং রেট, যা সর্বোচ্চ ফ্রিকোয়েন্সির দ্বিগুণ ($f_{NQ} = 2f_m$)।", "cat": "Nyquist Theorem"}, {"q": "স্যাম্পলিং ইন্টারভাল ($T_s$) কী?", "a": "পরপর দুটি স্যাম্পল সংগ্রহের মধ্যবর্তী সময়ের ব্যবধান ($T_s = 1/f_s$)।", "cat": "Sampling Basics"}, {"q": "অ্যালাইসিং ডিস্টরশন (Aliasing) কী?", "a": "স্যাম্পলিং হার নাইকুইস্ট হারের চেয়ে কম হলে ফ্রিকোয়েন্সি স্পেকট্রাম ওভারল্যাপ করে আসল সিগন্যাল বিকৃত হওয়ার ঘটনা।", "cat": "Aliasing"}, {"q": "এন্টি-অ্যালাইসিং ফিল্টার (Anti-aliasing Filter) কী?", "a": "স্যাম্পলিংয়ের আগে ব্যবহৃত একটি লো-পাস ফিল্টার যা সিগন্যালের অতিরিক্ত উচ্চ ফ্রিকোয়েন্সি উপাদান কেটে দেয়।", "cat": "Aliasing"}, {"q": "গার্ড ব্যান্ড (Guard Band) কী?", "a": "অ্যালাইসিং এড়াতে স্যাম্পলিং রেটকে নাইকুইস্ট রেটের চেয়ে কিছুটা বেশি রাখা হলে যে নিরাপদ ফ্রিকোয়েন্সি গ্যাপ তৈরি হয়।", "cat": "Sampling Basics"}, {"q": "ওভার-স্যাম্পলিং (Over-sampling) কী?", "a": "নাইকুইস্ট হারের চেয়ে অনেক বেশি হারে স্যাম্পলিং করা ($f_s \\gg 2f_m$)।", "cat": "Sampling Basics"}, {"q": "আন্ডার-স্যাম্পলিং (Under-sampling) কী?", "a": "নাইকুইস্ট হারের চেয়ে কম হারে স্যাম্পলিং করা ($f_s < 2f_m$), যা অ্যালাইসিং ঘটায়।", "cat": "Aliasing"}, {"q": "কম্পোজিট সিগন্যালে সর্বোচ্চ ফ্রিকোয়েন্সি ($f_m$) নির্ধারণের নিয়ম কী?", "a": "যোগফল সিগন্যালে সর্বোচ্চ ফ্রিকোয়েন্সি উপাদান নেওয়া হয়। গুণফল সিগন্যালে ত্রিকোণমিতিক সূত্রে ভেঙে যোগফলে এনে সর্বোচ্চ উপাদান নেওয়া হয়।", "cat": "Composite Signals"}, {"q": "ফান্ডামেন্টাল ফ্রিকোয়েন্সি (পিচ) নির্ধারণের নিয়ম কী?", "a": "কম্পোজিট সিগন্যালের বিভিন্ন ফ্রিকোয়েন্সি উপাদানগুলোর Greatest Common Divisor (GCD) বা গ.সা.গু নিতে হয়।", "cat": "Composite Signals"}, {"q": "অ্যাপারচার ইফেক্ট (Aperture Effect) কী?", "a": "ফ্ল্যাট-টপ স্যাম্পলিংয়ে স্যাম্পলের সসীম দৈর্ঘ্যের কারণে সিগন্যালের অ্যাম্প্লিচিউড বিকৃতির ঘটনা।", "cat": "Sampling Basics"}, {"q": "অ্যাপারচার ইফেক্ট কীভাবে দূর করা হয়?", "a": "রিসিভারে একটি বিশেষ ইকুলাইজার ফিল্টার ব্যবহার করে এর বিকৃতি সংশোধন করা হয়।", "cat": "Sampling Basics"}, {"q": "ইনস্ট্যান্টেনিয়াস স্যাম্পলিং (Instantaneous Sampling) কী?", "a": "বাস্তবে অসম্ভব কিন্তু গাণিতিক আইডিয়াল স্যাম্পলিং যেখানে স্যাম্পলের প্রস্থ শূন্য (Dirac delta impulse train)।", "cat": "Sampling Basics"}, {"q": "ন্যাচারাল স্যাম্পলিং (Natural Sampling) কী?", "a": "বাস্তবসম্মত স্যাম্পলিং যেখানে স্যাম্পলের টপ অংশ মূল অ্যানালগ সিগন্যালের মতনই বাঁকানো থাকে।", "cat": "Sampling Basics"}, {"q": "ফ্ল্যাট-টপ স্যাম্পলিং (Flat-top Sampling) কী?", "a": "বাস্তবসম্মত স্যাম্পলিং যেখানে স্যাম্পলের উপরের অংশ সম্পূর্ণ সমতল বা ফ্ল্যাট থাকে।", "cat": "Sampling Basics"}, {"q": "রিকনস্ট্রাকশন ফিল্টার (Reconstruction Filter) কী?", "a": "রিসিভারে ব্যবহৃত লো-পাস ফিল্টার যা বিচ্ছিন্ন স্যাম্পল থেকে মূল অবিচ্ছিন্ন অ্যানালগ সিগন্যাল তৈরি করে।", "cat": "Sampling Basics"}, {"q": "টেলিফোনি ভয়েস ব্যান্ডউইথ কত?", "a": "৩০০ Hz থেকে ৩৪০০ Hz (স্ট্যান্ডার্ড ৪ kHz চ্যানেল হিসেবে ধরা হয়)।", "cat": "Standards"}, {"q": "মোবাইল ও পিএসটিএন ভয়েস স্যাম্পলিং রেট কত?", "a": "৮ kHz (৮০০০ স্যাম্পল প্রতি সেকেন্ড)।", "cat": "Standards"}, {"q": "ব্যান্ডপাস স্যাম্পলিং থিওরেম কী?", "a": "যদি কোনো সিগন্যাল শুধুমাত্র নির্দিষ্ট হাই ফ্রিকোয়েন্সি ব্যান্ডে সীমাবদ্ধ থাকে, তবে সর্বনিম্ন স্যাম্পলিং রেট হবে তার ব্যান্ডউইথের দ্বিগুণ ($2 \\cdot B$)।", "cat": "Nyquist Theorem"}, {"q": "পালস কোড মডুলেশন (PCM) কী?", "a": "একটি পদ্ধতি যার মাধ্যমে অ্যানালগ সিগন্যালকে স্যাম্পলিং, কোয়ান্টাইজেশন ও কোডিংয়ের মাধ্যমে ডিজিটালে রূপান্তর করা হয়।", "cat": "PCM Basics"}, {"q": "টাইম ডিভিশন মাল্টিপ্লেক্সিং (TDM) কী?", "a": "একটি ডিজিটাল মাল্টিপ্লেক্সিং পদ্ধতি যেখানে একাধিক সিগন্যালকে একই ক্যাবলের মাধ্যমে ভিন্ন ভিন্ন টাইম স্লটে পাঠানো হয়।", "cat": "TDM"}, {"q": "ফ্রিকোয়েন্সি ডিভিশন মাল্টিপ্লেক্সিং (FDM) কী?", "a": "একটি অ্যানালগ মাল্টিপ্লেক্সিং পদ্ধতি যেখানে একাধিক ব্যবহারকারীকে সম্পূর্ণ ব্যান্ডের আলাদা আলাদা ফ্রিকোয়েন্সি চ্যানেল বরাদ্দ দেওয়া হয়।", "cat": "Multiplexing"}, {"q": "কোড ডিভিশন মাল্টিপ্লেক্সিং (CDM/CDMA) কী?", "a": "এমন একটি পদ্ধতি যেখানে প্রতিটি সিগন্যালকে আলাদা ইউনিক ম্যাথমেটিক্যাল কোড দিয়ে একই সময়ে ও একই ফ্রিকোয়েন্সিতে পাঠানো হয়।", "cat": "Multiplexing"}, {"q": "বিট রেট ($R_b$) কী?", "a": "ডিজিটাল সিগন্যালে প্রতি সেকেন্ডে প্রবাহিত মোট বিটের সংখ্যা ($R_b = n \\cdot f_s$)।", "cat": "PCM Basics"}, {"q": "TDM ফ্রেম (Frame) কী?", "a": "একটি পূর্ণ চক্রের স্যাম্পলিংয়ে গঠিত ডাটা প্যাকেট যা প্রতিটি ইনপুট চ্যানেলের স্লট এবং ফ্রেমিং বিট ধারণ করে।", "cat": "TDM"}, {"q": "ফ্রেমিং বিট (Framing/Sync Bit) কী?", "a": "ফ্রেমের শুরুতে বা শেষে যুক্ত অতিরিক্ত বিট যা রিসিভারকে ফ্রেমের শুরু চিহ্নিত করতে সাহায্য করে।", "cat": "TDM"}, {"q": "E1 ক্যারিয়ার স্ট্যান্ডার্ড কী?", "a": "ইউরোপীয় ডিজিটাল ট্রান্সমিশন স্ট্যান্ডার্ড যার ডাটা রেট ২.০৪৮ Mbps এবং এতে ৩২টি চ্যানেল (৩০ ভয়েস) থাকে।", "cat": "Standards"}, {"q": "T1 ক্যারিয়ার স্ট্যান্ডার্ড কী?", "a": "উত্তর আমেরিকান ডিজিটাল ট্রান্সমিশন স্ট্যান্ডার্ড যার ডাটা রেট ১.৫৪৪ Mbps এবং এতে ২৪টি ভয়েস চ্যানেল থাকে।", "cat": "Standards"}, {"q": "রিজেনারেটিভ রিপিটার (Regenerative Repeater) এর ৩টি প্রধান কাজ কী?", "a": "৩R: Reshaping (আকার ঠিক করা), Retiming (সময় সমন্বয় করা), and Regenerating (নতুন করে পালস তৈরি করা)।", "cat": "PCM Basics"}, {"q": "মাল্টিপ্লেক্সিং এর মূল সুবিধা কী?", "a": "একটিমাত্র শারীরিক ক্যাবল বা মিডিয়াম ব্যবহার করে একই সাথে একাধিক স্বাধীন ডাটা লিংক পরিচালনা করা, যা খরচ বাঁচায়।", "cat": "Multiplexing"}, {"q": "ইকুলাইজার (Equalizer) কী?", "a": "রিসিভারে ব্যবহৃত সার্কিট যা ট্রান্সমিশন ক্যাবলের কারণে সিগন্যালের অ্যাম্প্লিচিউড ও ফেস বিকৃতি সংশোধন করে।", "cat": "PCM Basics"}, {"q": "টেলিফোনি স্ট্যান্ডার্ড চ্যানেল ব্যান্ডউইথ কত?", "a": "৪ kHz (যাতে ভয়েস সংকেতের ৩.৪ kHz এবং গার্ড ব্যান্ডের ৬০০ Hz অন্তর্ভুক্ত থাকে)।", "cat": "Standards"}, {"q": "টেলিফোনিতে বিট রেট কত?", "a": "৬৪ kbps (৮ kHz স্যাম্পলিং হার $\\times$ ৮ বিট)। একে ডিজিটাল ভয়েস স্লট (DS0) বলা হয়।", "cat": "Standards"}, {"q": "TDM ফ্রেম রেট (Frame Rate) কী?", "a": "প্রতি সেকেন্ডে প্রেরিত মোট ফ্রেম সংখ্যা, যা সাধারণত ইনপুট সংকেতগুলোর স্যাম্পলিং ফ্রিকোয়েন্সির সমান।", "cat": "TDM"}, {"q": "NRZ লাইন কোডিং কী?", "a": "Non-Return-to-Zero কোড যেখানে ১-এর জন্য পজিটিভ ভোল্টেজ এবং ০-এর জন্য নেগেটিভ/জিরো ভোল্টেজ থাকে এবং বিটের মাঝে জিরোতে ফিরে আসে না।", "cat": "PCM Basics"}, {"q": "বড রেট (Baud Rate) কী?", "a": "প্রতি সেকেন্ডে সিগন্যাল পরিবর্তনের হার বা প্রতীক (Symbol) রেট। বাইনারি সিস্টেমে Baud Rate ও Bit Rate সমান হয়।", "cat": "PCM Basics"}, {"q": "বিট পিরিয়ড ($T_b$) কী?", "a": "একটি একক বিট ট্রান্সমিট হতে প্রয়োজনীয় সময় ($T_b = 1/R_b$)।", "cat": "PCM Basics"}, {"q": "ক্রসটক (Crosstalk) কী?", "a": "মাল্টিপ্লেক্সিং সিস্টেমে কাপলিংয়ের কারণে এক চ্যানেলের সিগন্যাল লিক হয়ে অন্য চ্যানেলে চলে যাওয়ার ঘটনা বা ত্রুটি।", "cat": "Multiplexing"}, {"q": "কমিউটেটর (Commutator) কী?", "a": "TDM সিস্টেমে ব্যবহৃত দ্রুতগতির ইলেকট্রনিক সুইচ যা পর্যায়ক্রমে প্রতিটি ইনপুট চ্যানেল থেকে স্যাম্পল সংগ্রহ করে।", "cat": "TDM"}, {"q": "কোয়ান্টাইজেশন (Quantization) কী?", "a": "স্যাম্পল করা অবিচ্ছিন্ন বিস্তার মানগুলোকে নিকটতম পূর্বনির্ধারিত ডিসক্রিট ভোল্টেজ লেভেলে নিয়ে যাওয়ার প্রক্রিয়া।", "cat": "Quantization Basics"}, {"q": "কোয়ান্টাইজেশন গোলযোগ (Quantization Noise) কী?", "a": "অ্যানালগ স্যাম্পলের মূল ভোল্টেজ এবং কোয়ান্টাইজড করা ডিজিটাল ভোল্টেজের মানের পার্থক্যের কারণে সৃষ্ট নয়েজ।", "cat": "Quantization Basics"}, {"q": "স্টেপ সাইজ (Step Size, $\\Delta$) কী?", "a": "কোয়ান্টাইজারের দুটি পাশাপাশি লেভেলের মধ্যবর্তী ভোল্টেজ পার্থক্য বা রেজোলিউশন ($\\Delta = 2m_p / L$)।", "cat": "Quantization Basics"}, {"q": "সর্বোচ্চ কোয়ান্টাইজেশন এরর কত?", "a": "অর্ধেক স্টেপ সাইজের সমান, অর্থাৎ $\\pm \\Delta / 2$।", "cat": "Quantization Basics"}, {"q": "কোয়ান্টাইজেশন গোলযোগ পাওয়ার সূত্র কী?", "a": "ইউনিফর্ম কোয়ান্টাইজেশনে নয়েজ পাওয়ার $P_Q = \\Delta^2 / 12$।", "cat": "Quantization Basics"}, {"q": "সিগন্যাল-টু-কোয়ান্টাইজেশন নয়েজ রেশিও (SQNR) কী?", "a": "সিগন্যাল পাওয়ার এবং কোয়ান্টাইজেশন নয়েজ পাওয়ারের অনুপাত।", "cat": "SQNR"}, {"q": "SQNR এর 6 dB নিয়মটি কী?", "a": "PCM-এ প্রতি অতিরিক্ত বিট কোডিংয়ের জন্য SQNR প্রায় ৬.০২ dB বৃদ্ধি পায়। সূত্র: $SQNR_{dB} = 1.76 + 6.02n$।", "cat": "SQNR"}, {"q": "কম্প্যান্ডিং (Companding) কী?", "a": "Compression এবং Expansion এর সমন্বিত প্রক্রিয়া। এটি সিগন্যালের ডাইনামিক রেঞ্জ সমন্বয় করে দুর্বল সংকেতকে নয়েজ থেকে বাঁচায়।", "cat": "Companding"}, {"q": "কম্প্রেসর (Compressor) কী?", "a": "ট্রান্সমিটারে স্যাম্পলারের আগে ব্যবহৃত সার্কিট যা দুর্বল সিগন্যালকে বাড়িয়ে দেয় এবং সবল সিগন্যালকে স্বাভাবিক রাখে।", "cat": "Companding"}, {"q": "এক্সপ্যান্ডার (Expander) কী?", "a": "রিসিভারে ডিকোডারের পরে ব্যবহৃত সার্কিট যা কম্প্রেস করা সিগন্যালকে তার আসল ডাইনামিক রেঞ্জে ফিরিয়ে নিয়ে যায়।", "cat": "Companding"}, {"q": "$\\mu$-law কম্প্যান্ডিং কী?", "a": "উত্তর আমেরিকা ও জাপানের লগারিদমিক কম্প্রেশন নিয়ম। সূত্র: $y = \\frac{\\ln(1+\\mu |x|)}{\\ln(1+\\mu)}$ (যেখানে $\\mu = 255$)।", "cat": "Companding"}, {"q": "A-law কম্প্যান্ডিং কী?", "a": "ইউরোপীয় লগারিদমিক কম্প্রেশন নিয়ম যা ITU-T স্ট্যান্ডার্ড। সূত্র প্যারামিটার A = ৮৭.৬।", "cat": "Companding"}, {"q": "নন-ইউনিফর্ম কোয়ান্টাইজেশন কী?", "a": "কোয়ান্টাইজেশন পদ্ধতি যেখানে স্টেপ সাইজ সব ভোল্টেজে সমান থাকে না; দুর্বল সিগন্যালে স্টেপ সাইজ ছোট এবং সবল সিগন্যালে বড় রাখা হয়।", "cat": "Quantization Basics"}, {"q": "ডেল্টা মডুলেশন (DM) কী?", "a": "এমন এক মডুলেশন যেখানে প্রতি স্যাম্পলে মাত্র ১টি বিট পাঠানো হয়। এটি নির্দেশ করে ইনপুট সিগন্যাল আগের স্যাম্পল থেকে বেড়েছে (১) নাকি কমেছে (০)।", "cat": "DM"}, {"q": "স্লোপ ওভারলোড (Slope Overload) ডিস্টরশন কী?", "a": "ডেল্টা মডুলেশনে সিগন্যাল যদি স্টেপ সাইজের চেয়ে দ্রুত পরিবর্তন হয়, তখন মডুলেটর তার পিছু নিতে পারে না এবং সিগন্যাল বিকৃত হয়।", "cat": "DM"}, {"q": "গ্র্যানুলার গোলযোগ (Granular Noise) কী?", "a": "ডেল্টা মডুলেশনে সিগন্যাল যদি স্থির বা খুব ধীরে পরিবর্তিত হয়, তখন বড় স্টেপ সাইজের কারণে মডুলেটর সিগন্যালের উপরে নিচে দুলতে থাকে।", "cat": "DM"}, {"q": "অ্যাডাপ্টিভ ডেল্টা মডুলেশন (ADM) কী?", "a": "ডেল্টা মডুলেশনের উন্নত রূপ যেখানে সিগন্যালের ঢাল বুঝে স্টেপ সাইজ স্বয়ংক্রিয়ভাবে পরিবর্তন করা হয়, যা গোলযোগ কমায়।", "cat": "DM"}, {"q": "সাইন তরঙ্গের আরএমএস (RMS) মান কত?", "a": "পিক অ্যাম্প্লিচিউডের $1/\\sqrt{2}$ গুণ (বা প্রায় ০.৭০৭ গুণ)।", "cat": "SQNR"}, {"q": "সাইন তরঙ্গের গড় ক্ষমতা (Signal Power) কত?", "a": "$P = m_p^2 / 2$ (যেখানে $m_p$ পিক বিস্তার)।", "cat": "SQNR"}, {"q": "ADC রেজোলিউশন কিসের সমান?", "a": "স্টেপ সাইজ বা সর্বনিম্ন ভোল্টেজ পরিবর্তন যা অ্যানালগ-টু-ডিজিটাল কনভার্টার সনাক্ত করতে পারে।", "cat": "Quantization Basics"}, {"q": "মনো অডিও (Mono Audio) কী?", "a": "একক চ্যানেল বিশিষ্ট অডিও সিগন্যাল যেখানে সমস্ত সাউন্ড একটি মাত্র ট্র্যাক দিয়ে নির্গত হয়।", "cat": "Audio Storage"}, {"q": "স্টেরিও অডিও (Stereo Audio) কী?", "a": "দ্বি-চ্যানেল বিশিষ্ট অডিও সিগন্যাল (বাম ও ডান স্পিকারের জন্য আলাদা ট্র্যাক) যা জীবন্ত অনুভূতি দেয়।", "cat": "Audio Storage"}, {"q": "বিট গভীরতা (Bit Depth) কী?", "a": "প্রতিটি স্যাম্পলকে কোড করার জন্য ব্যবহৃত মোট বিট সংখ্যা ($n$), যা ফাইলের রেজোলিউশন নির্ধারণ করে।", "cat": "Audio Storage"}, {"q": "ডিজিটাল অডিও ফাইল সাইজের সূত্র কী?", "a": "ফাইলের সাইজ (bits) = $f_s \\times n \\times \\text{Time (seconds)} \\times \\text{Channels}$।", "cat": "Audio Storage"}, {"q": "ডাইনামিক রেঞ্জ (Dynamic Range) কী?", "a": "ডিজিটাল সিস্টেম ডিকোড করতে পারে এমন সর্বোচ্চ এবং সর্বনিম্ন সিগন্যাল অ্যাম্প্লিচিউডের অনুপাত ($DR$)।", "cat": "Dynamic Range"}, {"q": "ডাইনামিক রেঞ্জের সাথে লেভেলের সম্পর্ক কী?", "a": "$L = DR + 1$ (যেখানে $L$ কোয়ান্টাইজেশন লেভেল সংখ্যা)।", "cat": "Dynamic Range"}, {"q": "অডিও সিডি (CD) স্ট্যান্ডার্ড ফ্রিকোয়েন্সি কত?", "a": "৪৪.১ kHz (মানুষের ২০ kHz শ্রবণসীমার দ্বিগুণের চেয়ে বেশি গার্ড ব্যান্ডসহ)।", "cat": "Standards"}, {"q": "অডিও সিডি (CD) বিট গভীরতা কত?", "a": "১৬-বিট (যা প্রায় ৯৬ dB ডাইনামিক রেঞ্জ প্রদান করে)।", "cat": "Standards"}, {"q": "১ বাইট (Byte) কিসের সমান?", "a": "৮টি বাইনারি বিটের সমান ডাটা ইউনিট।", "cat": "Audio Storage"}, {"q": "১ কিলোবাইট (KB) বাইনারি হিসেবে কত বাইট?", "a": "১০২৪ বাইট ($2^{10}$ Bytes)।", "cat": "Audio Storage"}, {"q": "১ মেগাবাইট (MB) বাইনারি হিসেবে কত বাইট?", "a": "১,০৪৮,৫৭৬ বাইট ($1024 \\times 1024$ Bytes)।", "cat": "Audio Storage"}, {"q": "স্পিচ সিগন্যাল স্ট্যান্ডার্ড স্যাম্পলিং রেট কত?", "a": "৮ kHz (টেলিফোনিতে মানুষের ভয়েসের জন্য ব্যবহৃত স্ট্যান্ডার্ড)।", "cat": "Standards"}, {"q": "অডিও কম্প্রেশন (Audio Compression) কী?", "a": "ডাটা ফাইল সাইজ কমানোর প্রযুক্তি (যেমন: MP3), যা মানুষের অপ্রয়োজনীয় শ্রবণ বহির্ভূত শব্দ কেটে দেয়।", "cat": "Audio Storage"}, {"q": "কোডেক (Codec) কী?", "a": "Coder-Decoder এর সংক্ষিপ্ত রূপ, যা ডিজিটাল ডাটা কম্প্রেস ও ডিকম্প্রেস করতে সাহায্য করে।", "cat": "Audio Storage"}, {"q": "লজলেস কম্প্রেশন (Lossless Compression) কী?", "a": "FlAC, WAV এর মতো হাই ফিডেলিটি মিউজিক স্টোরেজ যেখানে কোনো ডাটা নষ্ট হয় না।", "cat": "Audio Storage"}, {"q": "লজি কম্প্রেশন (Lossy Compression) কী?", "a": "এমপি৩-এর মতো সাইকো-অ্যাকোস্টিক কম্প্রেশন যেখানে অপ্রয়োজনীয় ডাটা মুছে ফাইল সাইজ অনেক কমানো হয়।", "cat": "Audio Storage"}, {"q": "ডাইনামিক রেঞ্জ $DR = 15$ হলে প্রয়োজনীয় বিট গভীরতা কত?", "a": "$L = 15 + 1 = 16 \\Rightarrow n = 4$ বিট।", "cat": "Dynamic Range"}, {"q": "বিট রেট (Bit Rate) কিসের নির্দেশক?", "a": "ডিজিটাল সিগন্যালে প্রতি সেকেন্ডে ডাটা প্রবাহের গতি (kbps বা Mbps)।", "cat": "Audio Storage"}, {"q": "হাই-রেজ অডিও (High-Resolution Audio) স্ট্যান্ডার্ড কী?", "a": "অডিও ফাইল যা সিডি কোয়ালিটির চেয়ে বেশি ফ্রিকোয়েন্সি (যেমন: ৯৬ kHz) ও গভীরতা (২৪-বিট) ব্যবহার করে।", "cat": "Standards"}, {"q": "ডাইনামিক রেঞ্জ বৃদ্ধির মূল সুবিধা কী?", "a": "অত্যন্ত মৃদু আওয়াজ এবং অত্যন্ত তীব্র আওয়াজ কোনো বিকৃতি ছাড়াই একই ফাইলে রেকর্ড ও ডিকোড করার ক্ষমতা।", "cat": "Dynamic Range"}, {"q": "পাসব্যান্ড মডুলেশন (Passband Modulation) কী?", "a": "ডিজিটাল পালসকে কোনো উচ্চ ফ্রিকোয়েন্সির এনালগ ক্যারিয়ার তরঙ্গে মডুলেট করে ব্যান্ডপাস চ্যানেলে পাঠানোর প্রক্রিয়া।", "cat": "Modulation Basics"}, {"q": "অ্যামপ্লিচিউড শিফট কিয়িং (ASK) কী?", "a": "ডিজিটাল বিট ১ ও ০ অনুযায়ী বাহক তরঙ্গের অ্যাম্প্লিচিউড পরিবর্তন করার পদ্ধতি।", "cat": "Carrier Modulation"}, {"q": "ফেজ শিফট কিয়িং (PSK) কী?", "a": "ডিজিটাল তথ্য অনুযায়ী বাহক তরঙ্গের ফেজ বা দশা কোণ পরিবর্তন করার পদ্ধতি।", "cat": "Carrier Modulation"}, {"q": "ফ্রিকোয়েন্সি শিফট কিয়িং (FSK) কী?", "a": "ডিজিটাল তথ্য অনুযায়ী বাহক তরঙ্গের ফ্রিকোয়েন্সি পরিবর্তন করার পদ্ধতি।", "cat": "Carrier Modulation"}, {"q": "BPSK (Binary PSK) কী?", "a": "PSK এর সহজ রূপ যেখানে বাহক তরঙ্গের ২টি পৃথক ফেজ কোণ (০ ও ১৮০ ডিগ্রি) ব্যবহার করা হয়।", "cat": "Carrier Modulation"}, {"q": "QPSK (Quadrature PSK) কী?", "a": " his is a 4-phase PSK that maps 2 bits per symbol, yielding double the spectral efficiency of BPSK.", "cat": "Carrier Modulation"}, {"q": "কোয়াড্রেচার অ্যাম্প্লিচিউড মডুলেশন (QAM) কী?", "a": "ডিজিটাল তথ্য অনুযায়ী বাহক তরঙ্গের অ্যাম্প্লিচিউড ও ফেজ দুটি বৈশিষ্ট্যই একসাথে পরিবর্তন করার অত্যন্ত মডিউলেটেড পদ্ধতি।", "cat": "Carrier Modulation"}, {"q": "MSK (Minimum Shift Keying) কী?", "a": "Continuous-Phase FSK এর উন্নত রূপ যার ব্যান্ডউইথ খরচ অত্যন্ত কম এবং সংকেতের ফেজে কোনো বিচ্ছিন্নতা ঘটে না।", "cat": "Carrier Modulation"}, {"q": "কোহেরেন্ট ডিটেকশন (Coherent Detection) কী?", "a": "ডিমডুলেশন পদ্ধতি যেখানে রিসিভারে লোকাল ক্যারিয়ারের ফ্রিকোয়েন্সি ও ফেজ ইনপুটের হুবহু সমান রাখা প্রয়োজন হয়।", "cat": "Detection"}, {"q": "নন-কোহেরেন্ট ডিটেকশন (Non-coherent Detection) কী?", "a": "সহজ ডিমডুলেশন পদ্ধতি যেখানে লোকাল ক্যারিয়ারের ফ্রিকোয়েন্সি ও ফেজ সিনক্রোনাইজেশনের প্রয়োজন নেই।", "cat": "Detection"}, {"q": "অন-অফ কিয়িং (OOK) কী?", "a": "ASK এর বিশেষ রূপ যেখানে ১ বিটের জন্য ক্যারিয়ার অন থাকে এবং ০ বিটের জন্য অফ থাকে।", "cat": "Carrier Modulation"}, {"q": "নক্ষত্র চিত্র (Constellation Diagram) কী?", "a": "একটি দ্বিমাত্রিক গ্রাফ যা ডিজিটাল মডুলেশন স্কিমের সিম্বলগুলোর বিস্তার ও দশা কোণকে ডট আকারে প্রদর্শন করে।", "cat": "Modulation Basics"}, {"q": "ডিজিটাল মডুলেশনের মূল লক্ষ্য কী?", "a": "সীমাবদ্ধ ব্যান্ডউইথের চ্যানেলে সর্বোচ্চ গতিতে ও ন্যূনতম ভুলের (BER) মাধ্যমে ডিজিটাল ডাটা পাঠানো।", "cat": "Modulation Basics"}, {"q": "সিম্বল রেট (Symbol Rate) কী?", "a": "প্রতি সেকেন্ডে বাহক তরঙ্গের প্যারামিটার (অ্যাম্প্লিচিউড, ফেজ বা ফ্রিকোয়েন্সি) পরিবর্তনের মোট সংখ্যা। একে Baud Rate ও বলা হয়।", "cat": "Modulation Basics"}, {"q": "স্পেকট্রাল দক্ষতা (Spectral Efficiency) কী?", "a": "প্রতি হার্টজ ব্যান্ডউইথ দিয়ে প্রতি সেকেন্ডে পাঠানো বিটের অনুপাত ($bits/s/Hz$)।", "cat": "Modulation Basics"}, {"q": "আইএসআই (Inter-Symbol Interference) কী?", "a": "চ্যানেলের ফিল্টারিং এফেক্টের কারণে একটি পালস ছড়িয়ে পাশের পালসের সাথে মিশে গিয়ে বিকৃতি তৈরির ত্রুটি।", "cat": "Modulation Basics"}, {"q": "পালস শেপিং ফিল্টার (Pulse Shaping Filter) কী?", "a": "ট্রান্সমিটারে ব্যবহৃত ফিল্টার যা পালসের ব্যান্ডউইথ সীমিত করে এবং ISI দূর করে (যেমন Raised Cosine Filter)।", "cat": "Modulation Basics"}, {"q": "ডিফারেন্সিয়াল PSK (DPSK) কী?", "a": "এমন এক PSK যেখানে কোহেরেন্ট রেফারেন্স ক্যারিয়ারের জটিলতা এড়াতে বর্তমান সিম্বলের ফেজকে আগের সিম্বলের সাথে তুলনা করে ডিকোড করা হয়।", "cat": "Carrier Modulation"}, {"q": "১২৮-QAM প্রতি সিম্বলে কতটি বিট পাঠায়?", "a": "৭টি বিট (কারণ $2^7 = 128$)।", "cat": "Carrier Modulation"}, {"q": "কোন মডুলেশনটি সবচেয়ে নয়েজ সহনশীল?", "a": "ফেজ শিফট কিয়িং (BPSK/QPSK), কারণ নয়েজ সাধারণত ফেজ কোণকে সহজে পরিবর্তন করতে পারে না (অ্যাম্প্লিচিউডের চেয়ে)।", "cat": "Carrier Modulation"}]};
+
+        // Helper to safely set display elements (checking if input or text span)
+        function setDisplayValue(id, val) {
+            const el = document.getElementById(id);
+            if (!el) return;
+            if (el.tagName === 'INPUT') {
+                el.value = val;
+            } else {
+                el.innerText = val;
+            }
+        }
+
+        // Bi-directional slider-input synchronization
+        function syncVal(sliderId, inputEl, updateFn) {
+            const slider = document.getElementById(sliderId);
+            if (!slider) return;
+            let val = parseFloat(inputEl.value);
+            if (isNaN(val)) return;
+            
+            // Clamp to slider boundaries
+            const min = parseFloat(slider.min);
+            const max = parseFloat(slider.max);
+            if (val < min) val = min;
+            if (val > max) val = max;
+            
+            slider.value = val;
+            inputEl.value = val;
+            updateFn();
+        }
+
+        // --- REAL-TIME GRAPHICAL VISUALIZERS ---
+
+        // Visualizer 1: Sampling & Nyquist Plot
+        function drawT1Plot(f1, f2, fs) {
+            const canvas = document.getElementById('canvas-t1');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            const w = canvas.width;
+            const h = canvas.height;
+            ctx.clearRect(0, 0, w, h);
+            
+            const activeTheme = document.body.classList.contains('light-theme') ? 'light' : 'dark';
+            
+            // Draw grid
+            ctx.strokeStyle = activeTheme === 'dark' ? 'rgba(255, 255, 255, 0.05)' : 'rgba(0, 0, 0, 0.05)';
+            ctx.lineWidth = 1;
+            for (let x = 0; x < w; x += 40) {
+                ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, h); ctx.stroke();
+            }
+            for (let y = 0; y < h; y += 30) {
+                ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(w, y); ctx.stroke();
+            }
+            
+            // Center axis
+            ctx.strokeStyle = activeTheme === 'dark' ? 'rgba(255, 255, 255, 0.2)' : 'rgba(0, 0, 0, 0.15)';
+            ctx.beginPath();
+            ctx.moveTo(0, h/2);
+            ctx.lineTo(w, h/2);
+            ctx.stroke();
+
+            const fm = Math.max(f1, f2);
+            const duration = 2.5 / fm; // show 2.5 cycles of fm
+            
+            // Draw continuous wave
+            ctx.strokeStyle = '#00f2fe';
+            ctx.lineWidth = 2.5;
+            ctx.beginPath();
+            for (let i = 0; i <= w; i++) {
+                const t = (i / w) * duration;
+                const yVal = 0.5 * Math.sin(2 * Math.PI * f1 * t) + 0.5 * Math.sin(2 * Math.PI * f2 * t);
+                const yPixel = h/2 - yVal * (h/2.5);
+                if (i === 0) ctx.moveTo(i, yPixel);
+                else ctx.lineTo(i, yPixel);
+            }
+            ctx.stroke();
+            
+            // Draw samples
+            const Ts = 1 / fs;
+            ctx.fillStyle = '#ff007f';
+            ctx.strokeStyle = '#ff007f';
+            ctx.lineWidth = 1.5;
+            
+            for (let t = 0; t <= duration; t += Ts) {
+                const xPixel = (t / duration) * w;
+                const yVal = 0.5 * Math.sin(2 * Math.PI * f1 * t) + 0.5 * Math.sin(2 * Math.PI * f2 * t);
+                const yPixel = h/2 - yVal * (h/2.5);
+                
+                // draw stem
+                ctx.beginPath();
+                ctx.moveTo(xPixel, h/2);
+                ctx.lineTo(xPixel, yPixel);
+                ctx.stroke();
+                
+                // draw dot
+                ctx.beginPath();
+                ctx.arc(xPixel, yPixel, 4, 0, 2 * Math.PI);
+                ctx.fill();
+            }
+            
+            // If aliased, draw the aliased low frequency wave
+            if (fs < 2 * fm) {
+                ctx.strokeStyle = 'rgba(255, 0, 0, 0.6)';
+                ctx.setLineDash([5, 5]);
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                const f_alias = Math.abs(fs - fm);
+                for (let i = 0; i <= w; i++) {
+                    const t = (i / w) * duration;
+                    const yVal = Math.sin(2 * Math.PI * f_alias * t);
+                    const yPixel = h/2 - yVal * (h/2.5);
+                    if (i === 0) ctx.moveTo(i, yPixel);
+                    else ctx.lineTo(i, yPixel);
+                }
+                ctx.stroke();
+                ctx.setLineDash([]);
+                
+                ctx.fillStyle = '#ff0033';
+                ctx.font = 'bold 12px Inter, Arial';
+                ctx.fillText('অ্যালাইসিং বিকৃতি (Aliasing Distortion)', 15, 20);
+            } else {
+                ctx.fillStyle = '#00ff66';
+                ctx.font = 'bold 12px Inter, Arial';
+                ctx.fillText('নিখুঁত পুনর্গঠন (Perfect Reconstruction)', 15, 20);
+            }
+        }
+
+        // Visualizer 2: TDM Frame Layout
+        function drawT2Plot(channels, bits, sync, control) {
+            const canvas = document.getElementById('canvas-t2');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            const w = canvas.width;
+            const h = canvas.height;
+            ctx.clearRect(0, 0, w, h);
+            
+            const activeTheme = document.body.classList.contains('light-theme') ? 'light' : 'dark';
+            
+            ctx.fillStyle = activeTheme === 'dark' ? '#ffffff' : '#1a2c40';
+            ctx.font = 'bold 12px Inter, Arial';
+            ctx.textAlign = 'left';
+            ctx.fillText(`TDM Frame Layout (M: ${channels} channels, n: ${bits} bits)`, 10, 18);
+            
+            const startX = 20;
+            const startY = h / 2 - 10;
+            const frameW = w - 40;
+            const frameH = 30;
+            
+            ctx.strokeStyle = activeTheme === 'dark' ? 'rgba(255, 255, 255, 0.2)' : 'rgba(0, 0, 0, 0.2)';
+            ctx.strokeRect(startX, startY, frameW, frameH);
+            
+            const displaySlots = [];
+            if (sync > 0) {
+                displaySlots.push({ label: 'Sync', size: sync, color: '#f5a623' });
+            }
+            
+            if (channels <= 8) {
+                for (let i = 1; i <= channels; i++) {
+                    displaySlots.push({ label: `Ch ${i}`, size: bits, color: `hsl(${i * 45}, 70%, 50%)` });
+                }
+            } else {
+                for (let i = 1; i <= 4; i++) {
+                    displaySlots.push({ label: `Ch ${i}`, size: bits, color: `hsl(${i * 45}, 70%, 50%)` });
+                }
+                displaySlots.push({ label: '...', size: 0, color: '#444444' });
+                displaySlots.push({ label: `Ch ${channels}`, size: bits, color: `hsl(${channels * 45}, 70%, 50%)` });
+            }
+            
+            if (control > 0) {
+                displaySlots.push({ label: 'Ctrl', size: control, color: '#d0021b' });
+            }
+            
+            let curX = startX;
+            const totalWeight = displaySlots.length;
+            const slotW = frameW / totalWeight;
+            
+            displaySlots.forEach((slot, index) => {
+                ctx.fillStyle = slot.color;
+                ctx.fillRect(curX + 2, startY + 2, slotW - 4, frameH - 4);
+                
+                ctx.fillStyle = '#ffffff';
+                ctx.font = '10px Inter, Arial';
+                ctx.textAlign = 'center';
+                ctx.fillText(slot.label, curX + slotW / 2, startY + 20);
+                
+                if (slot.size > 0) {
+                    ctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
+                    ctx.font = '8px Inter, Arial';
+                    ctx.fillText(`${slot.size}b`, curX + slotW / 2, startY + 10);
+                }
+                
+                curX += slotW;
+            });
+            
+            // Draw sweep pointer
+            const time = (Date.now() / 1500) % displaySlots.length;
+            const sweepIndex = Math.floor(time);
+            const sweepX = startX + sweepIndex * slotW + slotW / 2;
+            
+            ctx.fillStyle = '#00f2fe';
+            ctx.beginPath();
+            ctx.moveTo(sweepX, startY - 4);
+            ctx.lineTo(sweepX - 5, startY - 12);
+            ctx.lineTo(sweepX + 5, startY - 12);
+            ctx.fill();
+        }
+
+        // Visualizer 3: SQNR & Quantization Plot
+        function drawT3Plot(levels, mu) {
+            const canvas = document.getElementById('canvas-t3');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            const w = canvas.width;
+            const h = canvas.height;
+            ctx.clearRect(0, 0, w, h);
+            
+            const midX = w / 2;
+            const activeTheme = document.body.classList.contains('light-theme') ? 'light' : 'dark';
+            
+            ctx.strokeStyle = activeTheme === 'dark' ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)';
+            ctx.beginPath(); ctx.moveTo(midX, 0); ctx.lineTo(midX, h); ctx.stroke();
+            
+            // Left Half: Companding
+            ctx.fillStyle = activeTheme === 'dark' ? '#ffffff' : '#1a2c40';
+            ctx.font = 'bold 10px Inter, Arial';
+            ctx.textAlign = 'left';
+            ctx.fillText(`Compression Curve (μ = ${mu})`, 10, 18);
+            
+            const curveW = midX - 30;
+            const curveH = h - 40;
+            const startCurveX = 15;
+            const startCurveY = h - 15;
+            
+            ctx.strokeStyle = activeTheme === 'dark' ? 'rgba(255, 255, 255, 0.3)' : 'rgba(0, 0, 0, 0.3)';
+            ctx.beginPath();
+            ctx.moveTo(startCurveX, startCurveY); ctx.lineTo(startCurveX + curveW, startCurveY);
+            ctx.moveTo(startCurveX, startCurveY); ctx.lineTo(startCurveX, startCurveY - curveH);
+            ctx.stroke();
+            
+            ctx.strokeStyle = '#ff007f';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            for (let xPixel = 0; xPixel <= curveW; xPixel++) {
+                const x = xPixel / curveW;
+                let y = x;
+                if (mu > 0) {
+                    y = Math.log(1 + mu * x) / Math.log(1 + mu);
+                }
+                const yPixel = startCurveY - y * curveH;
+                if (xPixel === 0) ctx.moveTo(startCurveX + xPixel, yPixel);
+                else ctx.lineTo(startCurveX + xPixel, yPixel);
+            }
+            ctx.stroke();
+            
+            // Right Half: Staircase Quantizer
+            ctx.fillStyle = activeTheme === 'dark' ? '#ffffff' : '#1a2c40';
+            ctx.fillText(`Quantizer Stairs (L = ${levels})`, midX + 10, 18);
+            
+            const plotW = w - midX - 25;
+            const plotH = h - 40;
+            const startPlotX = midX + 10;
+            const startPlotY = h / 2 + 10;
+            
+            ctx.strokeStyle = '#00f2fe';
+            ctx.lineWidth = 1.5;
+            ctx.beginPath();
+            for (let i = 0; i <= plotW; i++) {
+                const t = (i / plotW) * (2 * Math.PI);
+                const yVal = Math.sin(t);
+                const yPixel = startPlotY - yVal * (plotH / 2.3);
+                if (i === 0) ctx.moveTo(startPlotX + i, yPixel);
+                else ctx.lineTo(startPlotX + i, yPixel);
+            }
+            ctx.stroke();
+            
+            ctx.strokeStyle = '#00ff66';
+            ctx.lineWidth = 1.8;
+            ctx.beginPath();
+            for (let i = 0; i <= plotW; i++) {
+                const t = (i / plotW) * (2 * Math.PI);
+                const yVal = Math.sin(t);
+                const levelIndex = Math.round((yVal + 1) / 2 * (levels - 1));
+                const quantizedVal = (levelIndex / (levels - 1)) * 2 - 1;
+                const yPixel = startPlotY - quantizedVal * (plotH / 2.3);
+                if (i === 0) ctx.moveTo(startPlotX + i, yPixel);
+                else ctx.lineTo(startPlotX + i, yPixel);
+            }
+            ctx.stroke();
+        }
+
+        // Visualizer 4: Storage Space Comparison
+        function drawT4Plot(totalSize) {
+            const canvas = document.getElementById('canvas-t4');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            const w = canvas.width;
+            const h = canvas.height;
+            ctx.clearRect(0, 0, w, h);
+            
+            const activeTheme = document.body.classList.contains('light-theme') ? 'light' : 'dark';
+            
+            ctx.fillStyle = activeTheme === 'dark' ? '#ffffff' : '#1a2c40';
+            ctx.font = 'bold 11px Inter, Arial';
+            ctx.textAlign = 'left';
+            ctx.fillText('Storage Capacity & Comparison', 10, 16);
+            
+            const cardX = 15;
+            const cardY = 30;
+            const cardW = 90;
+            const cardH = h - 45;
+            
+            ctx.strokeStyle = activeTheme === 'dark' ? '#00f2fe' : '#0072ff';
+            ctx.lineWidth = 2;
+            ctx.strokeRect(cardX, cardY, cardW, cardH);
+            
+            ctx.fillStyle = activeTheme === 'dark' ? 'rgba(0, 242, 254, 0.1)' : 'rgba(0, 114, 255, 0.1)';
+            ctx.fillRect(cardX + cardW - 12, cardY, 12, 12);
+            ctx.beginPath();
+            ctx.moveTo(cardX + cardW - 12, cardY);
+            ctx.lineTo(cardX + cardW, cardY + 12);
+            ctx.stroke();
+            
+            ctx.fillStyle = activeTheme === 'dark' ? '#00f2fe' : '#0072ff';
+            ctx.font = 'bold 12px Inter, Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText(`${totalSize.toFixed(2)}`, cardX + cardW / 2, cardY + cardH / 2 - 2);
+            ctx.font = '9px Inter, Arial';
+            ctx.fillText('MB File', cardX + cardW / 2, cardY + cardH / 2 + 10);
+            
+            const barX = 125;
+            const barW = w - barX - 15;
+            const barH = 10;
+            const spacing = 20;
+            
+            const comps = [
+                { label: 'Floppy (1.44 MB)', size: 1.44, color: '#f5a623' },
+                { label: 'Current File', size: totalSize, color: '#ff007f' },
+                { label: 'Standard MP3 (5.0 MB)', size: 5.0, color: '#00ff66' },
+                { label: 'CD Audio (700 MB)', size: 700.0, color: '#00f2fe' }
+            ];
+            
+            const maxBase = Math.max(10, totalSize);
+            ctx.textAlign = 'left';
+            
+            comps.forEach((comp, index) => {
+                const y = 30 + index * spacing;
+                
+                ctx.fillStyle = activeTheme === 'dark' ? 'rgba(255, 255, 255, 0.6)' : '#5c6b73';
+                ctx.font = '8px Inter, Arial';
+                ctx.fillText(comp.label, barX, y + 8);
+                
+                ctx.fillStyle = activeTheme === 'dark' ? 'rgba(255, 255, 255, 0.05)' : 'rgba(0, 0, 0, 0.05)';
+                ctx.fillRect(barX, y + 10, barW, barH);
+                
+                let fillW = (comp.size / maxBase) * barW;
+                if (comp.size === 700) fillW = barW;
+                if (fillW > barW) fillW = barW;
+                
+                ctx.fillStyle = comp.color;
+                ctx.fillRect(barX, y + 10, fillW, barH);
+                
+                ctx.fillStyle = activeTheme === 'dark' ? '#ffffff' : '#1a2c40';
+                ctx.font = 'bold 8px Inter, Arial';
+                ctx.fillText(comp.size >= 1000 ? `${(comp.size/1024).toFixed(1)} GB` : `${comp.size.toFixed(2)} MB`, barX + barW - 50, y + 8);
+            });
+        }
+
+        // Setup sweep interval for TDM pointer
+        setInterval(() => {
+            if (activeTab === 1) {
+                const channels = parseInt(document.getElementById('t2-channels').value) || 10;
+                const bits = parseInt(document.getElementById('t2-bits').value) || 8;
+                const sync = parseInt(document.getElementById('t2-sync').value) || 1;
+                const control = parseInt(document.getElementById('t2-control').value) || 1;
+                drawT2Plot(channels, bits, sync, control);
+            }
+        }, 100);
+
+        // --- FLASHCARDS ENGINE ---
+        let currentFlashcardIndex = 0;
+        let filteredFlashcards = [...studyDataset.flashcards];
+        let learnedFlashcards = new Set(JSON.parse(localStorage.getItem('learnedFlashcards') || '[]'));
+
+        function loadFlashcard(index) {
+            if (filteredFlashcards.length === 0) {
+                document.getElementById('fc-question').innerText = "কোনো ফ্ল্যাশকার্ড পাওয়া যায়নি!";
+                document.getElementById('fc-answer').innerText = "অনুগ্রহ করে অন্য কোনো ক্যাটাগরি ফিল্টার করুন।";
+                return;
+            }
+            currentFlashcardIndex = index;
+            const card = filteredFlashcards[index];
+            
+            document.querySelector('.flashcard-deck').classList.remove('flipped');
+            
+            setTimeout(() => {
+                document.getElementById('fc-question').innerText = card.q;
+                document.getElementById('fc-answer').innerHTML = card.a;
+                document.getElementById('fc-badge').innerText = card.cat;
+                document.getElementById('fc-badge-back').innerText = card.cat;
+                
+                const btn = document.getElementById('btn-fc-learned');
+                if (learnedFlashcards.has(card.q)) {
+                    btn.innerHTML = '<i class="fa-solid fa-check-double"></i> শিখেছি (Learned)';
+                    btn.classList.add('btn-primary');
+                    btn.classList.remove('btn-secondary');
+                } else {
+                    btn.innerHTML = '<i class="fa-solid fa-check"></i> শিখেছি / জানি';
+                    btn.classList.remove('btn-primary');
+                    btn.classList.add('btn-secondary');
+                }
+                
+                document.getElementById('fc-counter').innerText = `কার্ড ${index + 1}/${filteredFlashcards.length}`;
+                updateFlashcardProgress();
+                triggerMathJax();
+            }, 150);
+        }
+
+        function flipFlashcard() {
+            document.querySelector('.flashcard-deck').classList.toggle('flipped');
+        }
+
+        function nextFlashcard() {
+            if (filteredFlashcards.length === 0) return;
+            let nextIndex = (currentFlashcardIndex + 1) % filteredFlashcards.length;
+            loadFlashcard(nextIndex);
+        }
+
+        function prevFlashcard() {
+            if (filteredFlashcards.length === 0) return;
+            let prevIndex = (currentFlashcardIndex - 1 + filteredFlashcards.length) % filteredFlashcards.length;
+            loadFlashcard(prevIndex);
+        }
+
+        function shuffleFlashcards() {
+            for (let i = filteredFlashcards.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [filteredFlashcards[i], filteredFlashcards[j]] = [filteredFlashcards[j], filteredFlashcards[i]];
+            }
+            loadFlashcard(0);
+        }
+
+        function filterFlashcards(category) {
+            if (category === 'all') {
+                filteredFlashcards = [...studyDataset.flashcards];
+            } else {
+                filteredFlashcards = studyDataset.flashcards.filter(c => c.cat === category);
+            }
+            loadFlashcard(0);
+        }
+
+        function markFlashcardLearned() {
+            if (filteredFlashcards.length === 0) return;
+            const card = filteredFlashcards[currentFlashcardIndex];
+            if (learnedFlashcards.has(card.q)) {
+                learnedFlashcards.delete(card.q);
+            } else {
+                learnedFlashcards.add(card.q);
+            }
+            localStorage.setItem('learnedFlashcards', JSON.stringify([...learnedFlashcards]));
+            loadFlashcard(currentFlashcardIndex);
+        }
+
+        function updateFlashcardProgress() {
+            const total = studyDataset.flashcards.length;
+            const learned = studyDataset.flashcards.filter(c => learnedFlashcards.has(c.q)).length;
+            const pct = total > 0 ? Math.round((learned / total) * 100) : 0;
+            
+            document.getElementById('fc-learned-counter').innerText = `শেখা হয়েছে: ${learned}টি (${pct}%)`;
+            document.getElementById('fc-progress-bar').style.width = `${pct}%`;
+        }
+
+        // --- MCQ QUIZ ENGINE ---
+        let quizQuestions = [];
+        let currentQuizIndex = 0;
+        let quizUserAnswers = [];
+        let quizMode = 'quick';
+        let quizTimeLeft = 20 * 60;
+        let quizTimerInterval = null;
+        let quizStartTime = null;
+
+        function startQuiz(mode) {
+            quizMode = mode;
+            document.getElementById('quiz-intro-area').style.display = 'none';
+            document.getElementById('quiz-play-area').style.display = 'block';
+            document.getElementById('quiz-result-area').style.display = 'none';
+            document.getElementById('quiz-review-box').style.display = 'none';
+            
+            if (mode === 'quick') {
+                quizQuestions = selectRandomQuestions(10);
+                document.getElementById('quiz-mode-badge').innerText = 'কুইক প্র্যাকটিস';
+                document.getElementById('quiz-timer-box').style.display = 'none';
+            } else if (mode === 'mock') {
+                quizQuestions = selectRandomQuestions(20);
+                document.getElementById('quiz-mode-badge').innerText = 'মক টেস্ট (Timed)';
+                document.getElementById('quiz-timer-box').style.display = 'flex';
+                startMockTimer();
+            } else if (mode === 'category') {
+                const cat = document.getElementById('mcq-cat-select').value;
+                quizQuestions = studyDataset.mcqs.filter(m => {
+                    if (cat === 'Sampling') return m.id <= 20;
+                    if (cat === 'PCM & TDM') return m.id > 20 && m.id <= 40;
+                    if (cat === 'SQNR') return m.id > 40 && m.id <= 60;
+                    if (cat === 'Storage') return m.id > 60 && m.id <= 80;
+                    if (cat === 'Modulation') return m.id > 80;
+                    return false;
+                });
+                document.getElementById('quiz-mode-badge').innerText = `অধ্যায় ভিত্তিক: ${cat}`;
+                document.getElementById('quiz-timer-box').style.display = 'none';
+            }
+
+            currentQuizIndex = 0;
+            quizUserAnswers = [];
+            quizStartTime = Date.now();
+            loadQuizQuestion(0);
+        }
+
+        function selectRandomQuestions(count) {
+            const list = [...studyDataset.mcqs];
+            for (let i = list.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [list[i], list[j]] = [list[j], list[i]];
+            }
+            return list.slice(0, count);
+        }
+
+        function showCategoryQuizSelector() {
+            document.getElementById('cat-quiz-selector-box').style.display = 'block';
+        }
+
+        function hideCategoryQuizSelector() {
+            document.getElementById('cat-quiz-selector-box').style.display = 'none';
+        }
+
+        function loadQuizQuestion(index) {
+            currentQuizIndex = index;
+            const q = quizQuestions[index];
+            
+            document.getElementById('quiz-q-counter').innerText = `প্রশ্ন ${index + 1}/${quizQuestions.length}`;
+            document.getElementById('mcq-q-text').innerText = q.q;
+            
+            const box = document.getElementById('mcq-options-box');
+            box.innerHTML = '';
+            
+            const letters = ['A', 'B', 'C', 'D'];
+            q.options.forEach((opt, idx) => {
+                const btn = document.createElement('button');
+                btn.className = 'mcq-option-btn';
+                btn.innerHTML = `<span class="mcq-option-badge">${letters[idx]}</span> <span class="opt-text">${opt}</span>`;
+                btn.onclick = () => selectMCQOption(idx);
+                box.appendChild(btn);
+            });
+            
+            document.getElementById('mcq-explanation-box').style.display = 'none';
+            document.getElementById('btn-next-q').disabled = true;
+            if (index === quizQuestions.length - 1) {
+                document.getElementById('btn-next-q').innerText = 'ফলাফল দেখুন';
+            } else {
+                document.getElementById('btn-next-q').innerHTML = 'পরবর্তী প্রশ্ন <i class="fa-solid fa-arrow-right"></i>';
+            }
+            
+            triggerMathJax();
+        }
+
+        function selectMCQOption(optIdx) {
+            const q = quizQuestions[currentQuizIndex];
+            quizUserAnswers[currentQuizIndex] = optIdx;
+            
+            const btns = document.querySelectorAll('.mcq-option-btn');
+            btns.forEach((btn, idx) => {
+                btn.disabled = true;
+                if (idx === q.correct) {
+                    btn.classList.add('correct');
+                } else if (idx === optIdx) {
+                    btn.classList.add('incorrect');
+                }
+            });
+            
+            document.getElementById('mcq-explanation-text').innerHTML = q.explanation;
+            document.getElementById('mcq-explanation-box').style.display = 'block';
+            document.getElementById('btn-next-q').disabled = false;
+            
+            triggerMathJax();
+        }
+
+        function nextQuizQuestion() {
+            if (currentQuizIndex === quizQuestions.length - 1) {
+                finishQuiz();
+            } else {
+                loadQuizQuestion(currentQuizIndex + 1);
+            }
+        }
+
+        function startMockTimer() {
+            clearInterval(quizTimerInterval);
+            quizTimeLeft = 20 * 60;
+            updateTimerDisplay();
+            
+            quizTimerInterval = setInterval(() => {
+                quizTimeLeft--;
+                updateTimerDisplay();
+                if (quizTimeLeft <= 0) {
+                    clearInterval(quizTimerInterval);
+                    alert('সময় শেষ! আপনার মক টেস্ট অটো-সাবমিট করা হচ্ছে।');
+                    finishQuiz();
+                }
+            }, 1000);
+        }
+
+        function updateTimerDisplay() {
+            const min = Math.floor(quizTimeLeft / 60);
+            const sec = quizTimeLeft % 60;
+            document.getElementById('quiz-timer-text').innerText = `${min.toString().padStart(2, '0')}:${sec.toString().padStart(2, '0')}`;
+        }
+
+        function finishQuiz() {
+            clearInterval(quizTimerInterval);
+            document.getElementById('quiz-play-area').style.display = 'none';
+            document.getElementById('quiz-result-area').style.display = 'block';
+            
+            let correctCount = 0;
+            quizQuestions.forEach((q, idx) => {
+                if (quizUserAnswers[idx] === q.correct) correctCount++;
+            });
+            
+            const total = quizQuestions.length;
+            const pct = Math.round((correctCount / total) * 100);
+            
+            const elapsed = Math.round((Date.now() - quizStartTime) / 1000);
+            const min = Math.floor(elapsed / 60);
+            const sec = elapsed % 60;
+            const timeText = `${min.toString().padStart(2, '0')}:${sec.toString().padStart(2, '0')}`;
+            
+            document.getElementById('res-score').innerText = correctCount;
+            document.getElementById('res-total').innerText = `/ ${total}`;
+            document.getElementById('res-percentage').innerText = `${pct}%`;
+            document.getElementById('res-time').innerText = timeText;
+            document.getElementById('res-correct-count').innerText = `${correctCount}/${total}`;
+            
+            let feedback = "ভাল চেষ্টা! আরও বেশি বেশি অনুশীলন করুন।";
+            if (pct >= 90) feedback = "অসাধারণ! আপনার প্রস্তুতি খুবই চমৎকার।";
+            else if (pct >= 70) feedback = "বেশ ভালো! অল্প কিছু সংশোধনী প্রয়োজন।";
+            document.getElementById('res-feedback').innerText = feedback;
+        }
+
+        function showReviewScreen() {
+            document.getElementById('quiz-review-box').style.display = 'block';
+            const list = document.getElementById('quiz-review-list');
+            list.innerHTML = '';
+            
+            quizQuestions.forEach((q, idx) => {
+                const userAns = quizUserAnswers[idx] !== undefined ? q.options[quizUserAnswers[idx]] : 'কোনো উত্তর দেয়া হয়নি';
+                const correctAns = q.options[q.correct];
+                const isCorrect = quizUserAnswers[idx] === q.correct;
+                
+                const item = document.createElement('div');
+                item.className = 'review-item';
+                item.innerHTML = `
+                    <div class="review-question tex2jax_process">${idx + 1}. ${q.q}</div>
+                    <div class="review-user-ans" style="color: ${isCorrect ? '#00ff66' : '#ff0033'};">
+                        <i class="fa-solid fa-${isCorrect ? 'check' : 'xmark'}"></i> আপনার নির্বাচন: ${userAns}
+                    </div>
+                    ${!isCorrect ? `<div class="review-correct-ans" style="color: #00ff66;"><i class="fa-solid fa-circle-check"></i> সঠিক উত্তর: ${correctAns}</div>` : ''}
+                    <div class="mcq-explanation-panel tex2jax_process" style="margin-top: 10px; display: block;">
+                        <strong>ব্যাখ্যা:</strong> ${q.explanation}
+                    </div>
+                `;
+                list.appendChild(item);
+            });
+            
+            triggerMathJax();
+            smoothScroll(document.getElementById('quiz-review-box'));
+        }
+
+        function restartQuiz() {
+            startQuiz(quizMode);
+        }
+
+        function quitQuiz() {
+            clearInterval(quizTimerInterval);
+            document.getElementById('quiz-intro-area').style.display = 'block';
+            document.getElementById('quiz-play-area').style.display = 'none';
+            document.getElementById('quiz-result-area').style.display = 'none';
+            document.getElementById('cat-quiz-selector-box').style.display = 'none';
+        }
+</script>
 </body>
 </html>
