@@ -1025,6 +1025,59 @@
             }
         }
 
+        /* Premium Table Styles for Study Guides */
+        .table-responsive {
+            overflow-x: auto;
+            margin: 20px 0;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .premium-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+            text-align: left;
+            background-color: rgba(19, 26, 38, 0.4);
+        }
+
+        body.light-theme .premium-table {
+            background-color: #ffffff;
+        }
+
+        .premium-table th, .premium-table td {
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        body.light-theme .premium-table th, body.light-theme .premium-table td {
+            border-bottom-color: #d1dfed;
+        }
+
+        .premium-table th {
+            background-color: rgba(255, 255, 255, 0.02);
+            color: var(--accent-color);
+            font-weight: 700;
+            font-family: var(--font-heading);
+        }
+
+        body.light-theme .premium-table th {
+            background-color: rgba(0, 114, 255, 0.04);
+            color: var(--accent-color);
+        }
+
+        .premium-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .premium-table tr:hover td {
+            background-color: rgba(255, 255, 255, 0.01);
+        }
+
+        body.light-theme .premium-table tr:hover td {
+            background-color: rgba(0, 114, 255, 0.01);
+        }
+
         /* Video Lectures Styling */
         .video-grid {
             display: grid;
@@ -1199,6 +1252,10 @@
 
                     <h4>১.২ নাইকুইস্ট রেট ($f_{NQ}$) এবং অ্যালাইসিং (Aliasing)</h4>
                     <p>স্যাম্পলিং থিওরেম অনুযায়ী যে সর্বনিম্ন হারে স্যাম্পলিং করা সম্ভব তাকেই নাইকুইস্ট রেট বলা হয়। অর্থাৎ $f_{NQ} = 2 \cdot f_m$। যদি স্যাম্পলিং রেট নাইকুইস্ট হারের চেয়ে কম হয় ($f_s < 2f_m$), তবে স্যাম্পলগুলোর ফ্রিকোয়েন্সি স্পেকট্রাম একটির ওপর আরেকটি ওভারল্যাপ করবে। এর ফলে রিসিভারে আর আসল সিগন্যাল রিকভার করা সম্ভব হয় না এবং নতুন একটি বিকৃত সংকেত তৈরি হয়। এই ত্রুটিকে <strong>Aliasing Distortion</strong> বলা হয়। অ্যালাইসিং এড়াতে স্যাম্পলিং করার আগে এনালগ সিগন্যালটিকে একটি <strong>Anti-aliasing Filter</strong> (লো-পাস ফিল্টার)-এর মধ্য দিয়ে প্রবাহিত করা হয় যা অতিরিক্ত উচ্চ ফ্রিকোয়েন্সিগুলোকে কেটে দেয়।</p>
+                    
+                    <h4>১.৩ কম্পোজিট সিগন্যাল এবং গুণফলের ফ্রিকোয়েন্সি নির্ধারণ</h4>
+                    <p>১. <strong>কম্পোজিট সিগন্যাল (যোগফল আকারে):</strong> সিগন্যাল যদি যোগফল আকারে থাকে (যেমন: $x(t) = \sin(500\pi t) + \cos(1000\pi t)$), তবে সর্বোচ্চ ফ্রিকোয়েন্সি $f_m$ হিসেবে বড় ফ্রিকোয়েন্সিটি ব্যবহার করতে হয়। অর্থাৎ $f_m = \max(f_1, f_2)$। এই ধরনের সিগন্যালে ফান্ডামেন্টাল ফ্রিকোয়েন্সি বা পিচ বের করার জন্য ফ্রিকোয়েন্সি উপাদানগুলোর GCD (Greatest Common Divisor) বা গ.সা.গু নিতে হয়।</p>
+                    <p>২. <strong>গুণফল আকারে সিগন্যাল:</strong> যদি সিগন্যাল গুণফল আকারে থাকে (যেমন: $x(t) = 20 \cos(6400\pi t) \cos(400\pi t)$), তবে সরাসরি সর্বোচ্চ ফ্রিকোয়েন্সি উপাদান নেওয়া ভুল হবে। প্রথমে ত্রিকোণমিতিক সূত্রের সাহায্যে (যেমন: $2 \cos A \cos B = \cos(A+B) + \cos(A-B)$) গুণফলকে যোগফলে রূপান্তর করে তারপর সর্বোচ্চ ফ্রিকোয়েন্সি উপাদান নির্ধারণ করতে হয়।</p>
                 </div>
             </div>
 
@@ -1423,6 +1480,106 @@
                     <p>একটি সিঙ্গেল চ্যানেল বা চ্যানেলের ক্ষেত্রে প্রতি স্যাম্পলে যদি $n$ সংখ্যক বিট কোড করা হয় এবং সিগন্যালের স্যাম্পলিং রেট $f_s$ হয়, তবে প্রতি সেকেন্ডে সংগৃহীত মোট বিটের সংখ্যা হবে:</p>
                     <p style="text-align: center; margin: 15px 0; font-weight: bold; font-size: 1.1rem; color: #00f2fe;">$$R_b = n \cdot f_s$$</p>
                     <p>কোয়ান্টাইজেশন লেভেল $L$ এর সাথে বিটের সম্পর্ক $L = 2^n$ অথবা $n = \log_2(L)$।</p>
+
+                    <h4>কোডেড বনাম আনকোডেড সিস্টেম (Coded vs. Uncoded Systems)</h4>
+                    <div class="table-responsive">
+                        <table class="premium-table">
+                            <thead>
+                                <tr>
+                                    <th>প্যারামিটার / বৈশিষ্ট্য</th>
+                                    <th>আনকোডেড সিস্টেম (যেমন: AM, FM)</th>
+                                    <th>কোডেড সিস্টেম (যেমন: PCM, DM)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>সিস্টেমের ধরন</strong></td>
+                                    <td>অ্যানালগ (Analog)</td>
+                                    <td>ডিজিটাল (Digital)</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Figure of Merit (FOM)</strong></td>
+                                    <td>ব্যান্ডউইথ ($B$) এর সাথে লিনিয়ারলি আনুপাতিক</td>
+                                    <td>ব্যান্ডউইথ ($B$) এর সাথে এক্সপোনেনশিয়ালি আনুপাতিক</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>দক্ষতা (Efficiency)</strong></td>
+                                    <td>কম</td>
+                                    <td>অনেক বেশি</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>ব্যান্ডউইথ ব্যবহার</strong></td>
+                                    <td>কম (তুলনামূলক সংকীর্ণ)</td>
+                                    <td>বেশি (কিন্তু সিগন্যাল রিপ্রোডাকশন উন্নত)</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>নয়েজ পারফরম্যান্স</strong></td>
+                                    <td>দুর্বল (নয়েজ সহজে সিগন্যালে যুক্ত হয়)</td>
+                                    <td>অত্যন্ত উন্নত ও চমৎকার নয়েজ রিজেকশন</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>দীর্ঘ দূরত্বে রিপিটার ব্যবহার</strong></td>
+                                    <td>সম্ভব নয় (নয়েজ ক্রমশ বড় হতে থাকে)</td>
+                                    <td>রিজেনারেটিভ রিপিটার দিয়ে খুব সহজেই সম্ভব</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h4>ডিজিটাল মডুলেশন কৌশলের তুলনা (Comparison of Digital Modulation)</h4>
+                    <div class="table-responsive">
+                        <table class="premium-table">
+                            <thead>
+                                <tr>
+                                    <th>প্যারামিটার / বৈশিষ্ট্য</th>
+                                    <th>ASK</th>
+                                    <th>BPSK</th>
+                                    <th>QPSK</th>
+                                    <th>QAM</th>
+                                    <th>BFSK</th>
+                                    <th>MSK</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>তথ্য পরিবর্তনের মাধ্যম</strong></td>
+                                    <td>অ্যামপ্লিচিউড (Amplitude)</td>
+                                    <td>ফেজ (Phase)</td>
+                                    <td>ফেজ (Phase)</td>
+                                    <td>অ্যামপ্লিচিউড ও ফেজ উভয়েই</td>
+                                    <td>ফ্রিকোয়েন্সি (Frequency)</td>
+                                    <td>ফ্রিকোয়েন্সি (Frequency)</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>প্রতি স্যাম্পলে বিট ($n$)</strong></td>
+                                    <td>১</td>
+                                    <td>১</td>
+                                    <td>২</td>
+                                    <td>$N$</td>
+                                    <td>১</td>
+                                    <td>২</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>ডিটেকশন পদ্ধতি</strong></td>
+                                    <td>Coherent / Non-Coherent</td>
+                                    <td>Coherent</td>
+                                    <td>Coherent</td>
+                                    <td>Coherent</td>
+                                    <td>Non-Coherent / Coherent</td>
+                                    <td>Non-Coherent</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>সর্বনিম্ন ব্যান্ডউইথ</strong></td>
+                                    <td>$2f_b$</td>
+                                    <td>$2f_b$</td>
+                                    <td>$f_b$</td>
+                                    <td>$2f_b / N$</td>
+                                    <td>$4f_b$</td>
+                                    <td>$1.5f_b$</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                     
                     <h4>২.২ টাইম ডিভিশন মাল্টিপ্লেক্সিং (TDM) ও ফ্রেম সাইজ</h4>
                     <p>টেলিফোনি বা ডেটা নেটওয়ার্কে হাজার হাজার গ্রাহকের ডেটা একক চ্যানেলে পাঠানোর জন্য <strong>TDM</strong> ব্যবহার করা হয়। এখানে সময়কে ভাগ করে প্রতিটি চ্যানেলকে পর্যায়ক্রমে খুব ক্ষুদ্র সময় স্লট দেওয়া হয়। একটি পূর্ণ সাইকেলে যখন সবকটি চ্যানেলের একটি করে স্যাম্পল পাঠানো হয়, তখন তাকে ১টি <strong>Frame</strong> বলে।</p>
@@ -1660,6 +1817,10 @@
                     <p style="text-align: center; margin: 15px 0; font-weight: bold; font-size: 1.1rem; color: #00f2fe;">$$\Delta = \frac{2 \cdot m_p}{L}$$</p>
                     <p>কোয়ান্টাইজেশনের ফলে আসল স্যাম্পলের মানের সাথে ডিজিটাল মানের যে পার্থক্য থাকে তাকে কোয়ান্টাইজেশন ত্রুটি (Quantization Error) বলে। এই ত্রুটির সর্বোচ্চ মান হতে পারে $\pm \frac{\Delta}{2}$। যেহেতু এটি নয়েজ বা গোলযোগের জন্ম দেয়, তাই একে কোয়ান্টাইজেশন নয়েজ বলা হয়।</p>
                     
+                    <p>পিক-টু-পিক অ্যাম্প্লিচিউড ডোমেইনে সিগন্যাল পাওয়ার এবং কোয়ান্টাইজেশন নয়েজ পাওয়ার নিম্নলিখিত সমীকরণের মাধ্যমে হিসাব করা যায়:</p>
+                    <p>• **সিগন্যাল পাওয়ার (Signal Power, $P_M$):** $$P_M = \frac{m_p^2}{2}$$</p>
+                    <p>• **কোয়ান্টাইজেশন নয়েজ পাওয়ার (Noise Power, $P_Q$):** $$P_Q = \frac{\Delta^2}{12} = \frac{m_p^2}{3 L^2}$$</p>
+                    
                     <h4>৩.২ SQNR (Signal-to-Quantization-Noise Ratio)</h4>
                     <p>কোয়ান্টাইজেশন প্রক্রিয়াটি কতটুকু নির্ভুল বা সিগন্যাল কোয়ালিটি কেমন তা পরিমাপ করা হয় SQNR এর মাধ্যমে। ইউনিফর্ম কোয়ান্টাইজেশনের জন্য এর মান:</p>
                     <p style="text-align: center; margin: 15px 0; font-weight: bold; font-size: 1.1rem; color: #00f2fe;">$$\text{SQNR}_{dB} = 1.76 + 6.02 \cdot n$$</p>
@@ -1680,6 +1841,11 @@
                         <strong>Quantization Step Size ($\Delta$)</strong>
                         <code>\Delta = \frac{2 \cdot m_p}{L}</code>
                         <p>$m_p$ হলো পিক ভোল্টেজ এবং $L$ হলো কোয়ান্টাইজেশন লেভেল।</p>
+                    </div>
+                    <div class="formula-item">
+                        <strong>Signal Power ($P_M$) &amp; Noise Power ($P_Q$)</strong>
+                        <code>P_M = \frac{m_p^2}{2} \quad P_Q = \frac{m_p^2}{3L^2}</code>
+                        <p>পিক ভ্যালুর সাপেক্ষে সিগন্যাল ও কোয়ান্টাইজেশন নয়েজের গাণিতিক শক্তির সমীকরণ।</p>
                     </div>
                     <div class="formula-item">
                         <strong>SQNR (Uniform Quantization)</strong>
