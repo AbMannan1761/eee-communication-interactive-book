@@ -1018,6 +1018,195 @@ css_to_inject = """
             from { opacity: 0; }
             to { opacity: 1; }
         }
+
+        /* --- PREMIUM SINGLE THEME TOGGLE SWITCH --- */
+        .theme-switch-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            color: var(--accent-color);
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.05), 0 4px 10px rgba(0,0,0,0.2);
+            font-size: 1.1rem;
+            outline: none;
+        }
+        body.light-theme .theme-switch-btn {
+            background: rgba(0, 0, 0, 0.03);
+            color: #2563eb;
+            box-shadow: inset 0 1px 0 rgba(0,0,0,0.02), 0 4px 10px rgba(0, 50, 100, 0.05);
+        }
+        .theme-switch-btn:hover {
+            transform: scale(1.08) rotate(15deg);
+            border-color: var(--accent-color);
+            box-shadow: 0 0 12px rgba(0, 242, 254, 0.25);
+        }
+        body.light-theme .theme-switch-btn:hover {
+            border-color: #2563eb;
+            box-shadow: 0 0 12px rgba(37, 99, 235, 0.15);
+        }
+
+        /* --- SPACE OPTIMIZATION & COMPACT LAYOUT OVERRIDES --- */
+        header {
+            padding: 8px 20px !important;
+        }
+        .header-logo-container {
+            width: 40px !important;
+            height: 40px !important;
+            padding: 3px !important;
+            border-radius: 8px !important;
+        }
+        .header-logo-svg {
+            width: 32px !important;
+            height: 32px !important;
+        }
+        .logo-polygon {
+            transform-origin: 50px 50px;
+        }
+        .header-title {
+            font-size: 1.25rem !important;
+            gap: 6px !important;
+        }
+        .header-subtitle {
+            margin: 1px 0 0 0 !important;
+            font-size: 0.8rem !important;
+        }
+        .tagline-styled {
+            font-size: 0.8rem !important;
+            padding-left: 8px !important;
+        }
+        .container {
+            margin: 12px auto !important;
+            padding: 0 15px !important;
+        }
+        .tabs-nav-container {
+            margin-bottom: 12px !important;
+        }
+        .tabs-nav-title {
+            font-size: 0.85rem !important;
+            margin-bottom: 5px !important;
+        }
+        .tabs {
+            grid-template-columns: repeat(auto-fit, minmax(135px, 1fr)) !important;
+            gap: 8px !important;
+        }
+        .tab-btn {
+            padding: 8px 10px !important;
+            font-size: 0.78rem !important;
+            border-radius: 6px !important;
+            gap: 6px !important;
+            border-bottom-width: 2px !important;
+        }
+        .theory-section {
+            padding: 20px !important;
+            margin-bottom: 20px !important;
+            border-radius: 12px !important;
+        }
+        .theory-badge {
+            margin-bottom: 8px !important;
+        }
+        .theory-section h2 {
+            font-size: 1.3rem !important;
+            margin-bottom: 12px !important;
+            padding-bottom: 8px !important;
+            gap: 8px !important;
+        }
+        .theory-content p {
+            font-size: 0.9rem !important;
+            margin-bottom: 10px !important;
+            line-height: 1.5 !important;
+        }
+        .theory-content h4 {
+            font-size: 1rem !important;
+            margin: 12px 0 6px 0 !important;
+        }
+        .theory-highlight-box {
+            padding: 12px 15px !important;
+            margin: 10px 0 !important;
+        }
+        .split-card {
+            margin-bottom: 20px !important;
+            border-radius: 12px !important;
+        }
+        .card-left {
+            padding: 18px !important;
+        }
+        .card-right {
+            padding: 18px !important;
+        }
+        .simulator-grid {
+            gap: 15px !important;
+        }
+        .simulator-inputs {
+            gap: 10px !important;
+        }
+        .input-group {
+            gap: 4px !important;
+        }
+        .input-group label {
+            font-size: 0.82rem !important;
+        }
+        .input-group input[type="number"], .input-group select {
+            padding: 6px 10px !important;
+            font-size: 0.88rem !important;
+            border-radius: 5px !important;
+        }
+        .simulator-outputs {
+            padding: 15px !important;
+            border-radius: 8px !important;
+        }
+        .output-heading {
+            font-size: 0.9rem !important;
+            margin-bottom: 10px !important;
+            padding-bottom: 6px !important;
+        }
+        .output-value-block {
+            gap: 8px !important;
+            margin-bottom: 10px !important;
+        }
+        .output-row {
+            padding-bottom: 6px !important;
+        }
+        .output-label {
+            font-size: 0.82rem !important;
+        }
+        .output-val {
+            font-size: 0.95rem !important;
+        }
+        .output-math-steps {
+            padding: 10px !important;
+            font-size: 0.82rem !important;
+            border-radius: 5px !important;
+        }
+        .app-card {
+            padding: 12px 15px !important;
+            margin-bottom: 15px !important;
+            gap: 12px !important;
+        }
+        .app-icon {
+            font-size: 1.6rem !important;
+        }
+        .app-content h4 {
+            font-size: 1rem !important;
+            margin-bottom: 4px !important;
+        }
+        .app-content p {
+            font-size: 0.82rem !important;
+        }
+        .visualizer-box {
+            margin-top: 8px !important;
+            margin-bottom: 8px !important;
+            padding: 6px !important;
+            border-radius: 8px !important;
+        }
+        .visualizer-box canvas {
+            max-height: 110px !important;
+        }
 """
 
 # HTML Tab Buttons
@@ -1293,6 +1482,13 @@ if container_closing_idx != -1:
 js_code_to_inject = f"""
         // --- INLINED STUDY DECK DATABASE (100 MCQs & 100 Flashcards) ---
         const studyDataset = {json.dumps(dataset, ensure_ascii=False)};
+
+        // Helper to toggle theme with single button switch
+        function toggleTheme() {{
+            const currentTheme = localStorage.getItem('theme') || 'dark';
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            setTheme(newTheme);
+        }}
 
         // Helper to safely set display elements (checking if input or text span)
         function setDisplayValue(id, val) {{
@@ -2346,18 +2542,21 @@ modified_html = replace_function_safe(modified_html, "updateT4", new_updateT4_bo
 
 # Replace the setTheme function to support visualizer updates
 new_setTheme_body = """            const body = document.body;
-            const darkBtn = document.getElementById('theme-dark-btn');
-            const lightBtn = document.getElementById('theme-light-btn');
+            const toggleBtn = document.getElementById('theme-toggle-btn');
             
             if (theme === 'light') {
                 body.classList.add('light-theme');
-                if (lightBtn) lightBtn.classList.add('active');
-                if (darkBtn) darkBtn.classList.remove('active');
+                if (toggleBtn) {
+                    toggleBtn.innerHTML = '<i class="fa-solid fa-sun"></i>';
+                    toggleBtn.style.color = '#eab308'; // Golden sun color
+                }
                 localStorage.setItem('theme', 'light');
             } else {
                 body.classList.remove('light-theme');
-                if (darkBtn) darkBtn.classList.add('active');
-                if (lightBtn) lightBtn.classList.remove('active');
+                if (toggleBtn) {
+                    toggleBtn.innerHTML = '<i class="fa-solid fa-moon"></i>';
+                    toggleBtn.style.color = '#00f2fe'; // Cyan moon color
+                }
                 localStorage.setItem('theme', 'dark');
             }
             
@@ -2376,19 +2575,32 @@ old_title = "<title>ABM Academy - A Digital Learning Platform</title>"
 new_title = "<title>ABM Academy - Your Digital Learning hub.</title>"
 modified_html = modified_html.replace(old_title, new_title)
 
-old_header_brand = """    <header>
+old_full_header = """    <header>
         <div class="header-brand">
             <div class="header-logo">ABM</div>
             <div>
                 <h1><span>ABM Academy</span> - A Digital Learning Platform</h1>
                 <p>Interactive E-Learning E-Book for Communication Engineering</p>
             </div>
-        </div>"""
+        </div>
+        <div class="theme-actions">
+            <!-- Dynamic Theme Toggle Options -->
+            <div class="theme-toggle-container">
+                <button class="theme-option active" id="theme-dark-btn" onclick="setTheme('dark')">
+                    <i class="fa-solid fa-moon"></i> <span>ডার্ক মোড</span>
+                </button>
+                <button class="theme-option" id="theme-light-btn" onclick="setTheme('light')">
+                    <i class="fa-solid fa-sun"></i> <span>লাইট মোড</span>
+                </button>
+            </div>
+            <p style="font-style: italic; font-weight: 500; font-size: 0.85rem;" class="quiz-explanation-text"><i class="fa-solid fa-book-open"></i> E-Book 2026</p>
+        </div>
+    </header>"""
 
-new_header_brand = """    <header>
+new_full_header = """    <header>
         <div class="header-brand">
             <div class="header-logo-container">
-                <svg class="header-logo-svg" viewBox="0 0 100 100" width="50" height="50">
+                <svg class="header-logo-svg" viewBox="0 0 100 100" width="32" height="32">
                     <defs>
                         <linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
                             <stop offset="0%" stop-color="#00f2fe" />
@@ -2411,9 +2623,17 @@ new_header_brand = """    <header>
                 <h1 class="header-title"><span>ABM Academy</span> <span class="tagline-styled">Your Digital Learning hub.</span></h1>
                 <p class="header-subtitle">Interactive E-Learning E-Book for Communication Engineering</p>
             </div>
-        </div>"""
+        </div>
+        <div class="theme-actions">
+            <!-- Premium Single Toggle Switch -->
+            <button class="theme-switch-btn" id="theme-toggle-btn" onclick="toggleTheme()" title="থিম পরিবর্তন করুন (Toggle Theme)">
+                <i class="fa-solid fa-moon"></i>
+            </button>
+            <p style="font-style: italic; font-weight: 500; font-size: 0.85rem; margin: 0;" class="quiz-explanation-text"><i class="fa-solid fa-book-open"></i> E-Book 2026</p>
+        </div>
+    </header>"""
 
-modified_html = modified_html.replace(old_header_brand, new_header_brand)
+modified_html = modified_html.replace(old_full_header, new_full_header)
 print("Updated title, tagline, and animated SVG logo.")
 
 # Inject Chatbot HTML before </body> at the end
